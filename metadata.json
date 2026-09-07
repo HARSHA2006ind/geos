@@ -1,0 +1,6 @@
+{
+  "name": "GeoResilience-NER",
+  "description": "AI-Powered Landslide Early Warning and Disaster Decision-Support Platform for the North Eastern Region of India (SIH26001)",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
