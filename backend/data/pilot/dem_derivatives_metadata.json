@@ -1,0 +1,112 @@
+{
+  "dataset_id": "copernicus-dem-geomorphometric-hydrological-derivatives",
+  "dataset_name": "Full-District DEM Geomorphometric & Hydrological Features (Dima Hasao)",
+  "source_dem": "dima_hasao_dem_utm46n.tif",
+  "source_slope": "dima_hasao_slope_deg_utm46n.tif",
+  "crs": "EPSG:32646",
+  "pixel_size_m": [
+    90.0,
+    90.0
+  ],
+  "grid_shape": [
+    1106,
+    1114
+  ],
+  "processing_timestamp": "2026-11-23T13:25:05.301390+00:00",
+  "methods": {
+    "curvature": "Zevenbergen & Thorne (1987) 3x3 polynomial profile & planform curvature (1/100 m)",
+    "tri": "Riley et al. (1999) Terrain Ruggedness Index (m)",
+    "flow_accumulation": "D8 steepest-descent topographic-sort upslope area (m2)",
+    "twi": "Beven & Kirkby (1979) Topographic Wetness Index ln(a / tan(beta))",
+    "distance_to_drainage": "Euclidean distance (m) to D8 channels with upslope area >= 0.50 km2"
+  },
+  "attribution": "Derived from Copernicus DEM GLO-30 (ESA / Airbus, \u00a9 DLR e.V. 2010-2014 & Airbus Defence and Space GmbH 2014-2018)",
+  "temporal_validity": "Static topographic baseline (2011-2015 TanDEM-X epoch); valid pre-event conditioning factor.",
+  "uncertainty_and_limitations": "Derived on the 90 m district UTM grid (aligned with dima_hasao_dem_utm46n.tif) without pit-filling breach carve; micro-scale gullies (< 90 m) and artificial road culverts are unresolved.",
+  "layers": {
+    "profile_curvature": {
+      "file": "dima_hasao_profile_curvature_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.11,
+      "min": -5.1434,
+      "max": 15.8358,
+      "mean": -0.0059,
+      "std": 0.3397,
+      "p95": 0.2648,
+      "file_bytes": 4556471
+    },
+    "plan_curvature": {
+      "file": "dima_hasao_plan_curvature_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.11,
+      "min": -7.6729,
+      "max": 5.0825,
+      "mean": -0.0072,
+      "std": 0.1804,
+      "p95": 0.285,
+      "file_bytes": 4554082
+    },
+    "tri": {
+      "file": "dima_hasao_tri_m_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.11,
+      "min": 0.0,
+      "max": 2239.8655,
+      "mean": 54.5503,
+      "std": 53.3489,
+      "p95": 125.2591,
+      "file_bytes": 4321366
+    },
+    "flow_accumulation_m2": {
+      "file": "dima_hasao_flow_acc_m2_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.11,
+      "min": 8100.0,
+      "max": 27207900.0,
+      "mean": 85178.3828,
+      "std": 425360.0938,
+      "p95": 291600.0,
+      "file_bytes": 968306
+    },
+    "twi": {
+      "file": "dima_hasao_twi_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.11,
+      "min": 3.9064,
+      "max": 17.9053,
+      "mean": 7.4648,
+      "std": 1.5748,
+      "p95": 10.7204,
+      "file_bytes": 4248818
+    },
+    "distance_to_drainage_m": {
+      "file": "dima_hasao_dist_drainage_m_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.11,
+      "min": 0.0,
+      "max": 3444.7786,
+      "mean": 495.9108,
+      "std": 332.401,
+      "p95": 1094.8972,
+      "file_bytes": 462370
+    }
+  }
+}

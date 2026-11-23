@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Send, Radio, ShieldAlert } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Send, ShieldAlert } from 'lucide-react';
 import { AlertItem, RiskLocation, RiskLevel } from '../../types/disaster';
 
 interface CreateAlertModalProps {
@@ -25,13 +25,13 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
   );
   const [trigger, setTrigger] = useState(
     preselectedLocation
-      ? `Sustained 24h rainfall of ${preselectedLocation.currentRainfall} mm over saturated slope (${preselectedLocation.slope}°).`
-      : 'Intense precipitation exceeding critical slope threshold.'
+      ? `Prototype scenario: ${preselectedLocation.currentRainfall} mm rainfall over ${preselectedLocation.slope}° slope.`
+      : 'Prototype scenario threshold exceeded.'
   );
   const [potentialImpact, setPotentialImpact] = useState(
     preselectedLocation
-      ? `Risk to ${preselectedLocation.populationExposed.toLocaleString()} residents, NH arterial corridors, and essential civil infrastructure.`
-      : 'High probability of debris flow blocking arterial transport route.'
+      ? `Demo exposure estimate: ${preselectedLocation.populationExposed.toLocaleString()} residents and local road corridors.`
+      : 'Potential debris blockage of local road corridor.'
   );
   const [broadcastChannels, setBroadcastChannels] = useState({
     sms: true,
@@ -40,11 +40,26 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
     ndmaPortal: true,
   });
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const loc = preselectedLocation || locations[0];
+    if (!loc) return;
+    setSelectedLocationId(loc.id);
+    setRiskLevel(loc.calculatedLevel || 'HIGH');
+    setTrigger(
+      `Prototype scenario: ${loc.currentRainfall} mm rainfall over ${loc.slope}° slope (${loc.district}, ${loc.state}).`
+    );
+    setPotentialImpact(
+      `Demo exposure estimate: ${loc.populationExposed.toLocaleString()} residents, ${loc.infrastructure.roads} road segments, ${loc.infrastructure.bridges} bridges.`
+    );
+  }, [isOpen, preselectedLocation, locations]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const loc = locations.find((l) => l.id === selectedLocationId) || locations[0];
+    if (!loc) return;
 
     const newAlert: AlertItem = {
       id: `alert-${Date.now()}`,
@@ -53,17 +68,17 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
       state: loc.state,
       lat: loc.lat,
       lng: loc.lng,
-      riskLevel: riskLevel,
-      riskScore: loc.calculatedScore || 88,
-      timestamp: 'Just now',
-      trigger: trigger,
-      potentialImpact: potentialImpact,
+      riskLevel,
+      riskScore: loc.calculatedScore || 0,
+      timestamp: new Date().toISOString(),
+      trigger,
+      potentialImpact,
       status: 'ACTIVE',
       recommended: trigger,
       recommendedActions: [
-        'Halt heavy vehicular transit on adjoining national highways.',
-        'Issue immediate red-zone evacuation advisories to hillside residents.',
-        'Pre-position State Disaster Response Force (SDRF) heavy excavators.',
+        'Inspect affected cut-slopes and drainage culverts.',
+        'Notify local district administration and traffic patrol.',
+        'Monitor verified rainfall accumulations before escalating advisories.',
       ],
     };
 
@@ -80,8 +95,12 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
               <ShieldAlert className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-bold text-sm text-slate-100 font-display">Generate Disaster Early Warning Alert</h3>
-              <p className="text-[11px] text-slate-400">Authorized SEOC / NDMA Transmission Protocol</p>
+              <h3 className="font-bold text-sm text-slate-100 font-display">
+                Create Prototype Alert (Simulated Local Only)
+              </h3>
+              <p className="text-[11px] text-amber-300/90">
+                Records in browser session — does NOT transmit real SMS, VHF, or NDMA alerts
+              </p>
             </div>
           </div>
           <button

@@ -1,0 +1,101 @@
+# GeoResilience-NER 2.0 — Local & Pilot Server Stack
+# Sized conservatively for 8 GB RAM / 4 vCPU / 20 GB SSD Ubuntu Linux hosts.
+
+services:
+  postgis:
+    image: postgis/postgis:16-3.4-alpine
+    container_name: geos-postgis
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-geos_ner}
+      POSTGRES_USER: ${POSTGRES_USER:-geos}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-geos_dev_password}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - geos_pgdata:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 1536M
+          cpus: "1.5"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-geos} -d ${POSTGRES_DB:-geos_ner}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    container_name: geos-fastapi
+    restart: unless-stopped
+    depends_on:
+      postgis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-geos}:${POSTGRES_PASSWORD:-geos_dev_password}@postgis:5432/${POSTGRES_DB:-geos_ner}
+      PILOT_DATA_DIR: /app/backend/data/pilot
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      LOG_LEVEL: INFO
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-4-hydrogen}
+      GEOS_AUTH_SECRET: ${GEOS_AUTH_SECRET:-}
+      NASA_EARTHDATA_TOKEN: ${NASA_EARTHDATA_TOKEN:-}
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/backend/data
+    deploy:
+      resources:
+        limits:
+          memory: 1536M
+          cpus: "1.5"
+
+  monitor:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    container_name: geos-monitor
+    restart: unless-stopped
+    depends_on:
+      postgis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-geos}:${POSTGRES_PASSWORD:-geos_dev_password}@postgis:5432/${POSTGRES_DB:-geos_ner}
+      PILOT_DATA_DIR: /app/backend/data/pilot
+    volumes:
+      - ./data:/app/backend/data
+    command: ["sh", "-c", "while true; do PYTHONPATH=. python backend/ingestion/run_monitoring_cycle.py --refresh-live-gfs || true; sleep 21600; done"]
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: geos-caddy
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      GEOS_DOMAIN: ${GEOS_DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - geos_caddy_data:/data
+      - geos_caddy_config:/config
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+
+volumes:
+  geos_pgdata:
+  geos_caddy_data:
+  geos_caddy_config:

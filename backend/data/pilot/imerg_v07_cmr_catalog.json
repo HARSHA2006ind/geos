@@ -1,0 +1,147 @@
+{
+  "schema_version": "geos-imerg-v07-catalog-1.0",
+  "generated_at_utc": "2026-11-23T10:23:54.865313+00:00",
+  "study_area": "Dima Hasao District, Assam, India",
+  "cmr_endpoint": "https://cmr.earthdata.nasa.gov/search/granules.json",
+  "ges_disc_access_probe": {
+    "sample_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240602-S000000-E235959.V07B.nc4",
+    "http_status": 302,
+    "redirect_host": "urs.earthdata.nasa.gov",
+    "requires_earthdata_auth": true,
+    "credentials_configured": false,
+    "credential_source": "none_configured",
+    "probed_at_utc": "2026-11-23T10:23:54.854157+00:00"
+  },
+  "download_execution": {
+    "attempted": false,
+    "status": "blocked_earthdata_auth_required",
+    "downloaded_granules": 0,
+    "failed_granules": 0,
+    "reason": "NASA GES DISC returned HTTP 302 redirect to urs.earthdata.nasa.gov. No EARTHDATA_TOKEN env var or ~/.netrc credentials are configured in this runtime. Zero rainfall values were fabricated."
+  },
+  "existing_historical_archive_status": {
+    "archive_file": "dima_hasao_rainfall_multiyear.json",
+    "date_range": "2015-01-01 to 2024-12-31",
+    "total_days": 3653,
+    "valid_days": 3439,
+    "missing_days_preserved_null": 214,
+    "completeness_pct": 94.14,
+    "artificial_gap_filling_applied": false
+  },
+  "historical_gap_2019_and_2024": {
+    "dataset_role": "historical_training_archive_gap_closure",
+    "single_missing_2019_06_30": {
+      "short_name": "GPM_3IMERGDF",
+      "version": "07",
+      "cmr_hits": 1,
+      "available_in_cmr": true,
+      "granule": {
+        "short_name": "GPM_3IMERGDF",
+        "version": "07",
+        "date": "2019-06-30",
+        "title": "GPM_3IMERGDF.07:3B-DAY.MS.MRG.3IMERG.20190630-S000000-E235959.V07B.nc4",
+        "data_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2019/06/3B-DAY.MS.MRG.3IMERG.20190630-S000000-E235959.V07B.nc4",
+        "granule_size_mb": 31.193,
+        "time_start": "2019-06-30T00:00:00.000Z",
+        "time_end": "2019-06-30T23:59:59.999Z",
+        "product_revision": "V07B"
+      }
+    },
+    "gap_2024_06_02_to_2024_12_31_final_run": {
+      "short_name": "GPM_3IMERGDF",
+      "version": "07",
+      "run_type": "Final Run (Gauge-Calibrated Research Product)",
+      "expected_days": 213,
+      "cmr_granules_available": 213,
+      "cmr_hits_header": 213,
+      "cmr_coverage_pct": 100.0,
+      "cmr_missing_dates": [],
+      "revisions_observed": [
+        "V07B"
+      ],
+      "first_granule": {
+        "short_name": "GPM_3IMERGDF",
+        "version": "07",
+        "date": "2024-06-02",
+        "title": "GPM_3IMERGDF.07:3B-DAY.MS.MRG.3IMERG.20240602-S000000-E235959.V07B.nc4",
+        "data_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240602-S000000-E235959.V07B.nc4",
+        "granule_size_mb": 32.52,
+        "time_start": "2024-06-02T00:00:00.000Z",
+        "time_end": "2024-06-02T23:59:59.999Z",
+        "product_revision": "V07B"
+      },
+      "last_granule": {
+        "short_name": "GPM_3IMERGDF",
+        "version": "07",
+        "date": "2024-12-31",
+        "title": "GPM_3IMERGDF.07:3B-DAY.MS.MRG.3IMERG.20241231-S000000-E235959.V07B.nc4",
+        "data_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/12/3B-DAY.MS.MRG.3IMERG.20241231-S000000-E235959.V07B.nc4",
+        "granule_size_mb": 25.554,
+        "time_start": "2024-12-31T00:00:00.000Z",
+        "time_end": "2024-12-31T23:59:59.999Z",
+        "product_revision": "V07B"
+      },
+      "granule_urls_sample_first_5": [
+        "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240602-S000000-E235959.V07B.nc4",
+        "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240603-S000000-E235959.V07B.nc4",
+        "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240604-S000000-E235959.V07B.nc4",
+        "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240605-S000000-E235959.V07B.nc4",
+        "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2024/06/3B-DAY.MS.MRG.3IMERG.20240606-S000000-E235959.V07B.nc4"
+      ]
+    },
+    "gap_2024_06_02_to_2024_12_31_late_run_reference": {
+      "short_name": "GPM_3IMERGDL",
+      "version": "07",
+      "cmr_granules_available": 213,
+      "note": "Do NOT mix Late Run into Final Run training series without explicit run-type flag."
+    }
+  },
+  "current_monitoring_2025_2026_separate_dataset": {
+    "dataset_role": "current_monitoring_only_strictly_separate_from_historical_training",
+    "query_start_date": "2025-01-01",
+    "query_end_date": "2026-11-23",
+    "GPM_3IMERGDF_v07_final": {
+      "run_type": "Final Run (Gauge-Calibrated Research Product)",
+      "cmr_granules_available": 273,
+      "cmr_hits_header": 273,
+      "earliest_date": "2025-01-01",
+      "latest_date": "2025-09-30",
+      "revisions_observed": [
+        "V07B"
+      ],
+      "latest_granule_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/2025/09/3B-DAY.MS.MRG.3IMERG.20250930-S000000-E235959.V07B.nc4"
+    },
+    "GPM_3IMERGDL_v07_late": {
+      "run_type": "Late Run (Near-Real-Time Monitoring)",
+      "cmr_granules_available": 690,
+      "cmr_hits_header": 690,
+      "earliest_date": "2025-01-01",
+      "latest_date": "2026-11-21",
+      "revisions_observed": [
+        "V07B",
+        "V07C"
+      ],
+      "latest_granule_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDL.07/2026/11/3B-DAY-L.MS.MRG.3IMERG.20261121-S000000-E235959.V07C.nc4"
+    },
+    "GPM_3IMERGDE_v07_early": {
+      "run_type": "Early Run (Low-Latency Monitoring)",
+      "cmr_granules_available": 691,
+      "cmr_hits_header": 691,
+      "earliest_date": "2025-01-01",
+      "latest_date": "2026-11-22",
+      "revisions_observed": [
+        "V07B",
+        "V07C"
+      ],
+      "latest_granule_url": "https://data.gesdisc.earthdata.nasa.gov/data/GPM_L3/GPM_3IMERGDE.07/2026/11/3B-DAY-E.MS.MRG.3IMERG.20261122-S000000-E235959.V07C.nc4"
+    }
+  },
+  "validation_distinction_notice": "Previous Stage 4 cross-checks (IMERG vs CHIRPS, NASA POWER, and ERA5) measure inter-product agreement ONLY, not ground-truth gauge-validated accuracy. Gauge-validated accuracy for Dima Hasao requires independent IMD / CWC / ASDMA rain-gauge observations (e.g., Haflong, Maibang, Harangajao, Umrangso stations).",
+  "earthdata_setup_instructions": [
+    "1. Create a free NASA Earthdata Login account at https://urs.earthdata.nasa.gov/users/new",
+    "2. Authorize 'NASA GESDISC DATA ARCHIVE' under Earthdata Profile -> Applications -> Authorized Apps",
+    "3. Generate a Bearer token (Profile -> Generate Token) OR configure ~/.netrc with chmod 600:",
+    "   machine urs.earthdata.nasa.gov login <YOUR_USERNAME> password <YOUR_PASSWORD>",
+    "4. Run: EARTHDATA_TOKEN=<token> PYTHONPATH=. backend/.venv/bin/python -m backend.ingestion.fetch_imerg_v07_earthdata"
+  ]
+}

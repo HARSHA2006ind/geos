@@ -9,6 +9,7 @@ import { ImpactResponsePage } from './pages/ImpactResponsePage';
 import { FieldReportsPage } from './pages/FieldReportsPage';
 import { AlertsPage } from './pages/AlertsPage';
 import { HistoricalAnalysisPage } from './pages/HistoricalAnalysisPage';
+import { GeosV2WorkspacePage } from './pages/GeosV2WorkspacePage';
 import { CreateAlertModal } from './components/modals/CreateAlertModal';
 import { SubmitReportModal } from './components/modals/SubmitReportModal';
 import { RiskUpdatedModal, RiskFeedbackModalData } from './components/modals/RiskUpdatedModal';
@@ -50,12 +51,16 @@ export default function App() {
   const [isSubmitReportModalOpen, setIsSubmitReportModalOpen] = useState(false);
   const [modalPreselectedLoc, setModalPreselectedLoc] = useState<RiskLocation | null>(null);
 
-  // Demo mode state (SIH Presentation Walkthrough)
+  // Demo mode state (Simulated Presentation Walkthrough)
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [demoStep, setDemoStep] = useState(1);
+  const [mapLevelFilter, setMapLevelFilter] = useState<string>('ALL');
 
   // Continuous Intelligence Feedback Loop Modal State
   const [riskUpdatedData, setRiskUpdatedData] = useState<RiskFeedbackModalData | null>(null);
+
+  // Mobile drawer state
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   // Toast notifications state
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
@@ -120,55 +125,48 @@ export default function App() {
   const handleSubmitFieldReport = (newReport: FieldReport) => {
     setFieldReports((prev) => [newReport, ...prev]);
 
-    let previousScore = 0;
-    let updatedScore = 0;
+    const targetLoc = locations.find((loc) => loc.id === newReport.locationId);
+    const previousScore = targetLoc ? targetLoc.calculatedScore : 0;
+    let updatedScore = previousScore;
     let affectedLocationName = newReport.locationName;
     let updatedLocationObj: RiskLocation | null = null;
 
-    // Recalculate and update the corresponding location's score
-    setLocations((prev) =>
-      prev.map((loc) => {
-        if (loc.id === newReport.locationId) {
-          previousScore = loc.calculatedScore;
-          const satBoost =
-            newReport.severity === 'Critical' ? 14 : newReport.severity === 'High' ? 9 : 5;
-          const rainBoost =
-            newReport.severity === 'Critical' ? 28 : newReport.severity === 'High' ? 16 : 10;
-          const histBoost =
-            newReport.severity === 'Critical' ? 12 : newReport.severity === 'High' ? 8 : 4;
+    if (targetLoc) {
+      const satBoost =
+        newReport.severity === 'Critical' ? 14 : newReport.severity === 'High' ? 9 : 5;
+      const rainBoost =
+        newReport.severity === 'Critical' ? 28 : newReport.severity === 'High' ? 16 : 10;
+      const histBoost =
+        newReport.severity === 'Critical' ? 12 : newReport.severity === 'High' ? 8 : 4;
 
-          const updatedLoc: RiskLocation = {
-            ...loc,
-            soilSaturation: Math.min(100, loc.soilSaturation + satBoost),
-            currentRainfall: loc.currentRainfall + rainBoost,
-            historicalActivity: Math.min(100, loc.historicalActivity + histBoost),
-          };
-          const calc = calculateLocationRisk(updatedLoc);
-          updatedScore = calc.score;
-          affectedLocationName = updatedLoc.name;
+      const updatedLoc: RiskLocation = {
+        ...targetLoc,
+        soilSaturation: Math.min(100, targetLoc.soilSaturation + satBoost),
+        currentRainfall: targetLoc.currentRainfall + rainBoost,
+        historicalActivity: Math.min(100, targetLoc.historicalActivity + histBoost),
+      };
+      const calc = calculateLocationRisk(updatedLoc);
+      updatedScore = calc.score;
+      affectedLocationName = updatedLoc.name;
 
-          const finalized: RiskLocation = {
-            ...updatedLoc,
-            calculatedScore: calc.score,
-            calculatedLevel: calc.level,
-            primaryRiskDrivers: [
-              `Field Observation: ${newReport.type} (${newReport.severity})`,
-              ...calc.drivers,
-            ].slice(0, 4),
-          };
-          updatedLocationObj = finalized;
-          return finalized;
-        }
-        return loc;
-      })
-    );
+      updatedLocationObj = {
+        ...updatedLoc,
+        calculatedScore: calc.score,
+        calculatedLevel: calc.level,
+        primaryRiskDrivers: [
+          `Session Observation: ${newReport.type} (${newReport.severity})`,
+          ...calc.drivers,
+        ].slice(0, 4),
+      };
 
-    // Sync selected location if affected
-    if (selectedLocation && selectedLocation.id === newReport.locationId && updatedLocationObj) {
-      setSelectedLocation(updatedLocationObj);
+      const finalized = updatedLocationObj;
+      setLocations((prev) => prev.map((loc) => (loc.id === finalized.id ? finalized : loc)));
+
+      if (selectedLocation && selectedLocation.id === finalized.id) {
+        setSelectedLocation(finalized);
+      }
     }
 
-    // Auto-generate emergency alert if severity is High or Critical
     if (newReport.severity === 'Critical' || newReport.severity === 'High') {
       const autoAlert: AlertItem = {
         id: `alert-auto-${Date.now()}`,
@@ -177,35 +175,34 @@ export default function App() {
         state: newReport.state || 'Assam',
         lat: newReport.lat,
         lng: newReport.lng,
-        riskScore: updatedScore || 88,
+        riskScore: updatedScore,
         riskLevel: newReport.severity === 'Critical' ? 'CRITICAL' : 'HIGH',
-        trigger: `Ground Verification: ${newReport.type} reported by ${newReport.role}`,
-        potentialImpact: 'Immediate blockage of arterial highway corridor & structural slope threat.',
-        recommended: 'Deploy SDRF rescue column and close traffic along affected sector.',
+        trigger: `Session Observation: ${newReport.type} reported by ${newReport.role}`,
+        potentialImpact: 'Prototype local alert triggered by session observation.',
+        recommended: 'Inspect site conditions and monitor verified precipitation.',
         recommendedActions: [
-          'Pre-position earthmovers and clear culverts',
-          'Enforce Section 144 traffic diversion',
-          'Establish emergency relief satellite communication',
+          'Inspect affected road cut and drainage culverts',
+          'Coordinate local field verification',
+          'Track observed rainfall accumulations',
         ],
-        timestamp: 'Just now',
+        timestamp: new Date().toISOString(),
         status: 'ACTIVE',
       };
       setAlerts((prev) => [autoAlert, ...prev]);
     }
 
-    // Trigger prominent Continuous Intelligence Feedback Loop banner
     setRiskUpdatedData({
       show: true,
       locationName: affectedLocationName,
-      previousScore: previousScore || 63,
-      newScore: updatedScore || 78,
-      reason: `${newReport.severity} severity ground observation received: ${newReport.type} reported by ${newReport.role}.`,
+      previousScore,
+      newScore: updatedScore,
+      reason: `${newReport.severity} severity session observation recorded: ${newReport.type} (${newReport.role}).`,
     });
 
     addToast(
       'success',
-      'Ground Observation Ingested',
-      `Hazard score for ${newReport.locationName} recalculated in real time.`
+      'Session Observation Recorded',
+      `Prototype heuristic index for ${affectedLocationName} updated (${previousScore} → ${updatedScore}).`
     );
   };
 
@@ -265,26 +262,24 @@ export default function App() {
         'Standard Operating Procedures (SOPs) prioritized across 0-2h, 2-6h, and 6-24h timeframes.'
       );
     } else if (step === 7) {
-      const verifiedObservation: FieldReport = {
-        id: `report-sih-demo-${Date.now()}`,
+      const simulatedObservation: FieldReport = {
+        id: `report-demo-${Date.now()}`,
         locationId: dimaHasao.id,
         locationName: dimaHasao.name,
         state: dimaHasao.state,
-        lat: dimaHasao.lat + 0.005,
-        lng: dimaHasao.lng - 0.003,
+        lat: dimaHasao.lat,
+        lng: dimaHasao.lng,
         type: 'Landslide',
         severity: 'Critical',
         description:
-          'High pore-pressure seepage and 40-meter rotational slump blocking culvert on NH-54E KM 38 near Jatinga.',
+          'Simulated walkthrough observation: seepage and slope slump reported along Jatinga corridor.',
         role: 'Field Officer',
-        submittedBy: 'SDRF Patrol Unit 4',
-        verificationStatus: 'Verified',
-        timestamp: 'Just now',
-        verified: true,
-        imageUrl:
-          'https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=600&q=80',
+        submittedBy: 'Demo Walkthrough Unit',
+        verificationStatus: 'Pending',
+        timestamp: new Date().toISOString(),
+        verified: false,
       };
-      handleSubmitFieldReport(verifiedObservation);
+      handleSubmitFieldReport(simulatedObservation);
       setSelectedLocation(dimaHasao);
       setActivePage('risk-map');
     }
@@ -340,6 +335,7 @@ export default function App() {
   };
 
   const handleFilterByLevel = (level: string) => {
+    setMapLevelFilter(level);
     setActivePage('risk-map');
   };
 
@@ -352,6 +348,8 @@ export default function App() {
         activePage={activePage}
         onNavigate={setActivePage}
         activeAlertsCount={unreadAlertsCount}
+        isMobileOpen={isMobileNavOpen}
+        onCloseMobile={() => setIsMobileNavOpen(false)}
       />
 
       {/* 2. Main Body Container */}
@@ -373,10 +371,13 @@ export default function App() {
           onOpenAlerts={() => setActivePage('alerts')}
           isDemoMode={isDemoMode}
           onToggleDemoMode={handleToggleDemoMode}
+          onOpenMobileMenu={() => setIsMobileNavOpen(true)}
         />
 
         {/* Dynamic Page Router */}
         <main className="flex-1 overflow-y-auto p-3 sm:p-4 bg-[#090d16]">
+          {activePage === 'geos-v2-hub' && <GeosV2WorkspacePage />}
+
           {activePage === 'command-center' && (
             <CommandCenter
               locations={filteredLocations}
@@ -407,6 +408,7 @@ export default function App() {
               fieldReports={fieldReports}
               onViewAnalysis={handleViewAnalysis}
               onSimulate={handleSimulate}
+              initialLevelFilter={mapLevelFilter}
             />
           )}
 

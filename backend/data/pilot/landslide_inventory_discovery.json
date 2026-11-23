@@ -1,0 +1,68 @@
+{
+  "study_area": "Dima Hasao District, Assam (Pilot)",
+  "discovery_timestamp": "2026-11-23T09:53:01.520435+00:00",
+  "fabricated_labels_count": 0,
+  "verified_pilot_landslide_records_count": 0,
+  "verified_contextual_pilot_records_count": 19,
+  "verified_buffer_50km_records_count": 104,
+  "verified_pilot_landslide_records": [],
+  "providers": [
+    {
+      "provider": "Geological Survey of India (GSI)",
+      "dataset": "GSI Bhusanket (NLSM 1:50k/1:10k, Statewise Reports) & Bhukosh Landslide Inventory",
+      "portal_url": "https://bhusanket.gsi.gov.in/",
+      "secondary_url": "https://bhukosh.gsi.gov.in/Bhukosh/Public",
+      "probe_url": "https://bhusanket.gsi.gov.in/statewiseLandslideReport.html",
+      "requires_registration": true,
+      "machine_readable_api_available": false,
+      "resolution_steps": [
+        "Public Bhusanket portal (https://bhusanket.gsi.gov.in/) provides 1,044 statewise PDF reports and NLSM 1:10k map viewer, not bulk GeoJSON/Shapefile downloads.",
+        "For GIS point/polygon landslide inventories and 1:50,000 lithology/fault layers, register a free user account on GSI Bhukosh (https://bhukosh.gsi.gov.in/Bhukosh/Public) or submit a formal data request via https://www.gsi.gov.in/.",
+        "Export Assam / Dima Hasao Landslide Inventory Shapefile (.zip) and place into backend/data/raw/gsi_landslides/."
+      ],
+      "http_status": 200,
+      "reachable_from_environment": true,
+      "content_type": "text/html",
+      "pilot_records_retrieved": 0,
+      "blocker_note": "Public portal reachable, but machine-readable GIS inventory requires account registration or formal institutional data request."
+    },
+    {
+      "provider": "ISRO / NRSC",
+      "dataset": "Landslide Atlas of India (1998\u20132022) & Bhuvan Disaster Services",
+      "portal_url": "https://www.isro.gov.in/Landslide_Atlas_India.html",
+      "secondary_url": "https://bhuvan-app1.nrsc.gov.in/disaster/disaster.php",
+      "probe_url": "https://www.isro.gov.in/Landslide_Atlas_India.html",
+      "requires_registration": true,
+      "machine_readable_api_available": false,
+      "resolution_steps": [
+        "The public ISRO Landslide Atlas page distributes a summary PDF (/media_isro/pdf/LandslideAtlas_new_2023.pdf) containing district rankings and aggregate statistics, NOT machine-readable event coordinates.",
+        "For georeferenced point/polygon inventories in Dima Hasao, register on ISRO Bhuvan or submit an institutional research request to NRSC Hyderabad / NESAC Shillong.",
+        "Do NOT transcribe aggregate PDF charts into synthetic point coordinates."
+      ],
+      "http_status": 200,
+      "reachable_from_environment": true,
+      "content_type": "text/html; charset=UTF-8",
+      "pilot_records_retrieved": 0,
+      "blocker_note": "Public portal reachable, but machine-readable GIS inventory requires account registration or formal institutional data request."
+    },
+    {
+      "provider": "NASA GSFC",
+      "dataset": "NASA Cooperative Open Online Landslide Repository (COOLR \u2014 Reports & Events FeatureServers)",
+      "portal_url": "https://gpm.nasa.gov/applications/landslides/coolr",
+      "secondary_url": "https://gis.earthdata.nasa.gov/portal/rest/services/Landslides/COOLR_Events_Points/FeatureServer/0",
+      "probe_url": "https://gis.earthdata.nasa.gov/portal/rest/services/Landslides/COOLR_Reports_Points/FeatureServer/0/query?where=1%3D1&geometry=92.0,24.5,94.0,26.3&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&returnCountOnly=true&f=json",
+      "requires_registration": false,
+      "machine_readable_api_available": true,
+      "resolution_steps": [
+        "Retrieved automatically via backend/ingestion/fetch_coolr_landslides.py (104 verified records in 50 km buffer; 19 inside Dima Hasao polygon; 0 in COOLR_Events_Points).",
+        "All 19 Dima Hasao COOLR records have 1 km\u201350 km or 'unknown' location_accuracy (0 exact <= 100 m), so they are suitable ONLY for contextual visualization, NOT 30 m/90 m slope-scale ML training."
+      ],
+      "http_status": 200,
+      "reachable_from_environment": true,
+      "content_type": "application/json;charset=UTF-8",
+      "pilot_records_retrieved": 104,
+      "blocker_note": "Public ArcGIS FeatureServer reachable; retrieved records are coarse (1 km\u201350 km) media reports unsuitable for 30 m ML training."
+    }
+  ],
+  "scientific_note": "NASA COOLR returned 104 verified records in the 50 km buffer (19 inside Dima Hasao polygon), of which 0 meet <= 100 m positional accuracy required for 30 m/90 m slope-scale ML training. No synthetic or hardcoded landslide labels are generated. Field-validated GSI Bhukosh / ISRO NRSC polygons remain required."
+}

@@ -1,0 +1,758 @@
+{
+  "schema_version": "geos-experimental-gfs-eval-1.0",
+  "data_role": "experimental_nwp_forecast_only_NOT_ground_observation",
+  "scientific_guardrail": "Coarse 0.25-degree (~25 km) NOAA GFS numerical weather forecasts are experimental atmospheric guidance ONLY. They are NOT ground-truth rainfall measurements, MUST NOT substitute for NASA IMERG or IMD/CWC rain gauges, and MUST NOT alter landslide_probability (null).",
+  "discovery_provenance": {
+    "discovered_via": "NVIDIA Earth2Studio v1.0.0 (`earth2studio/data/dynamical.py` -> DynamicalGFS_FX)",
+    "direct_client_used": "Lightweight CPU-only zarr==3.1.6 + httpx (avoids earth2studio's 4+ GB CUDA/torch/cupy stack)",
+    "source_url": "https://data.dynamical.org/noaa/gfs/forecast/latest.zarr",
+    "dataset_id": "noaa-gfs-forecast",
+    "dataset_version": "0.2.7",
+    "license": "CC-BY-4.0",
+    "attribution": "NOAA NWS NCEP GFS data processed by dynamical.org from NOAA Open Data Dissemination archives.",
+    "authentication_required": false
+  },
+  "spatial_domain": {
+    "study_area": "Dima Hasao District, Assam (0.25\u00b0 NWP grid patch)",
+    "crs": "EPSG:4326",
+    "resolution_deg": 0.25,
+    "grid_points_lat": [
+      26.0,
+      25.75,
+      25.5,
+      25.25,
+      25.0,
+      24.75
+    ],
+    "grid_points_lon": [
+      92.5,
+      92.75,
+      93.0,
+      93.25,
+      93.5
+    ],
+    "total_grid_cells": 30
+  },
+  "temporal_domain": {
+    "forecast_init_time_utc": "2026-11-23T00:00:00+00:00",
+    "forecast_horizon_hours": 72,
+    "lead_steps_count": 73,
+    "retrieved_at_utc": "2026-11-23T14:02:01.548766+00:00"
+  },
+  "summary_metrics": {
+    "forecast_24h_mean_rain_mm": 8.36,
+    "forecast_48h_mean_rain_mm": 9.978,
+    "forecast_72h_mean_rain_mm": 9.978,
+    "t2m_min_c": 13.9521,
+    "t2m_max_c": 25.1333,
+    "t2m_mean_c": 18.41,
+    "rh_2m_mean_pct": 88.53,
+    "pwat_mean_mm": 25.98
+  },
+  "validation": {
+    "total_lead_steps": 73,
+    "valid_counts": {
+      "precipitation_rate_mm_h": 72,
+      "temperature_2m_c": 73,
+      "relative_humidity_2m_pct": 73,
+      "precipitable_water_mm": 73
+    },
+    "null_counts": {
+      "precipitation_rate_mm_h": 1,
+      "temperature_2m_c": 0,
+      "relative_humidity_2m_pct": 0,
+      "precipitable_water_mm": 0
+    },
+    "range_violations": {
+      "precipitation_rate_mm_h": 0,
+      "temperature_2m_c": 0,
+      "relative_humidity_2m_pct": 0,
+      "precipitable_water_mm": 0
+    },
+    "all_physical_bounds_valid": true
+  },
+  "comparison_with_existing_imerg_pipeline": {
+    "existing_imerg_baseline": {
+      "dataset": "NASA GPM IMERG Multi-Year Historical Archive",
+      "role": "historical_satellite_observation",
+      "spatial_resolution_deg": 0.1,
+      "valid_days": 3439,
+      "historical_daily_p95_mm": 28.85,
+      "historical_daily_max_mm": 203.34
+    },
+    "spatial_resolution_ratio": "GFS 0.25\u00b0 (~25 km) is 2.5x coarser linearly (~6.25x larger cell area) than IMERG 0.10\u00b0 (~11 km).",
+    "complementary_value": "Fills a genuine gap: our existing pipeline had ZERO operational weather forecasts (only historical rainfall). Provides 6-hourly updated forecast precipitation, 2m temperature, relative humidity, and precipitable water with zero GPU or API keys.",
+    "limitations": [
+      "0.25\u00b0 (~25 km) horizontal grid severely smooths Barail Range orographic precipitation extremes.",
+      "GFS convective precipitation is a numerical model forecast, NOT measured rainfall.",
+      "Lead step 0 (`lead_hours=0`) has NaN/null precipitation rate by GFS convention (accumulated flux starts at hour 1)."
+    ]
+  },
+  "performance_benchmark": {
+    "execution_time_sec": 11.663,
+    "peak_python_heap_mb": 13.2,
+    "http_requests_count": 17,
+    "http_bytes_transferred_kb": 4620.22,
+    "gpu_required": false,
+    "output_disk_kb": 24.65
+  },
+  "hourly_forecast": [
+    {
+      "lead_hours": 0,
+      "valid_time_utc": "2026-11-23T00:00:00+00:00",
+      "precipitation_rate_mm_h": null,
+      "precipitation_rate_grid_max_mm_h": null,
+      "temperature_2m_c": 17.6417,
+      "relative_humidity_2m_pct": 98.65,
+      "precipitable_water_mm": 30.05
+    },
+    {
+      "lead_hours": 1,
+      "valid_time_utc": "2026-11-23T01:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1169,
+      "precipitation_rate_grid_max_mm_h": 0.9407,
+      "temperature_2m_c": 18.2833,
+      "relative_humidity_2m_pct": 98.3667,
+      "precipitable_water_mm": 31.325
+    },
+    {
+      "lead_hours": 2,
+      "valid_time_utc": "2026-11-23T02:00:00+00:00",
+      "precipitation_rate_mm_h": 0.2149,
+      "precipitation_rate_grid_max_mm_h": 1.0025,
+      "temperature_2m_c": 19.7417,
+      "relative_humidity_2m_pct": 95.9833,
+      "precipitable_water_mm": 32.975
+    },
+    {
+      "lead_hours": 3,
+      "valid_time_utc": "2026-11-23T03:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3503,
+      "precipitation_rate_grid_max_mm_h": 1.0643,
+      "temperature_2m_c": 20.7875,
+      "relative_humidity_2m_pct": 92.85,
+      "precipitable_water_mm": 34.2083
+    },
+    {
+      "lead_hours": 4,
+      "valid_time_utc": "2026-11-23T04:00:00+00:00",
+      "precipitation_rate_mm_h": 0.469,
+      "precipitation_rate_grid_max_mm_h": 1.1879,
+      "temperature_2m_c": 21.4625,
+      "relative_humidity_2m_pct": 89.075,
+      "precipitable_water_mm": 35.0
+    },
+    {
+      "lead_hours": 5,
+      "valid_time_utc": "2026-11-23T05:00:00+00:00",
+      "precipitation_rate_mm_h": 0.5317,
+      "precipitation_rate_grid_max_mm_h": 1.2497,
+      "temperature_2m_c": 22.0292,
+      "relative_humidity_2m_pct": 85.3833,
+      "precipitable_water_mm": 35.8833
+    },
+    {
+      "lead_hours": 6,
+      "valid_time_utc": "2026-11-23T06:00:00+00:00",
+      "precipitation_rate_mm_h": 0.5857,
+      "precipitation_rate_grid_max_mm_h": 1.5656,
+      "temperature_2m_c": 22.4208,
+      "relative_humidity_2m_pct": 83.1167,
+      "precipitable_water_mm": 36.6083
+    },
+    {
+      "lead_hours": 7,
+      "valid_time_utc": "2026-11-23T07:00:00+00:00",
+      "precipitation_rate_mm_h": 0.5336,
+      "precipitation_rate_grid_max_mm_h": 1.4969,
+      "temperature_2m_c": 22.6958,
+      "relative_humidity_2m_pct": 81.1917,
+      "precipitable_water_mm": 37.0
+    },
+    {
+      "lead_hours": 8,
+      "valid_time_utc": "2026-11-23T08:00:00+00:00",
+      "precipitation_rate_mm_h": 0.4543,
+      "precipitation_rate_grid_max_mm_h": 1.6891,
+      "temperature_2m_c": 22.75,
+      "relative_humidity_2m_pct": 80.7667,
+      "precipitable_water_mm": 37.475
+    },
+    {
+      "lead_hours": 9,
+      "valid_time_utc": "2026-11-23T09:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3854,
+      "precipitation_rate_grid_max_mm_h": 1.4969,
+      "temperature_2m_c": 22.4167,
+      "relative_humidity_2m_pct": 82.5,
+      "precipitable_water_mm": 37.8208
+    },
+    {
+      "lead_hours": 10,
+      "valid_time_utc": "2026-11-23T10:00:00+00:00",
+      "precipitation_rate_mm_h": 0.2648,
+      "precipitation_rate_grid_max_mm_h": 0.9407,
+      "temperature_2m_c": 21.6292,
+      "relative_humidity_2m_pct": 87.7667,
+      "precipitable_water_mm": 37.55
+    },
+    {
+      "lead_hours": 11,
+      "valid_time_utc": "2026-11-23T11:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1896,
+      "precipitation_rate_grid_max_mm_h": 0.7484,
+      "temperature_2m_c": 19.4688,
+      "relative_humidity_2m_pct": 93.65,
+      "precipitable_water_mm": 37.2083
+    },
+    {
+      "lead_hours": 12,
+      "valid_time_utc": "2026-11-23T12:00:00+00:00",
+      "precipitation_rate_mm_h": 0.2792,
+      "precipitation_rate_grid_max_mm_h": 1.4351,
+      "temperature_2m_c": 18.6104,
+      "relative_humidity_2m_pct": 95.4667,
+      "precipitable_water_mm": 36.6875
+    },
+    {
+      "lead_hours": 13,
+      "valid_time_utc": "2026-11-23T13:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3272,
+      "precipitation_rate_grid_max_mm_h": 1.4351,
+      "temperature_2m_c": 18.0938,
+      "relative_humidity_2m_pct": 96.3,
+      "precipitable_water_mm": 36.4125
+    },
+    {
+      "lead_hours": 14,
+      "valid_time_utc": "2026-11-23T14:00:00+00:00",
+      "precipitation_rate_mm_h": 0.4313,
+      "precipitation_rate_grid_max_mm_h": 1.6891,
+      "temperature_2m_c": 17.6187,
+      "relative_humidity_2m_pct": 96.9833,
+      "precipitable_water_mm": 36.2625
+    },
+    {
+      "lead_hours": 15,
+      "valid_time_utc": "2026-11-23T15:00:00+00:00",
+      "precipitation_rate_mm_h": 0.421,
+      "precipitation_rate_grid_max_mm_h": 2.0599,
+      "temperature_2m_c": 17.2958,
+      "relative_humidity_2m_pct": 97.5333,
+      "precipitable_water_mm": 35.9083
+    },
+    {
+      "lead_hours": 16,
+      "valid_time_utc": "2026-11-23T16:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3436,
+      "precipitation_rate_grid_max_mm_h": 1.4351,
+      "temperature_2m_c": 17.1187,
+      "relative_humidity_2m_pct": 97.75,
+      "precipitable_water_mm": 35.4583
+    },
+    {
+      "lead_hours": 17,
+      "valid_time_utc": "2026-11-23T17:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3063,
+      "precipitation_rate_grid_max_mm_h": 2.0599,
+      "temperature_2m_c": 16.9708,
+      "relative_humidity_2m_pct": 98.0167,
+      "precipitable_water_mm": 35.0917
+    },
+    {
+      "lead_hours": 18,
+      "valid_time_utc": "2026-11-23T18:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3837,
+      "precipitation_rate_grid_max_mm_h": 1.8814,
+      "temperature_2m_c": 16.8458,
+      "relative_humidity_2m_pct": 98.3,
+      "precipitable_water_mm": 34.9292
+    },
+    {
+      "lead_hours": 19,
+      "valid_time_utc": "2026-11-23T19:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3626,
+      "precipitation_rate_grid_max_mm_h": 1.1879,
+      "temperature_2m_c": 16.75,
+      "relative_humidity_2m_pct": 98.4667,
+      "precipitable_water_mm": 34.5417
+    },
+    {
+      "lead_hours": 20,
+      "valid_time_utc": "2026-11-23T20:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3355,
+      "precipitation_rate_grid_max_mm_h": 0.7484,
+      "temperature_2m_c": 16.5958,
+      "relative_humidity_2m_pct": 98.5833,
+      "precipitable_water_mm": 33.8792
+    },
+    {
+      "lead_hours": 21,
+      "valid_time_utc": "2026-11-23T21:00:00+00:00",
+      "precipitation_rate_mm_h": 0.3482,
+      "precipitation_rate_grid_max_mm_h": 1.0025,
+      "temperature_2m_c": 16.4479,
+      "relative_humidity_2m_pct": 98.7,
+      "precipitable_water_mm": 33.0458
+    },
+    {
+      "lead_hours": 22,
+      "valid_time_utc": "2026-11-23T22:00:00+00:00",
+      "precipitation_rate_mm_h": 0.2981,
+      "precipitation_rate_grid_max_mm_h": 1.1261,
+      "temperature_2m_c": 16.3458,
+      "relative_humidity_2m_pct": 98.7,
+      "precipitable_water_mm": 32.1583
+    },
+    {
+      "lead_hours": 23,
+      "valid_time_utc": "2026-11-23T23:00:00+00:00",
+      "precipitation_rate_mm_h": 0.2022,
+      "precipitation_rate_grid_max_mm_h": 0.6866,
+      "temperature_2m_c": 16.2833,
+      "relative_humidity_2m_pct": 98.6833,
+      "precipitable_water_mm": 31.4167
+    },
+    {
+      "lead_hours": 24,
+      "valid_time_utc": "2026-11-24T00:00:00+00:00",
+      "precipitation_rate_mm_h": 0.2251,
+      "precipitation_rate_grid_max_mm_h": 0.7484,
+      "temperature_2m_c": 16.2604,
+      "relative_humidity_2m_pct": 98.5833,
+      "precipitable_water_mm": 30.8042
+    },
+    {
+      "lead_hours": 25,
+      "valid_time_utc": "2026-11-24T01:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1293,
+      "precipitation_rate_grid_max_mm_h": 0.6248,
+      "temperature_2m_c": 16.7583,
+      "relative_humidity_2m_pct": 98.4,
+      "precipitable_water_mm": 30.0083
+    },
+    {
+      "lead_hours": 26,
+      "valid_time_utc": "2026-11-24T02:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1376,
+      "precipitation_rate_grid_max_mm_h": 0.6248,
+      "temperature_2m_c": 17.8896,
+      "relative_humidity_2m_pct": 96.5833,
+      "precipitable_water_mm": 29.5125
+    },
+    {
+      "lead_hours": 27,
+      "valid_time_utc": "2026-11-24T03:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1356,
+      "precipitation_rate_grid_max_mm_h": 0.8137,
+      "temperature_2m_c": 18.9625,
+      "relative_humidity_2m_pct": 93.1,
+      "precipitable_water_mm": 28.9417
+    },
+    {
+      "lead_hours": 28,
+      "valid_time_utc": "2026-11-24T04:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1688,
+      "precipitation_rate_grid_max_mm_h": 1.4351,
+      "temperature_2m_c": 20.0958,
+      "relative_humidity_2m_pct": 87.7833,
+      "precipitable_water_mm": 28.3
+    },
+    {
+      "lead_hours": 29,
+      "valid_time_utc": "2026-11-24T05:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1917,
+      "precipitation_rate_grid_max_mm_h": 1.1261,
+      "temperature_2m_c": 21.0833,
+      "relative_humidity_2m_pct": 82.7667,
+      "precipitable_water_mm": 27.4
+    },
+    {
+      "lead_hours": 30,
+      "valid_time_utc": "2026-11-24T06:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1917,
+      "precipitation_rate_grid_max_mm_h": 0.7484,
+      "temperature_2m_c": 21.7083,
+      "relative_humidity_2m_pct": 79.2,
+      "precipitable_water_mm": 26.6458
+    },
+    {
+      "lead_hours": 31,
+      "valid_time_utc": "2026-11-24T07:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1543,
+      "precipitation_rate_grid_max_mm_h": 0.6248,
+      "temperature_2m_c": 22.3333,
+      "relative_humidity_2m_pct": 75.3333,
+      "precipitable_water_mm": 26.0021
+    },
+    {
+      "lead_hours": 32,
+      "valid_time_utc": "2026-11-24T08:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1438,
+      "precipitation_rate_grid_max_mm_h": 0.5013,
+      "temperature_2m_c": 22.55,
+      "relative_humidity_2m_pct": 73.7167,
+      "precipitable_water_mm": 25.5792
+    },
+    {
+      "lead_hours": 33,
+      "valid_time_utc": "2026-11-24T09:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1563,
+      "precipitation_rate_grid_max_mm_h": 0.6866,
+      "temperature_2m_c": 22.275,
+      "relative_humidity_2m_pct": 75.425,
+      "precipitable_water_mm": 25.4229
+    },
+    {
+      "lead_hours": 34,
+      "valid_time_utc": "2026-11-24T10:00:00+00:00",
+      "precipitation_rate_mm_h": 0.1146,
+      "precipitation_rate_grid_max_mm_h": 0.4377,
+      "temperature_2m_c": 21.3042,
+      "relative_humidity_2m_pct": 82.9833,
+      "precipitable_water_mm": 25.1958
+    },
+    {
+      "lead_hours": 35,
+      "valid_time_utc": "2026-11-24T11:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0459,
+      "precipitation_rate_grid_max_mm_h": 0.3124,
+      "temperature_2m_c": 18.725,
+      "relative_humidity_2m_pct": 92.5167,
+      "precipitable_water_mm": 25.0938
+    },
+    {
+      "lead_hours": 36,
+      "valid_time_utc": "2026-11-24T12:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0354,
+      "precipitation_rate_grid_max_mm_h": 0.3742,
+      "temperature_2m_c": 17.7938,
+      "relative_humidity_2m_pct": 95.3667,
+      "precipitable_water_mm": 25.0083
+    },
+    {
+      "lead_hours": 37,
+      "valid_time_utc": "2026-11-24T13:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0084,
+      "precipitation_rate_grid_max_mm_h": 0.0627,
+      "temperature_2m_c": 17.3896,
+      "relative_humidity_2m_pct": 96.3,
+      "precipitable_water_mm": 24.9562
+    },
+    {
+      "lead_hours": 38,
+      "valid_time_utc": "2026-11-24T14:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0042,
+      "precipitation_rate_grid_max_mm_h": 0.0627,
+      "temperature_2m_c": 17.0083,
+      "relative_humidity_2m_pct": 96.9333,
+      "precipitable_water_mm": 24.6917
+    },
+    {
+      "lead_hours": 39,
+      "valid_time_utc": "2026-11-24T15:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 16.7062,
+      "relative_humidity_2m_pct": 96.95,
+      "precipitable_water_mm": 24.2646
+    },
+    {
+      "lead_hours": 40,
+      "valid_time_utc": "2026-11-24T16:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 16.4229,
+      "relative_humidity_2m_pct": 97.0,
+      "precipitable_water_mm": 23.8229
+    },
+    {
+      "lead_hours": 41,
+      "valid_time_utc": "2026-11-24T17:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 16.125,
+      "relative_humidity_2m_pct": 97.2333,
+      "precipitable_water_mm": 23.1625
+    },
+    {
+      "lead_hours": 42,
+      "valid_time_utc": "2026-11-24T18:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.8208,
+      "relative_humidity_2m_pct": 97.4,
+      "precipitable_water_mm": 22.6875
+    },
+    {
+      "lead_hours": 43,
+      "valid_time_utc": "2026-11-24T19:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.575,
+      "relative_humidity_2m_pct": 97.5167,
+      "precipitable_water_mm": 22.1958
+    },
+    {
+      "lead_hours": 44,
+      "valid_time_utc": "2026-11-24T20:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.35,
+      "relative_humidity_2m_pct": 97.55,
+      "precipitable_water_mm": 21.5979
+    },
+    {
+      "lead_hours": 45,
+      "valid_time_utc": "2026-11-24T21:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.1271,
+      "relative_humidity_2m_pct": 97.4833,
+      "precipitable_water_mm": 21.1021
+    },
+    {
+      "lead_hours": 46,
+      "valid_time_utc": "2026-11-24T22:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.9396,
+      "relative_humidity_2m_pct": 97.5833,
+      "precipitable_water_mm": 20.7708
+    },
+    {
+      "lead_hours": 47,
+      "valid_time_utc": "2026-11-24T23:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.7729,
+      "relative_humidity_2m_pct": 97.5667,
+      "precipitable_water_mm": 20.2875
+    },
+    {
+      "lead_hours": 48,
+      "valid_time_utc": "2026-11-25T00:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.6333,
+      "relative_humidity_2m_pct": 97.6,
+      "precipitable_water_mm": 19.8687
+    },
+    {
+      "lead_hours": 49,
+      "valid_time_utc": "2026-11-25T01:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.525,
+      "relative_humidity_2m_pct": 95.9167,
+      "precipitable_water_mm": 19.5208
+    },
+    {
+      "lead_hours": 50,
+      "valid_time_utc": "2026-11-25T02:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 17.9042,
+      "relative_humidity_2m_pct": 88.85,
+      "precipitable_water_mm": 19.1583
+    },
+    {
+      "lead_hours": 51,
+      "valid_time_utc": "2026-11-25T03:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 20.2,
+      "relative_humidity_2m_pct": 78.4083,
+      "precipitable_water_mm": 18.9062
+    },
+    {
+      "lead_hours": 52,
+      "valid_time_utc": "2026-11-25T04:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 22.2375,
+      "relative_humidity_2m_pct": 67.2417,
+      "precipitable_water_mm": 18.5146
+    },
+    {
+      "lead_hours": 53,
+      "valid_time_utc": "2026-11-25T05:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 23.7667,
+      "relative_humidity_2m_pct": 58.6833,
+      "precipitable_water_mm": 18.1625
+    },
+    {
+      "lead_hours": 54,
+      "valid_time_utc": "2026-11-25T06:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 24.6917,
+      "relative_humidity_2m_pct": 53.6917,
+      "precipitable_water_mm": 17.8229
+    },
+    {
+      "lead_hours": 55,
+      "valid_time_utc": "2026-11-25T07:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 25.1333,
+      "relative_humidity_2m_pct": 51.2125,
+      "precipitable_water_mm": 17.4167
+    },
+    {
+      "lead_hours": 56,
+      "valid_time_utc": "2026-11-25T08:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 25.1083,
+      "relative_humidity_2m_pct": 51.125,
+      "precipitable_water_mm": 17.1521
+    },
+    {
+      "lead_hours": 57,
+      "valid_time_utc": "2026-11-25T09:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 24.4917,
+      "relative_humidity_2m_pct": 54.3833,
+      "precipitable_water_mm": 16.9625
+    },
+    {
+      "lead_hours": 58,
+      "valid_time_utc": "2026-11-25T10:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 22.5333,
+      "relative_humidity_2m_pct": 69.3417,
+      "precipitable_water_mm": 16.9604
+    },
+    {
+      "lead_hours": 59,
+      "valid_time_utc": "2026-11-25T11:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 18.7354,
+      "relative_humidity_2m_pct": 82.9833,
+      "precipitable_water_mm": 17.0458
+    },
+    {
+      "lead_hours": 60,
+      "valid_time_utc": "2026-11-25T12:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 17.4937,
+      "relative_humidity_2m_pct": 87.0833,
+      "precipitable_water_mm": 17.3375
+    },
+    {
+      "lead_hours": 61,
+      "valid_time_utc": "2026-11-25T13:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 16.8833,
+      "relative_humidity_2m_pct": 88.4167,
+      "precipitable_water_mm": 17.6187
+    },
+    {
+      "lead_hours": 62,
+      "valid_time_utc": "2026-11-25T14:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 16.4396,
+      "relative_humidity_2m_pct": 89.0,
+      "precipitable_water_mm": 17.9312
+    },
+    {
+      "lead_hours": 63,
+      "valid_time_utc": "2026-11-25T15:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 16.1042,
+      "relative_humidity_2m_pct": 89.3167,
+      "precipitable_water_mm": 18.0
+    },
+    {
+      "lead_hours": 64,
+      "valid_time_utc": "2026-11-25T16:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.7771,
+      "relative_humidity_2m_pct": 89.4,
+      "precipitable_water_mm": 18.1479
+    },
+    {
+      "lead_hours": 65,
+      "valid_time_utc": "2026-11-25T17:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.4771,
+      "relative_humidity_2m_pct": 89.5,
+      "precipitable_water_mm": 18.1896
+    },
+    {
+      "lead_hours": 66,
+      "valid_time_utc": "2026-11-25T18:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 15.1792,
+      "relative_humidity_2m_pct": 89.7833,
+      "precipitable_water_mm": 18.3479
+    },
+    {
+      "lead_hours": 67,
+      "valid_time_utc": "2026-11-25T19:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.9083,
+      "relative_humidity_2m_pct": 90.1,
+      "precipitable_water_mm": 18.5042
+    },
+    {
+      "lead_hours": 68,
+      "valid_time_utc": "2026-11-25T20:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.6875,
+      "relative_humidity_2m_pct": 90.6333,
+      "precipitable_water_mm": 18.3958
+    },
+    {
+      "lead_hours": 69,
+      "valid_time_utc": "2026-11-25T21:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.475,
+      "relative_humidity_2m_pct": 90.9833,
+      "precipitable_water_mm": 18.3438
+    },
+    {
+      "lead_hours": 70,
+      "valid_time_utc": "2026-11-25T22:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.2792,
+      "relative_humidity_2m_pct": 91.3,
+      "precipitable_water_mm": 18.4479
+    },
+    {
+      "lead_hours": 71,
+      "valid_time_utc": "2026-11-25T23:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 14.0896,
+      "relative_humidity_2m_pct": 91.7,
+      "precipitable_water_mm": 18.6021
+    },
+    {
+      "lead_hours": 72,
+      "valid_time_utc": "2026-11-26T00:00:00+00:00",
+      "precipitation_rate_mm_h": 0.0,
+      "precipitation_rate_grid_max_mm_h": 0.0,
+      "temperature_2m_c": 13.9521,
+      "relative_humidity_2m_pct": 91.8167,
+      "precipitable_water_mm": 18.7771
+    }
+  ]
+}

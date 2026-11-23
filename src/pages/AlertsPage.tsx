@@ -169,10 +169,15 @@ export const AlertsPage: React.FC<AlertsPageProps> = ({
               {/* Recommended Directives */}
               <div className="text-xs space-y-1">
                 <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">
-                  Mandatory SEOC Directives:
+                  Draft Directives (Prototype Simulation):
                 </span>
                 <ul className="list-disc list-inside space-y-0.5 text-slate-300 text-[11px]">
-                  {alert.recommendedActions.map((rec, i) => (
+                  {(alert.recommendedActions && alert.recommendedActions.length > 0
+                    ? alert.recommendedActions
+                    : alert.recommended
+                    ? [alert.recommended]
+                    : ['No directive specified']
+                  ).map((rec, i) => (
                     <li key={i}>{rec}</li>
                   ))}
                 </ul>
@@ -180,9 +185,9 @@ export const AlertsPage: React.FC<AlertsPageProps> = ({
 
               {/* Actions */}
               <div className="pt-2 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
-                  <Radio className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Broadcasted via SMS (DoT) & Police VHF</span>
+                <div className="flex items-center gap-2 text-[11px] text-amber-300/90 font-mono">
+                  <Radio className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Simulated Local Session Alert (No External SMS/VHF Dispatch)</span>
                 </div>
 
                 <div className="flex items-center gap-2">

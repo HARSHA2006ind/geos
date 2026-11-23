@@ -1,0 +1,605 @@
+{
+  "schema_version": "geos-spatial-quality-inventory-1.0",
+  "generated_at_utc": "2026-11-23T13:29:35.118050+00:00",
+  "study_area": "Dima Hasao District, Assam, India (Pilot)",
+  "canonical_metric_crs": "EPSG:32646",
+  "ingested_layer_groups_count": 10,
+  "missing_critical_layer_groups_count": 5,
+  "ingested_layers": [
+    {
+      "layer_id": "copernicus_dem_90m_utm",
+      "category": "topography",
+      "status": "VERIFIED_INGESTED",
+      "provider": "ESA / Copernicus DEM GLO-30 (AWS Public Bucket)",
+      "license": "Copernicus DEM Licence (Open, attribution required)",
+      "temporal_epoch": "TanDEM-X mission acquisitions (2011\u20132015), Copernicus DEM release 2021",
+      "temporal_validity": "Static topographic baseline (2011\u20132015); valid pre-event conditioning factor.",
+      "uncertainty": "Vertical accuracy < 4 m LE90; 90 m district grid smooths narrow sub-50 m road cuts.",
+      "raster_audit": {
+        "exists": true,
+        "file": "dima_hasao_dem_utm46n.tif",
+        "file_bytes": 3559318,
+        "crs": "EPSG:32646",
+        "width": 1114,
+        "height": 1106,
+        "pixel_size_m": [
+          90.0,
+          90.0
+        ],
+        "nodata": -9999.0,
+        "valid_pixel_pct": 99.43,
+        "has_nan_in_valid": false,
+        "covers_dima_hasao_utm46n_bbox": true,
+        "min": 11.6403,
+        "max": 2065.8054,
+        "mean": 528.521
+      }
+    },
+    {
+      "layer_id": "copernicus_slope_aspect_90m_utm",
+      "category": "topography",
+      "status": "VERIFIED_INGESTED",
+      "provider": "Derived from Copernicus DEM GLO-30",
+      "license": "Copernicus DEM Licence",
+      "temporal_epoch": "TanDEM-X mission acquisitions (2011\u20132015), Copernicus DEM release 2021",
+      "temporal_validity": "Static topographic baseline.",
+      "uncertainty": "Horn 3x3 gradient at 90 m underestimates steep vertical cut-slopes (>55 deg) along NH-27.",
+      "raster_audit": {
+        "slope_deg": {
+          "exists": true,
+          "file": "dima_hasao_slope_deg_utm46n.tif",
+          "file_bytes": 4026049,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.0,
+          "max": 66.3567,
+          "mean": 11.22
+        },
+        "aspect_deg": {
+          "exists": true,
+          "file": "dima_hasao_aspect_deg_utm46n.tif",
+          "file_bytes": 4029922,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": -1.0,
+          "max": 359.9999,
+          "mean": 178.7873
+        }
+      }
+    },
+    {
+      "layer_id": "dem_geomorphometric_hydrological_derivatives",
+      "category": "topography_and_hydrology",
+      "status": "VERIFIED_INGESTED",
+      "provider": "Derived from Copernicus DEM GLO-30 (Zevenbergen-Thorne, Riley TRI, D8 TWI/Drainage)",
+      "license": "Copernicus DEM Licence",
+      "temporal_epoch": "TanDEM-X mission acquisitions (2011\u20132015), Copernicus DEM release 2021",
+      "temporal_validity": "Static topographic/hydrological conditioning factors; aligned identically to DEM UTM46N grid.",
+      "uncertainty": "Derived on the 90 m district UTM grid (aligned with dima_hasao_dem_utm46n.tif) without pit-filling breach carve; micro-scale gullies (< 90 m) and artificial road culverts are unresolved.",
+      "raster_audit": {
+        "profile_curvature": {
+          "exists": true,
+          "file": "dima_hasao_profile_curvature_utm46n.tif",
+          "file_bytes": 4556471,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": -5.1434,
+          "max": 15.8358,
+          "mean": -0.0059
+        },
+        "plan_curvature": {
+          "exists": true,
+          "file": "dima_hasao_plan_curvature_utm46n.tif",
+          "file_bytes": 4554082,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": -7.6729,
+          "max": 5.0825,
+          "mean": -0.0072
+        },
+        "tri_m": {
+          "exists": true,
+          "file": "dima_hasao_tri_m_utm46n.tif",
+          "file_bytes": 4321366,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.0,
+          "max": 2239.8655,
+          "mean": 54.5503
+        },
+        "flow_accumulation_m2": {
+          "exists": true,
+          "file": "dima_hasao_flow_acc_m2_utm46n.tif",
+          "file_bytes": 968306,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 8100.0,
+          "max": 27207900.0,
+          "mean": 85178.3828
+        },
+        "twi": {
+          "exists": true,
+          "file": "dima_hasao_twi_utm46n.tif",
+          "file_bytes": 4248818,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 3.9064,
+          "max": 17.9053,
+          "mean": 7.4648
+        },
+        "distance_to_drainage_m": {
+          "exists": true,
+          "file": "dima_hasao_dist_drainage_m_utm46n.tif",
+          "file_bytes": 462370,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.11,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.0,
+          "max": 3444.7786,
+          "mean": 495.9108
+        }
+      }
+    },
+    {
+      "layer_id": "isric_soilgrids_2.0_250m",
+      "category": "pedology_and_soil",
+      "status": "VERIFIED_INGESTED",
+      "provider": "ISRIC \u2014 World Soil Information (SoilGrids 2.0 WCS 2.0)",
+      "license": "CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+      "temporal_epoch": "Static global digital soil mapping (WoSIS profiles through 2019; 2020 release)",
+      "temporal_validity": "Static pedological baseline; valid as pre-event geotechnical conditioning covariate for post-2015 landslides, NOT dynamic soil moisture.",
+      "uncertainty": "SoilGrids 2.0 predictions are machine-learning interpolations from sparse WoSIS profiles at 250 m resolution. Steep Himalayan/Barail hillslopes in Dima Hasao have limited local profile density; these layers represent regional soil texture/bulk-density priors and do NOT replace site-specific geotechnical shear-strength tests or dynamic soil moisture (SMAP).",
+      "raster_audit": {
+        "clay_0_5cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_clay_0_5cm_utm46n.tif",
+          "file_bytes": 522786,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 24.5467,
+          "max": 40.3061,
+          "mean": 31.4752
+        },
+        "clay_15_30cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_clay_15_30cm_utm46n.tif",
+          "file_bytes": 512691,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 26.2126,
+          "max": 42.5021,
+          "mean": 34.5696
+        },
+        "sand_0_5cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_sand_0_5cm_utm46n.tif",
+          "file_bytes": 523006,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 23.8344,
+          "max": 45.0035,
+          "mean": 32.9666
+        },
+        "silt_0_5cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_silt_0_5cm_utm46n.tif",
+          "file_bytes": 509384,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 27.0803,
+          "max": 43.3319,
+          "mean": 35.558
+        },
+        "bdod_0_5cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_bdod_0_5cm_utm46n.tif",
+          "file_bytes": 488524,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.9315,
+          "max": 1.3139,
+          "mean": 1.1522
+        },
+        "cfvo_0_5cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_cfvo_0_5cm_utm46n.tif",
+          "file_bytes": 512507,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 6.8772,
+          "max": 27.1737,
+          "mean": 17.7988
+        },
+        "soc_0_5cm": {
+          "exists": true,
+          "file": "dima_hasao_soilgrids_soc_0_5cm_utm46n.tif",
+          "file_bytes": 534457,
+          "crs": "EPSG:32646",
+          "width": 392,
+          "height": 389,
+          "pixel_size_m": [
+            250.0,
+            250.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.57,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 17.9884,
+          "max": 92.4209,
+          "mean": 39.6817
+        }
+      }
+    },
+    {
+      "layer_id": "esa_worldcover_2021_30m",
+      "category": "land_cover",
+      "status": "VERIFIED_INGESTED",
+      "provider": "ESA WorldCover 2021 v200",
+      "license": "CC-BY 4.0",
+      "temporal_epoch": "2021-01-01 to 2021-12-31 (annual composite)",
+      "temporal_validity": "Epoch 2021 ONLY. Valid pre-event covariate for 2022\u20132026 landslides; POST-DATES 2007\u20132020 historical landslides (temporal leakage if applied to pre-2021 events).",
+      "uncertainty": "Static 2021 annual map (global overall accuracy ~76.7% in v200 validation report). Does NOT capture post-2021 deforestation, jhum shifting cultivation cycles, highway cut-slopes, or seasonal canopy stress; persistent monsoon cloud cover in NER increases optical classification uncertainty.",
+      "raster_audit": {
+        "exists": true,
+        "file": "dima_hasao_worldcover_2021_utm46n.tif",
+        "file_bytes": 548543,
+        "crs": "EPSG:32646",
+        "width": 3342,
+        "height": 3318,
+        "pixel_size_m": [
+          30.0,
+          30.0
+        ],
+        "nodata": 0.0,
+        "valid_pixel_pct": 99.52,
+        "has_nan_in_valid": false,
+        "covers_dima_hasao_utm46n_bbox": true,
+        "min": 10.0,
+        "max": 90.0,
+        "mean": 12.6514
+      }
+    },
+    {
+      "layer_id": "sentinel2_l2a_premonsoon_2024_ndvi",
+      "category": "vegetation_dynamic",
+      "status": "VERIFIED_INGESTED",
+      "provider": "Copernicus Sentinel-2 L2A via Element84 Earth Search STAC",
+      "license": "Copernicus Sentinel Data Terms & Conditions (Free, full and open access)",
+      "temporal_epoch": "2024-01-15T00:00:00Z/2024-04-30T23:59:59Z",
+      "temporal_validity": "Pre-monsoon dry-season 2024 composite (Jan\u2013Apr 2024). Strictly pre-dates the May 2024 Cyclone Remal landslide cluster; NOT temporally valid as a pre-event feature for 2007\u20132019 COOLR events (earlier pre-event NDVI composites must be matched to each historical event's year).",
+      "uncertainty": "Cloud-masked via ESA SCL (classes 4,5,6,7) median composite across 8 scenes; valid ONLY as pre-event NDVI for post-April 2024 landslides (must fetch matched pre-event years for 2015\u20132023 events).",
+      "raster_audit": {
+        "ndvi_median": {
+          "exists": true,
+          "file": "dima_hasao_ndvi_premonsoon_2024_utm46n.tif",
+          "file_bytes": 4187333,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.58,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": -0.5992,
+          "max": 0.9307,
+          "mean": 0.6573
+        },
+        "qa_clear_obs_count": {
+          "exists": true,
+          "file": "dima_hasao_ndvi_qa_clear_obs_count_utm46n.tif",
+          "file_bytes": 28722,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": 255.0,
+          "valid_pixel_pct": 100.0,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.0,
+          "max": 6.0,
+          "mean": 1.968
+        }
+      }
+    },
+    {
+      "layer_id": "osm_road_railway_proximity",
+      "category": "anthropogenic_exposure_and_slope_cuts",
+      "status": "VERIFIED_INGESTED",
+      "provider": "OpenStreetMap via Overpass API",
+      "license": "Open Database License (ODbL 1.0)",
+      "temporal_epoch": "OSM snapshot retrieved 2026-11-23",
+      "temporal_validity": "Current OSM transport network snapshot (includes NH-27 four-laning and Lumding-Badarpur BG rail line). Valid for post-2016 road-cut proximity analysis; pre-2015 highway alignments may differ.",
+      "uncertainty": "Community-mapped transport network (2,212 road ways, 392 railway ways). Minor unpaved village tracks or recent NH-27 realignment detours may have lag; CAUTION: strong collinearity with GSI road-corridor reporting bias (77.8% of GSI records mention road/rail).",
+      "raster_audit": {
+        "distance_to_road_m": {
+          "exists": true,
+          "file": "dima_hasao_dist_road_m_utm46n.tif",
+          "file_bytes": 1127102,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.43,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.0,
+          "max": 17573.0625,
+          "mean": 2934.4678
+        },
+        "distance_to_railway_m": {
+          "exists": true,
+          "file": "dima_hasao_dist_railway_m_utm46n.tif",
+          "file_bytes": 2621195,
+          "crs": "EPSG:32646",
+          "width": 1114,
+          "height": 1106,
+          "pixel_size_m": [
+            90.0,
+            90.0
+          ],
+          "nodata": -9999.0,
+          "valid_pixel_pct": 99.43,
+          "has_nan_in_valid": false,
+          "covers_dima_hasao_utm46n_bbox": true,
+          "min": 0.0,
+          "max": 58648.1055,
+          "mean": 18336.584
+        }
+      }
+    },
+    {
+      "layer_id": "nasa_gpm_imerg_multiyear_rainfall",
+      "category": "precipitation_trigger",
+      "status": "PARTIAL_EARTHDATA_AUTH_REQUIRED_FOR_2024_GAP",
+      "provider": "NASA GPM IMERG (ClimateSERV 2015\u20132024-06-01; GES DISC V07B/V07C CMR cataloged)",
+      "license": "NASA Open Data (Earthdata Login required for GES DISC .nc4 granules)",
+      "temporal_epoch": "2015-01-01 to 2024-06-01 ingested (3,439/3,653 days = 94.14%); 2024-06-02..2024-12-31 (213 days) & 2025\u20132026 cataloged in CMR",
+      "temporal_validity": "District-averaged 0.1 deg (~11 km) daily precipitation; strict null propagation on missing days.",
+      "uncertainty": "Stage 4 CHIRPS/POWER/ERA5 benchmarks measure inter-product agreement ONLY, NOT gauge-validated accuracy. Independent IMD/CWC rain gauges inside Dima Hasao are required for ground-truth validation.",
+      "imerg_v07_cmr_summary": {
+        "gap_2024_final_granules_in_cmr": 213,
+        "monitoring_2025_2026_late_in_cmr": 690,
+        "ges_disc_auth_status": "blocked_earthdata_auth_required"
+      }
+    },
+    {
+      "layer_id": "gsi_bhusanket_public_landslide_inventory",
+      "category": "landslide_inventory_ground_truth",
+      "status": "VERIFIED_INGESTED_WITH_BIAS_AND_POLYGON_CAVEATS",
+      "provider": "Geological Survey of India (GSI) \u2014 Bhusanket Public Portal",
+      "license": "Published by Geological Survey of India (Ministry of Mines, Govt. of India) on the public Bhusanket portal for public viewing and tabular export; redistribution/operational use subject to GSI/MoM data sharing terms and formal institutional acknowledgement.",
+      "temporal_epoch": "1998\u20132026 (including May 2022 & May 2024 events)",
+      "temporal_validity": "Mixed: 95 exact day-level dates, 19 month-only, 103 year-only, 162 undated inside Dima Hasao polygon.",
+      "uncertainty": "Point centroids ONLY (GSI/Landslide_Polygon/FeatureServer is HTTP 499 Token Required); no explicit horizontal GPS error radius column; 81 near-duplicate pairs <= 50 m; 77.8% transport-corridor sampling bias.",
+      "inventory_audit": {
+        "total_raw_records": 418,
+        "exact_objectid_duplicates_removed": 0,
+        "curated_unique_records": 418,
+        "invalid_coordinates": 0,
+        "within_dima_hasao_polygon": 379,
+        "valid_coord_outside_osm_polygon": 39,
+        "date_precision_in_polygon": {
+          "day": 95,
+          "year": 103,
+          "unknown": 162,
+          "month": 19
+        },
+        "day_level_dates_in_polygon": 95,
+        "day_level_dates_2015_2024_overlap": 85,
+        "day_level_dates_2022_2025": 49,
+        "years_distribution_in_polygon": {
+          "1998": 1,
+          "2010": 4,
+          "2011": 2,
+          "2014": 36,
+          "2015": 8,
+          "2016": 88,
+          "2017": 2,
+          "2018": 4,
+          "2019": 1,
+          "2021": 1,
+          "2022": 51,
+          "2024": 15,
+          "2025": 3,
+          "2026": 1
+        },
+        "source_type_distribution_in_polygon": {
+          "Mobile app": 6,
+          "LEWS": 36,
+          "PDLS": 152,
+          "Macro-Scale": 185
+        },
+        "coord_precision_tier_in_polygon": {
+          "high_decimal_ge_4dp_unverified_error_radius": 285,
+          "moderate_decimal_3dp_approx_110m": 47,
+          "coarse_decimal_le_2dp_gt_1km": 47
+        },
+        "records_with_geology_description": 365,
+        "records_with_reported_area_m2": 365,
+        "near_duplicate_pairs_within_50m": 81,
+        "transport_corridor_text_bias_count": 295,
+        "transport_corridor_text_bias_pct": 77.8
+      }
+    },
+    {
+      "layer_id": "nasa_coolr_landslide_inventory",
+      "category": "landslide_inventory_contextual",
+      "status": "VERIFIED_INGESTED_CONTEXTUAL_ONLY",
+      "provider": "NASA Cooperative Open Online Landslide Repository (COOLR)",
+      "license": "NASA Open Data / Public Domain",
+      "temporal_epoch": "2007\u20132018 inside Dima Hasao (19 records)",
+      "temporal_validity": "Contextual historical reference ONLY (0 records <= 100 m positional precision; all 1\u201350 km or unknown).",
+      "uncertainty": "Coarse 1\u201350 km geocoding uncertainty; unusable for 30 m / 90 m slope-scale labels."
+    }
+  ],
+  "missing_scientific_layers": [
+    {
+      "layer_id": "gsi_1_50k_lithology_and_structural_faults_gis",
+      "status": "MISSING_PORTAL_BLOCKED",
+      "impact": "Critical conditioning covariate: Barail/Disang/Surma shale-sandstone contacts and Halflong/Disang thrust fault proximity cannot be sampled wall-to-wall across non-landslide slopes.",
+      "access_path": "Requires GSI NGDR (geodataindia.gov.in) / Bhukosh registration or formal institutional request to GSI NER Shillong."
+    },
+    {
+      "layer_id": "gsi_observed_landslide_polygons_and_nrsc_event_polygons",
+      "status": "MISSING_TOKEN_GATED_499",
+      "impact": "GSI Bhusanket public GetData gives point centroids only; exact initiation scar vs runout polygons require authorized GSI FeatureServer token or NRSC/NESAC multi-temporal satellite inventory.",
+      "access_path": "Formal data request to GSI NLFC / NRSC Bhuvan / NESAC Umiam (draft included in GEOS_GSI_ACCESS_FINDINGS.md)."
+    },
+    {
+      "layer_id": "nasa_imerg_v07b_2024_gap_and_imd_gauge_validation",
+      "status": "MISSING_CREDENTIALS_AND_GAUGES",
+      "impact": "2024-06-02..2024-12-31 IMERG Final Run requires free NASA Earthdata Login token; ground-truth rainfall error requires IMD/CWC daily station gauges in Dima Hasao.",
+      "access_path": "Run fetch_imerg_v07_earthdata.py with EARTHDATA_TOKEN; request IMD Guwahati / CWC Haflong gauge series."
+    },
+    {
+      "layer_id": "multi_year_pre_event_ndvi_2015_2023",
+      "status": "PARTIAL_2024_ONLY",
+      "impact": "Pre-monsoon 2024 Sentinel-2 NDVI is ingested for post-April 2024 events, but historical 2015\u20132023 events require matched pre-event annual dry-season NDVI composites to prevent post-event vegetation leakage.",
+      "access_path": "Extend fetch_preevent_ndvi.py over 2016\u20132023 pre-monsoon Sentinel-2 L2A / Landsat C2 L2 windows once polygon inventory dates are finalized."
+    },
+    {
+      "layer_id": "dynamic_soil_moisture_smap_l4",
+      "status": "MISSING_EARTHDATA_AUTH",
+      "impact": "ISRIC SoilGrids provides static soil texture/bulk density ONLY; antecedent pore-water preconditioning requires NASA SMAP L4 (9 km) or ERA5-Land volumetric soil water.",
+      "access_path": "NASA Earthdata Login (`SPL4SMGP`) once EARTHDATA_TOKEN is configured."
+    }
+  ]
+}

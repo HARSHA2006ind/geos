@@ -1,0 +1,103 @@
+{
+  "dataset_id": "esa-worldcover-2021-v200",
+  "dataset_name": "ESA WorldCover 10 m 2021 v200 (Sentinel-1 & Sentinel-2 Derived)",
+  "product_version": "v200 (2021 epoch)",
+  "source_tiles": [
+    {
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N24E090_Map.tif",
+      "native_crs": "EPSG:4326",
+      "native_res_deg": [
+        8.3333e-05,
+        8.3333e-05
+      ],
+      "width": 36000,
+      "height": 36000,
+      "dtype": "uint8"
+    },
+    {
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N24E093_Map.tif",
+      "native_crs": "EPSG:4326",
+      "native_res_deg": [
+        8.3333e-05,
+        8.3333e-05
+      ],
+      "width": 36000,
+      "height": 36000,
+      "dtype": "uint8"
+    }
+  ],
+  "native_resolution_m": 10.0,
+  "exported_resolution_m": 30.0,
+  "resampling_method": "mode (overview/grid aggregation to 30m) + nearest to EPSG:32646",
+  "exported_crs": "EPSG:32646",
+  "raster_file": "dima_hasao_worldcover_2021_utm46n.tif",
+  "file_size_kb": 535.7,
+  "clip_bounds_wgs84": [
+    92.500515,
+    24.951076,
+    93.493486,
+    25.848943
+  ],
+  "observation_period": "2021-01-01 to 2021-12-31 (annual composite)",
+  "class_distribution": [
+    {
+      "code": 10,
+      "label": "Tree cover",
+      "pixel_count": 9874398,
+      "area_km2": 8886.96,
+      "percentage": 89.47
+    },
+    {
+      "code": 30,
+      "label": "Grassland",
+      "pixel_count": 726457,
+      "area_km2": 653.81,
+      "percentage": 6.58
+    },
+    {
+      "code": 40,
+      "label": "Cropland",
+      "pixel_count": 370256,
+      "area_km2": 333.23,
+      "percentage": 3.36
+    },
+    {
+      "code": 80,
+      "label": "Permanent water bodies",
+      "pixel_count": 29938,
+      "area_km2": 26.94,
+      "percentage": 0.27
+    },
+    {
+      "code": 50,
+      "label": "Built-up",
+      "pixel_count": 21671,
+      "area_km2": 19.5,
+      "percentage": 0.2
+    },
+    {
+      "code": 60,
+      "label": "Bare / sparse vegetation",
+      "pixel_count": 12475,
+      "area_km2": 11.23,
+      "percentage": 0.11
+    },
+    {
+      "code": 90,
+      "label": "Herbaceous wetland",
+      "pixel_count": 431,
+      "area_km2": 0.39,
+      "percentage": 0.0
+    },
+    {
+      "code": 20,
+      "label": "Shrubland",
+      "pixel_count": 320,
+      "area_km2": 0.29,
+      "percentage": 0.0
+    }
+  ],
+  "processing_timestamp": "2026-11-23T13:24:44.960869+00:00",
+  "attribution": "\u00a9 ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium (CC BY 4.0).",
+  "uncertainty_and_limitations": "Static 2021 annual map (global overall accuracy ~76.7% in v200 validation report). Does NOT capture post-2021 deforestation, jhum shifting cultivation cycles, highway cut-slopes, or seasonal canopy stress; persistent monsoon cloud cover in NER increases optical classification uncertainty."
+}

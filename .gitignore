@@ -6,3 +6,16 @@ coverage/
 *.log
 .env*
 !.env.example
+backend/.venv/
+backend/data/pilot/*.tif
+backend/data/pilot/*.db
+backend/data/pilot/*.nc4
+backend/data/raw/
+backend/data/uploads/
+backend/data/backups/
+exports/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.bundle
+*.tar.gz

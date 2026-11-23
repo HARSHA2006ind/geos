@@ -1,0 +1,41 @@
+{
+  "dataset_id": "osm-dima-hasao-road-railway-proximity",
+  "dataset_name": "OpenStreetMap Road & Railway Network + Euclidean Proximity Rasters (Dima Hasao)",
+  "source_endpoint": "https://overpass-api.de/api/interpreter",
+  "license": "Open Database License (ODbL 1.0)",
+  "attribution": "\u00a9 OpenStreetMap contributors (https://www.openstreetmap.org/copyright)",
+  "observation_period": "OSM snapshot retrieved 2026-11-23",
+  "temporal_validity": "Current OSM transport network snapshot (includes NH-27 four-laning and Lumding-Badarpur BG rail line). Valid for post-2016 road-cut proximity analysis; pre-2015 highway alignments may differ.",
+  "vector_geojson_file": "dima_hasao_osm_transport.geojson",
+  "road_way_count": 2212,
+  "railway_way_count": 392,
+  "rasters": {
+    "distance_to_road_m": {
+      "file": "dima_hasao_dist_road_m_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.43,
+      "min_m": 0.0,
+      "max_m": 17573.06,
+      "mean_m": 2934.47,
+      "median_m": 1800.0,
+      "file_bytes": 1127102
+    },
+    "distance_to_railway_m": {
+      "file": "dima_hasao_dist_railway_m_utm46n.tif",
+      "crs": "EPSG:32646",
+      "width": 1114,
+      "height": 1106,
+      "nodata": -9999.0,
+      "valid_pixel_pct": 99.43,
+      "min_m": 0.0,
+      "max_m": 58648.11,
+      "mean_m": 18336.58,
+      "median_m": 15964.79,
+      "file_bytes": 2621195
+    }
+  },
+  "processing_timestamp": "2026-11-23T13:28:05.185398+00:00"
+}

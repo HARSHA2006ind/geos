@@ -1,0 +1,1054 @@
+{
+  "dataset_id": "nasa-gpm-imerg-daily",
+  "dataset_name": "NASA GPM IMERG Late Run Daily (ClimateSERV datatype=26)",
+  "product_version": "GPM IMERG Late Run Daily via SERVIR ClimateSERV API",
+  "spatial_resolution_deg": 0.1,
+  "spatial_resolution_approx_km": 11.1,
+  "latency_info": "IMERG Late Run: ~14 hours; IMERG Early Run: ~4 hours; IMERG Final Run (GES DISC): ~3.5 months",
+  "source_url": "https://climateserv.servirglobal.net/api/getDataFromRequest/?id=8f8d403b-bd9f-4f04-bf87-cfdbca3a0999",
+  "climateserv_job_id": "8f8d403b-bd9f-4f04-bf87-cfdbca3a0999",
+  "direct_ges_disc_status": {
+    "url": "https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGDF.07/",
+    "requires_credentials": true,
+    "auth_mechanism": "NASA Earthdata Login (URS OAuth2 redirect HTTP 302)"
+  },
+  "study_area": "Dima Hasao District, Assam (Pilot Bounding Box)",
+  "query_geometry_wgs84": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          92.5205,
+          24.9711
+        ],
+        [
+          93.4735,
+          24.9711
+        ],
+        [
+          93.4735,
+          25.8289
+        ],
+        [
+          92.5205,
+          25.8289
+        ],
+        [
+          92.5205,
+          24.9711
+        ]
+      ]
+    ]
+  },
+  "interval_start": "2024-05-01",
+  "interval_end": "2024-06-30",
+  "total_days_in_interval": 61,
+  "valid_observation_days": 32,
+  "missing_observation_days": 29,
+  "latest_valid_observation": {
+    "date": "2024-06-01",
+    "observation_timestamp_utc": "2024-06-01T23:59:59Z",
+    "rainfall_24h_mm": 27.469,
+    "rainfall_72h_mm": 48.665,
+    "missing_24h": false,
+    "missing_72h": false
+  },
+  "max_24h_mm": 203.259,
+  "max_72h_mm": 478.384,
+  "observations": [
+    {
+      "date": "2024-05-01",
+      "observation_timestamp_utc": "2024-05-01T23:59:59Z",
+      "rainfall_24h_mm": 56.01,
+      "rainfall_72h_mm": null,
+      "missing_24h": false,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-05-02",
+      "observation_timestamp_utc": "2024-05-02T23:59:59Z",
+      "rainfall_24h_mm": 16.396,
+      "rainfall_72h_mm": null,
+      "missing_24h": false,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-05-03",
+      "observation_timestamp_utc": "2024-05-03T23:59:59Z",
+      "rainfall_24h_mm": 0.0,
+      "rainfall_72h_mm": 72.406,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-04",
+      "observation_timestamp_utc": "2024-05-04T23:59:59Z",
+      "rainfall_24h_mm": 7.281,
+      "rainfall_72h_mm": 23.677,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-05",
+      "observation_timestamp_utc": "2024-05-05T23:59:59Z",
+      "rainfall_24h_mm": 33.191,
+      "rainfall_72h_mm": 40.472,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-06",
+      "observation_timestamp_utc": "2024-05-06T23:59:59Z",
+      "rainfall_24h_mm": 52.631,
+      "rainfall_72h_mm": 93.104,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-07",
+      "observation_timestamp_utc": "2024-05-07T23:59:59Z",
+      "rainfall_24h_mm": 0.299,
+      "rainfall_72h_mm": 86.121,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-08",
+      "observation_timestamp_utc": "2024-05-08T23:59:59Z",
+      "rainfall_24h_mm": 6.615,
+      "rainfall_72h_mm": 59.545,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-09",
+      "observation_timestamp_utc": "2024-05-09T23:59:59Z",
+      "rainfall_24h_mm": 5.939,
+      "rainfall_72h_mm": 12.853,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-10",
+      "observation_timestamp_utc": "2024-05-10T23:59:59Z",
+      "rainfall_24h_mm": 6.534,
+      "rainfall_72h_mm": 19.088,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-11",
+      "observation_timestamp_utc": "2024-05-11T23:59:59Z",
+      "rainfall_24h_mm": 1.481,
+      "rainfall_72h_mm": 13.954,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-12",
+      "observation_timestamp_utc": "2024-05-12T23:59:59Z",
+      "rainfall_24h_mm": 0.089,
+      "rainfall_72h_mm": 8.104,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-13",
+      "observation_timestamp_utc": "2024-05-13T23:59:59Z",
+      "rainfall_24h_mm": 0.354,
+      "rainfall_72h_mm": 1.924,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-14",
+      "observation_timestamp_utc": "2024-05-14T23:59:59Z",
+      "rainfall_24h_mm": 1.501,
+      "rainfall_72h_mm": 1.944,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-15",
+      "observation_timestamp_utc": "2024-05-15T23:59:59Z",
+      "rainfall_24h_mm": 2.048,
+      "rainfall_72h_mm": 3.903,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-16",
+      "observation_timestamp_utc": "2024-05-16T23:59:59Z",
+      "rainfall_24h_mm": 6.845,
+      "rainfall_72h_mm": 10.394,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-17",
+      "observation_timestamp_utc": "2024-05-17T23:59:59Z",
+      "rainfall_24h_mm": 40.669,
+      "rainfall_72h_mm": 49.561,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-18",
+      "observation_timestamp_utc": "2024-05-18T23:59:59Z",
+      "rainfall_24h_mm": 15.509,
+      "rainfall_72h_mm": 63.023,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-19",
+      "observation_timestamp_utc": "2024-05-19T23:59:59Z",
+      "rainfall_24h_mm": 3.056,
+      "rainfall_72h_mm": 59.234,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-20",
+      "observation_timestamp_utc": "2024-05-20T23:59:59Z",
+      "rainfall_24h_mm": 9.336,
+      "rainfall_72h_mm": 27.901,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-21",
+      "observation_timestamp_utc": "2024-05-21T23:59:59Z",
+      "rainfall_24h_mm": 4.605,
+      "rainfall_72h_mm": 16.998,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-22",
+      "observation_timestamp_utc": "2024-05-22T23:59:59Z",
+      "rainfall_24h_mm": 1.14,
+      "rainfall_72h_mm": 15.081,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-23",
+      "observation_timestamp_utc": "2024-05-23T23:59:59Z",
+      "rainfall_24h_mm": 10.136,
+      "rainfall_72h_mm": 15.881,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-24",
+      "observation_timestamp_utc": "2024-05-24T23:59:59Z",
+      "rainfall_24h_mm": 4.06,
+      "rainfall_72h_mm": 15.336,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-25",
+      "observation_timestamp_utc": "2024-05-25T23:59:59Z",
+      "rainfall_24h_mm": 0.93,
+      "rainfall_72h_mm": 15.126,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-26",
+      "observation_timestamp_utc": "2024-05-26T23:59:59Z",
+      "rainfall_24h_mm": 51.172,
+      "rainfall_72h_mm": 56.162,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-27",
+      "observation_timestamp_utc": "2024-05-27T23:59:59Z",
+      "rainfall_24h_mm": 144.531,
+      "rainfall_72h_mm": 196.634,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-28",
+      "observation_timestamp_utc": "2024-05-28T23:59:59Z",
+      "rainfall_24h_mm": 130.594,
+      "rainfall_72h_mm": 326.297,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-29",
+      "observation_timestamp_utc": "2024-05-29T23:59:59Z",
+      "rainfall_24h_mm": 203.259,
+      "rainfall_72h_mm": 478.384,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-30",
+      "observation_timestamp_utc": "2024-05-30T23:59:59Z",
+      "rainfall_24h_mm": 18.301,
+      "rainfall_72h_mm": 352.154,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-05-31",
+      "observation_timestamp_utc": "2024-05-31T23:59:59Z",
+      "rainfall_24h_mm": 2.895,
+      "rainfall_72h_mm": 224.455,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-06-01",
+      "observation_timestamp_utc": "2024-06-01T23:59:59Z",
+      "rainfall_24h_mm": 27.469,
+      "rainfall_72h_mm": 48.665,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    {
+      "date": "2024-06-02",
+      "observation_timestamp_utc": "2024-06-02T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-03",
+      "observation_timestamp_utc": "2024-06-03T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-04",
+      "observation_timestamp_utc": "2024-06-04T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-05",
+      "observation_timestamp_utc": "2024-06-05T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-06",
+      "observation_timestamp_utc": "2024-06-06T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-07",
+      "observation_timestamp_utc": "2024-06-07T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-08",
+      "observation_timestamp_utc": "2024-06-08T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-09",
+      "observation_timestamp_utc": "2024-06-09T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-10",
+      "observation_timestamp_utc": "2024-06-10T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-11",
+      "observation_timestamp_utc": "2024-06-11T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-12",
+      "observation_timestamp_utc": "2024-06-12T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-13",
+      "observation_timestamp_utc": "2024-06-13T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-14",
+      "observation_timestamp_utc": "2024-06-14T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-15",
+      "observation_timestamp_utc": "2024-06-15T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-16",
+      "observation_timestamp_utc": "2024-06-16T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-17",
+      "observation_timestamp_utc": "2024-06-17T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-18",
+      "observation_timestamp_utc": "2024-06-18T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-19",
+      "observation_timestamp_utc": "2024-06-19T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-20",
+      "observation_timestamp_utc": "2024-06-20T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-21",
+      "observation_timestamp_utc": "2024-06-21T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-22",
+      "observation_timestamp_utc": "2024-06-22T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-23",
+      "observation_timestamp_utc": "2024-06-23T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-24",
+      "observation_timestamp_utc": "2024-06-24T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-25",
+      "observation_timestamp_utc": "2024-06-25T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-26",
+      "observation_timestamp_utc": "2024-06-26T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-27",
+      "observation_timestamp_utc": "2024-06-27T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-28",
+      "observation_timestamp_utc": "2024-06-28T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-29",
+      "observation_timestamp_utc": "2024-06-29T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    },
+    {
+      "date": "2024-06-30",
+      "observation_timestamp_utc": "2024-06-30T23:59:59Z",
+      "rainfall_24h_mm": null,
+      "rainfall_72h_mm": null,
+      "missing_24h": true,
+      "missing_72h": true
+    }
+  ],
+  "secondary_reference": {
+    "dataset_id": "nasa-power-merra2-daily",
+    "dataset_name": "NASA POWER Daily Precipitation (MERRA-2 PRECTOTCORR)",
+    "api_version": "v2.10.5",
+    "point_wgs84": {
+      "lat": 25.378022,
+      "lon": 93.031047
+    },
+    "spatial_resolution_deg": 0.5,
+    "valid_observation_days": 61,
+    "missing_observation_days": 0,
+    "observations": [
+      {
+        "date": "2024-05-01",
+        "observation_timestamp_utc": "2024-05-01T23:59:59Z",
+        "rainfall_24h_mm": 6.55,
+        "rainfall_72h_mm": null,
+        "missing_24h": false,
+        "missing_72h": true
+      },
+      {
+        "date": "2024-05-02",
+        "observation_timestamp_utc": "2024-05-02T23:59:59Z",
+        "rainfall_24h_mm": 33.54,
+        "rainfall_72h_mm": null,
+        "missing_24h": false,
+        "missing_72h": true
+      },
+      {
+        "date": "2024-05-03",
+        "observation_timestamp_utc": "2024-05-03T23:59:59Z",
+        "rainfall_24h_mm": 4.8,
+        "rainfall_72h_mm": 44.89,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-04",
+        "observation_timestamp_utc": "2024-05-04T23:59:59Z",
+        "rainfall_24h_mm": 0.68,
+        "rainfall_72h_mm": 39.02,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-05",
+        "observation_timestamp_utc": "2024-05-05T23:59:59Z",
+        "rainfall_24h_mm": 23.49,
+        "rainfall_72h_mm": 28.97,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-06",
+        "observation_timestamp_utc": "2024-05-06T23:59:59Z",
+        "rainfall_24h_mm": 7.81,
+        "rainfall_72h_mm": 31.98,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-07",
+        "observation_timestamp_utc": "2024-05-07T23:59:59Z",
+        "rainfall_24h_mm": 0.73,
+        "rainfall_72h_mm": 32.03,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-08",
+        "observation_timestamp_utc": "2024-05-08T23:59:59Z",
+        "rainfall_24h_mm": 0.23,
+        "rainfall_72h_mm": 8.77,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-09",
+        "observation_timestamp_utc": "2024-05-09T23:59:59Z",
+        "rainfall_24h_mm": 4.2,
+        "rainfall_72h_mm": 5.16,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-10",
+        "observation_timestamp_utc": "2024-05-10T23:59:59Z",
+        "rainfall_24h_mm": 5.94,
+        "rainfall_72h_mm": 10.37,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-11",
+        "observation_timestamp_utc": "2024-05-11T23:59:59Z",
+        "rainfall_24h_mm": 2.25,
+        "rainfall_72h_mm": 12.39,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-12",
+        "observation_timestamp_utc": "2024-05-12T23:59:59Z",
+        "rainfall_24h_mm": 0.12,
+        "rainfall_72h_mm": 8.31,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-13",
+        "observation_timestamp_utc": "2024-05-13T23:59:59Z",
+        "rainfall_24h_mm": 0.45,
+        "rainfall_72h_mm": 2.82,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-14",
+        "observation_timestamp_utc": "2024-05-14T23:59:59Z",
+        "rainfall_24h_mm": 0.44,
+        "rainfall_72h_mm": 1.01,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-15",
+        "observation_timestamp_utc": "2024-05-15T23:59:59Z",
+        "rainfall_24h_mm": 0.97,
+        "rainfall_72h_mm": 1.86,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-16",
+        "observation_timestamp_utc": "2024-05-16T23:59:59Z",
+        "rainfall_24h_mm": 6.11,
+        "rainfall_72h_mm": 7.52,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-17",
+        "observation_timestamp_utc": "2024-05-17T23:59:59Z",
+        "rainfall_24h_mm": 5.21,
+        "rainfall_72h_mm": 12.29,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-18",
+        "observation_timestamp_utc": "2024-05-18T23:59:59Z",
+        "rainfall_24h_mm": 7.01,
+        "rainfall_72h_mm": 18.33,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-19",
+        "observation_timestamp_utc": "2024-05-19T23:59:59Z",
+        "rainfall_24h_mm": 1.4,
+        "rainfall_72h_mm": 13.62,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-20",
+        "observation_timestamp_utc": "2024-05-20T23:59:59Z",
+        "rainfall_24h_mm": 0.27,
+        "rainfall_72h_mm": 8.68,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-21",
+        "observation_timestamp_utc": "2024-05-21T23:59:59Z",
+        "rainfall_24h_mm": 10.5,
+        "rainfall_72h_mm": 12.17,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-22",
+        "observation_timestamp_utc": "2024-05-22T23:59:59Z",
+        "rainfall_24h_mm": 1.72,
+        "rainfall_72h_mm": 12.49,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-23",
+        "observation_timestamp_utc": "2024-05-23T23:59:59Z",
+        "rainfall_24h_mm": 1.58,
+        "rainfall_72h_mm": 13.8,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-24",
+        "observation_timestamp_utc": "2024-05-24T23:59:59Z",
+        "rainfall_24h_mm": 5.5,
+        "rainfall_72h_mm": 8.8,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-25",
+        "observation_timestamp_utc": "2024-05-25T23:59:59Z",
+        "rainfall_24h_mm": 2.96,
+        "rainfall_72h_mm": 10.04,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-26",
+        "observation_timestamp_utc": "2024-05-26T23:59:59Z",
+        "rainfall_24h_mm": 4.7,
+        "rainfall_72h_mm": 13.16,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-27",
+        "observation_timestamp_utc": "2024-05-27T23:59:59Z",
+        "rainfall_24h_mm": 73.93,
+        "rainfall_72h_mm": 81.59,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-28",
+        "observation_timestamp_utc": "2024-05-28T23:59:59Z",
+        "rainfall_24h_mm": 82.01,
+        "rainfall_72h_mm": 160.64,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-29",
+        "observation_timestamp_utc": "2024-05-29T23:59:59Z",
+        "rainfall_24h_mm": 11.13,
+        "rainfall_72h_mm": 167.07,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-30",
+        "observation_timestamp_utc": "2024-05-30T23:59:59Z",
+        "rainfall_24h_mm": 16.33,
+        "rainfall_72h_mm": 109.47,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-05-31",
+        "observation_timestamp_utc": "2024-05-31T23:59:59Z",
+        "rainfall_24h_mm": 7.3,
+        "rainfall_72h_mm": 34.76,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-01",
+        "observation_timestamp_utc": "2024-06-01T23:59:59Z",
+        "rainfall_24h_mm": 12.13,
+        "rainfall_72h_mm": 35.76,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-02",
+        "observation_timestamp_utc": "2024-06-02T23:59:59Z",
+        "rainfall_24h_mm": 13.91,
+        "rainfall_72h_mm": 33.34,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-03",
+        "observation_timestamp_utc": "2024-06-03T23:59:59Z",
+        "rainfall_24h_mm": 19.35,
+        "rainfall_72h_mm": 45.39,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-04",
+        "observation_timestamp_utc": "2024-06-04T23:59:59Z",
+        "rainfall_24h_mm": 17.96,
+        "rainfall_72h_mm": 51.22,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-05",
+        "observation_timestamp_utc": "2024-06-05T23:59:59Z",
+        "rainfall_24h_mm": 1.5,
+        "rainfall_72h_mm": 38.81,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-06",
+        "observation_timestamp_utc": "2024-06-06T23:59:59Z",
+        "rainfall_24h_mm": 1.65,
+        "rainfall_72h_mm": 21.11,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-07",
+        "observation_timestamp_utc": "2024-06-07T23:59:59Z",
+        "rainfall_24h_mm": 4.75,
+        "rainfall_72h_mm": 7.9,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-08",
+        "observation_timestamp_utc": "2024-06-08T23:59:59Z",
+        "rainfall_24h_mm": 7.45,
+        "rainfall_72h_mm": 13.85,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-09",
+        "observation_timestamp_utc": "2024-06-09T23:59:59Z",
+        "rainfall_24h_mm": 7.59,
+        "rainfall_72h_mm": 19.79,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-10",
+        "observation_timestamp_utc": "2024-06-10T23:59:59Z",
+        "rainfall_24h_mm": 1.84,
+        "rainfall_72h_mm": 16.88,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-11",
+        "observation_timestamp_utc": "2024-06-11T23:59:59Z",
+        "rainfall_24h_mm": 5.37,
+        "rainfall_72h_mm": 14.8,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-12",
+        "observation_timestamp_utc": "2024-06-12T23:59:59Z",
+        "rainfall_24h_mm": 13.91,
+        "rainfall_72h_mm": 21.12,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-13",
+        "observation_timestamp_utc": "2024-06-13T23:59:59Z",
+        "rainfall_24h_mm": 11.27,
+        "rainfall_72h_mm": 30.55,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-14",
+        "observation_timestamp_utc": "2024-06-14T23:59:59Z",
+        "rainfall_24h_mm": 21.53,
+        "rainfall_72h_mm": 46.71,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-15",
+        "observation_timestamp_utc": "2024-06-15T23:59:59Z",
+        "rainfall_24h_mm": 26.28,
+        "rainfall_72h_mm": 59.08,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-16",
+        "observation_timestamp_utc": "2024-06-16T23:59:59Z",
+        "rainfall_24h_mm": 13.51,
+        "rainfall_72h_mm": 61.32,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-17",
+        "observation_timestamp_utc": "2024-06-17T23:59:59Z",
+        "rainfall_24h_mm": 33.24,
+        "rainfall_72h_mm": 73.03,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-18",
+        "observation_timestamp_utc": "2024-06-18T23:59:59Z",
+        "rainfall_24h_mm": 19.96,
+        "rainfall_72h_mm": 66.71,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-19",
+        "observation_timestamp_utc": "2024-06-19T23:59:59Z",
+        "rainfall_24h_mm": 25.26,
+        "rainfall_72h_mm": 78.46,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-20",
+        "observation_timestamp_utc": "2024-06-20T23:59:59Z",
+        "rainfall_24h_mm": 1.85,
+        "rainfall_72h_mm": 47.07,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-21",
+        "observation_timestamp_utc": "2024-06-21T23:59:59Z",
+        "rainfall_24h_mm": 1.0,
+        "rainfall_72h_mm": 28.11,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-22",
+        "observation_timestamp_utc": "2024-06-22T23:59:59Z",
+        "rainfall_24h_mm": 3.13,
+        "rainfall_72h_mm": 5.98,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-23",
+        "observation_timestamp_utc": "2024-06-23T23:59:59Z",
+        "rainfall_24h_mm": 3.06,
+        "rainfall_72h_mm": 7.19,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-24",
+        "observation_timestamp_utc": "2024-06-24T23:59:59Z",
+        "rainfall_24h_mm": 3.07,
+        "rainfall_72h_mm": 9.26,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-25",
+        "observation_timestamp_utc": "2024-06-25T23:59:59Z",
+        "rainfall_24h_mm": 3.58,
+        "rainfall_72h_mm": 9.71,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-26",
+        "observation_timestamp_utc": "2024-06-26T23:59:59Z",
+        "rainfall_24h_mm": 9.24,
+        "rainfall_72h_mm": 15.89,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-27",
+        "observation_timestamp_utc": "2024-06-27T23:59:59Z",
+        "rainfall_24h_mm": 18.35,
+        "rainfall_72h_mm": 31.17,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-28",
+        "observation_timestamp_utc": "2024-06-28T23:59:59Z",
+        "rainfall_24h_mm": 14.12,
+        "rainfall_72h_mm": 41.71,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-29",
+        "observation_timestamp_utc": "2024-06-29T23:59:59Z",
+        "rainfall_24h_mm": 9.84,
+        "rainfall_72h_mm": 42.31,
+        "missing_24h": false,
+        "missing_72h": false
+      },
+      {
+        "date": "2024-06-30",
+        "observation_timestamp_utc": "2024-06-30T23:59:59Z",
+        "rainfall_24h_mm": 17.15,
+        "rainfall_72h_mm": 41.11,
+        "missing_24h": false,
+        "missing_72h": false
+      }
+    ],
+    "note": "Retained strictly as an independent coarse-resolution (0.5\u00b0) reference; never substituted silently for GPM IMERG."
+  },
+  "processing_timestamp": "2026-11-23T09:00:54.083499+00:00",
+  "attribution": "NASA Goddard Space Flight Center GPM IMERG via SERVIR Global ClimateSERV; secondary reference NASA LaRC POWER (MERRA-2).",
+  "missing_data_policy": "Missing observations are stored strictly as null; 72-hour rolling totals require 3 consecutive non-null days."
+}

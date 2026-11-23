@@ -1,0 +1,125 @@
+{
+  "schema_version": "2.0",
+  "generated_at_utc": "2026-11-23T11:31:00+00:00",
+  "project": "GeoResilience-NER 2.0",
+  "pilot_district": "Dima Hasao District, Assam, India",
+  "repository": "https://github.com/HARSHA2006ind/geos",
+  "branch": "feature/geos-v2-foundation",
+  "main_branch_modified": false,
+  "scientific_guards": {
+    "production_ml_ready": false,
+    "quality_gate_passed_checks": 6,
+    "quality_gate_total_checks": 13,
+    "quality_gate_blocking_failures": 6,
+    "production_landslide_probability": null,
+    "production_factor_of_safety": null,
+    "official_government_warnings_issued": false,
+    "gpu_cuda_packages_installed": 0
+  },
+  "measured_benchmarks": {
+    "pytest_passed": 34,
+    "pytest_total": 34,
+    "vitest_passed": 9,
+    "vitest_total": 9,
+    "peak_python_rss_mb": 347.1,
+    "warm_api_latency_ms": {
+      "health": 5.0,
+      "datasets": 12.1,
+      "environment_point": 30.1,
+      "environment_soil": 52.3,
+      "rainfall_forecast": 3.4,
+      "hazard_assess": 75.4,
+      "hazard_simulate": 45.2,
+      "ml_models": 5.0,
+      "ml_infer": 72.6,
+      "regions": 5.6
+    },
+    "disk_footprint_mb": {
+      "pilot_data": 52,
+      "raw_data": 1.7,
+      "experimental_data": 0.05,
+      "python_venv": 825
+    },
+    "backup_restore_verified": true
+  },
+  "phases": {
+    "phase_a_preservation_and_branch_hygiene": {
+      "status": "Tested",
+      "details": "Preserved Stage 1–9 + NVIDIA modules; all work isolated to feature/geos-v2-foundation; main untouched."
+    },
+    "phase_b_authentic_geospatial_data": {
+      "status": "Tested",
+      "implemented_features": [
+        "Copernicus DEM 30m/90m + 6 geomorphometric/hydrological rasters (EPSG:32646)",
+        "ESA WorldCover 2021",
+        "ISRIC SoilGrids 2.0 (7 layers)",
+        "Sentinel-2 L2A pre-monsoon 2024 NDVI + clear-obs QA",
+        "NASA GPM IMERG 10-year daily archive (3,439 valid / 214 null days)",
+        "NOAA GFS 0.25 deg experimental 72h forecast (Dynamical.org Zarr v3)",
+        "GSI Bhusanket public inventory (379 in-district) + NASA COOLR (19 in-district)",
+        "Live OpenStreetMap transport (2,212 roads, 392 rails) & facilities (15 hospitals/health, 21 schools, 376 settlements, 207 bridges)"
+      ],
+      "blocked_features": [
+        "GSI 1:50k lithology & thrust-fault GIS (NGDR/Bhukosh auth required)",
+        "GSI Landslide Polygon FeatureServer (HTTP 499 token required)",
+        "NASA IMERG V07B 2024-06-02..present & SMAP L4 soil moisture (Earthdata token required)",
+        "IMD/CWC district rain gauges (non-public institutional feed)"
+      ]
+    },
+    "phase_c_spatial_database_schema": {
+      "status": "Tested",
+      "details": "19 SQLAlchemy + PostGIS/SQLite-compatible tables across Alembic migrations 0001 -> 0002 -> 0003 with verified upgrade/downgrade tests."
+    },
+    "phase_d_ml_quality_gate_and_exploratory_benchmark": {
+      "status": "Blocked",
+      "exploratory_benchmark_status": "Tested",
+      "production_model_status": "Blocked",
+      "scientifically_validated": false,
+      "details": "CPU-only RF (ROC-AUC 0.7588) vs XGBoost (ROC-AUC 0.7623) + SHAP + Model B rainfall threshold analysis executed & tested; proved +0.185 corridor-bias inflation. Production ML remains strictly BLOCKED by 6/13 Quality Gate failures."
+    },
+    "phase_e_dynamic_hazard_and_exposure_engine": {
+      "status": "Tested",
+      "details": "6-part separated dynamic hazard API & real OSM proximity exposure engine; strictly landslide_probability = null, factor_of_safety = null."
+    },
+    "phase_f_frontend_geos_v2_hub_and_what_if": {
+      "status": "Tested",
+      "details": "GEOS 2.0 Research Hub integrated into Sidebar/App with live SoilGrids/OSM/GFS inspection, Recharts SHAP chart, server What-If simulator, in-memory Bearer auth, photo upload field reporting, experimental alerts, and 8-state matrix."
+    },
+    "phase_g_grounded_gemini_assistant": {
+      "status": "Tested",
+      "details": "POST /api/v1/assistant/explain uses gemini-4-hydrogen server-side proxy with prompt-injection screening (HTTP 400), rate limiting, and honest HTTP 503 grounded evidence response when GEMINI_API_KEY is unset."
+    },
+    "phase_h_authenticated_field_reporting": {
+      "status": "Tested",
+      "details": "Authenticated RBAC multipart field reporting with magic-byte JPEG/PNG/WebP validation (<= 5 MB), SHA-256 digests, confined downloads, analyst verification, and audit logging."
+    },
+    "phase_i_experimental_alerts_and_dry_run": {
+      "status": "Tested",
+      "details": "EXPERIMENTAL_RESEARCH_DRAFT creation, review/approval workflow, and DRY_RUN_NO_EXTERNAL_DISPATCH notification logging; zero external public warnings sent."
+    },
+    "phase_j_automated_monitoring": {
+      "status": "Tested",
+      "details": "Cron-compatible run_monitoring_cycle.py and /api/v1/monitoring/status|run logging IMERG staleness & GFS forecast freshness."
+    },
+    "phase_k_versioned_api_and_proxy": {
+      "status": "Tested",
+      "details": "Complete /api/v1/* FastAPI contract + Express full-method/multipart/Authorization proxy in server.ts."
+    },
+    "phase_l_security_hardening_and_audit": {
+      "status": "Tested",
+      "details": "scrypt password hashing, HMAC-SHA256 tokens, first-run admin claim lock, RBAC, upload magic-byte & path checks, hardened backup scripts, prompt guardrails, and bun audit documented."
+    },
+    "phase_m_ubuntu_deployment_and_backups": {
+      "status": "Tested",
+      "details": "docker-compose.yml (3.75 GB max container cap for 8 GB host), Caddyfile TLS proxy, and end-to-end verified backup_db.sh & restore_db.sh."
+    },
+    "phase_n_automated_tests_and_benchmarks": {
+      "status": "Tested",
+      "details": "34/34 pytest + 9/9 vitest passing, warm latencies 3.4–75.4 ms, peak Python RSS 347.1 MB."
+    },
+    "phase_o_8_state_ner_expansion": {
+      "status": "Implemented",
+      "details": "8 NER states seeded in regional_coverage (1 active pilot: Assam/Dima Hasao; 7 planned states with 0 validated models)."
+    }
+  }
+}

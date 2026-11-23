@@ -1,0 +1,94 @@
+{
+  "dataset_id": "copernicus-dem-glo30",
+  "dataset_name": "Copernicus DEM GLO-30 (Global 30 m Digital Surface Model)",
+  "product_version": "COP-DEM_GLO-30-DGED / 2021_1 (AWS Open Data COG)",
+  "source_tiles": [
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N24_00_E092_00_DEM/Copernicus_DSM_COG_10_N24_00_E092_00_DEM.tif",
+      "native_crs": "EPSG:4326",
+      "native_res_deg": [
+        0.00027778,
+        0.00027778
+      ],
+      "width": 3600,
+      "height": 3600,
+      "dtype": "float32"
+    },
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N24_00_E093_00_DEM/Copernicus_DSM_COG_10_N24_00_E093_00_DEM.tif",
+      "native_crs": "EPSG:4326",
+      "native_res_deg": [
+        0.00027778,
+        0.00027778
+      ],
+      "width": 3600,
+      "height": 3600,
+      "dtype": "float32"
+    },
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N25_00_E092_00_DEM/Copernicus_DSM_COG_10_N25_00_E092_00_DEM.tif",
+      "native_crs": "EPSG:4326",
+      "native_res_deg": [
+        0.00027778,
+        0.00027778
+      ],
+      "width": 3600,
+      "height": 3600,
+      "dtype": "float32"
+    },
+    {
+      "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N25_00_E093_00_DEM/Copernicus_DSM_COG_10_N25_00_E093_00_DEM.tif",
+      "native_crs": "EPSG:4326",
+      "native_res_deg": [
+        0.00027778,
+        0.00027778
+      ],
+      "width": 3600,
+      "height": 3600,
+      "dtype": "float32"
+    }
+  ],
+  "native_crs": "EPSG:4326",
+  "derived_metric_crs": "EPSG:32646",
+  "native_resolution_m": 30.0,
+  "district_raster_resolution_m": 90.0,
+  "core_corridor_native_30m_file": "haflong_jatinga_copernicus_dem_30m.tif",
+  "district_dem_file": "dima_hasao_dem_utm46n.tif",
+  "district_slope_file": "dima_hasao_slope_deg_utm46n.tif",
+  "district_aspect_file": "dima_hasao_aspect_deg_utm46n.tif",
+  "clip_bounds_wgs84": [
+    92.500515,
+    24.951076,
+    93.493486,
+    25.848943
+  ],
+  "core_corridor_bounds_wgs84": [
+    92.85,
+    25.05,
+    93.15,
+    25.3
+  ],
+  "elevation_stats_m": {
+    "min": 11.64,
+    "max": 2065.81,
+    "mean": 528.52,
+    "p95": 1248.92
+  },
+  "slope_stats_deg": {
+    "min": 0.0,
+    "max": 66.36,
+    "mean": 11.22,
+    "p95": 28.03
+  },
+  "file_sizes_kb": {
+    "haflong_jatinga_copernicus_dem_30m.tif": 2527.1,
+    "dima_hasao_dem_utm46n.tif": 3475.9,
+    "dima_hasao_slope_deg_utm46n.tif": 3931.7,
+    "dima_hasao_aspect_deg_utm46n.tif": 3935.5
+  },
+  "slope_algorithm": "Horn (1981) 3x3 finite difference on EPSG:32646 projected meters",
+  "observation_period": "TanDEM-X mission acquisitions (2011\u20132015), Copernicus DEM release 2021",
+  "processing_timestamp": "2026-11-23T13:24:36.013521+00:00",
+  "attribution": "\u00a9 DLR e.V. 2010\u20132014 and \u00a9 Airbus Defence and Space GmbH 2014\u20132018 provided under COPERNICUS by the European Union and ESA",
+  "limitations": "GLO-30 is a Digital Surface Model (DSM) including forest canopy height; 90 m district derivatives smooth micro-cliff gradients compared to native 30 m."
+}

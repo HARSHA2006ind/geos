@@ -7,6 +7,7 @@ import {
   Radio,
   ChevronDown,
   Sparkles,
+  Menu,
 } from 'lucide-react';
 import { NERState, RiskLocation } from '../../types/disaster';
 
@@ -19,6 +20,7 @@ interface HeaderProps {
   onOpenAlerts: () => void;
   isDemoMode?: boolean;
   onToggleDemoMode?: () => void;
+  onOpenMobileMenu?: () => void;
 }
 
 const statesList: NERState[] = [
@@ -42,6 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenAlerts,
   isDemoMode = false,
   onToggleDemoMode,
+  onOpenMobileMenu,
 }) => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -60,9 +63,19 @@ export const Header: React.FC<HeaderProps> = ({
   }, [searchQuery, locations]);
 
   return (
-    <header className="h-16 bg-[#0f172a]/95 backdrop-blur border-b border-slate-800/80 px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
-      {/* Left: Region / State Selector */}
-      <div className="flex items-center gap-4">
+    <header className="h-16 bg-[#0f172a]/95 backdrop-blur border-b border-slate-800/80 px-3 sm:px-4 md:px-6 flex items-center justify-between sticky top-0 z-30">
+      {/* Left: Mobile Menu Toggle & Region / State Selector */}
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+        {onOpenMobileMenu && (
+          <button
+            id="header-mobile-menu-btn"
+            onClick={onOpenMobileMenu}
+            className="md:hidden p-2 rounded-md bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-700 shrink-0"
+            aria-label="Open navigation menu"
+          >
+            <Menu className="w-4 h-4" />
+          </button>
+        )}
         <div className="relative">
           <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
             <span className="hidden sm:inline">Region:</span>
@@ -190,18 +203,21 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         )}
 
-        {/* Live telemetry status */}
-        <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
-          <Radio className="w-3.5 h-3.5 animate-pulse" />
-          <span className="font-semibold tracking-wider text-[11px]">LIVE GIS TELEMETRY</span>
+        {/* Honest Pilot Data + Demo Transparency Badge */}
+        <div
+          className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded bg-cyan-950/50 border border-cyan-500/30 text-cyan-300 text-xs font-mono"
+          title="Dima Hasao pilot uses verified Copernicus DEM, NASA GPM IMERG & ESA WorldCover datasets; legacy NER risk scores remain simulated prototype heuristics."
+        >
+          <Radio className="w-3.5 h-3.5" />
+          <span className="font-semibold tracking-wider text-[11px]">DIMA HASAO PILOT · NO ML MODEL</span>
         </div>
 
-        {/* Last Updated */}
+        {/* Scientific Phase Notice */}
         <div className="hidden sm:flex items-center gap-2 text-xs text-slate-400 font-mono">
-          <Clock className="w-3.5 h-3.5 text-emerald-400" />
+          <Clock className="w-3.5 h-3.5 text-cyan-400" />
           <div className="leading-tight text-right">
-            <span className="block text-[10px] text-slate-500 uppercase tracking-wider">Last Updated</span>
-            <span className="text-slate-300 text-xs">14 Nov 2024, 10:30 AM</span>
+            <span className="block text-[10px] text-slate-500 uppercase tracking-wider">Data Foundation</span>
+            <span className="text-slate-300 text-xs">Phase 1 · Real GIS + Demo Layer</span>
           </div>
         </div>
 

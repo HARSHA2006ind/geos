@@ -1,0 +1,249 @@
+{
+  "pilot_study_area": "Dima Hasao District, Assam, India",
+  "started_at": "2026-11-23T09:00:20.250490+00:00",
+  "completed_at": "2026-11-23T09:01:31.599837+00:00",
+  "boundary": {
+    "dataset_name": "OpenStreetMap Administrative Boundary (Dima Hasao District, Assam)",
+    "source_url": "https://nominatim.openstreetmap.org/search?q=Dima+Hasao%2C+Assam%2C+India&format=geojson&polygon_geojson=1&addressdetails=1&limit=5",
+    "crs": "EPSG:4326",
+    "metric_crs_for_area": "EPSG:32646",
+    "area_km2": 4880.75,
+    "bbox_wgs84": [
+      92.520515,
+      24.971076,
+      93.473486,
+      25.828943
+    ],
+    "centroid_wgs84": {
+      "lat": 25.378022,
+      "lon": 93.031047
+    },
+    "osm_type": "relation",
+    "osm_id": 2025931,
+    "geometry_valid": true,
+    "processing_timestamp": "2026-11-23T09:00:21.580664+00:00",
+    "attribution": "\u00a9 OpenStreetMap contributors (ODbL 1.0) via Nominatim",
+    "limitations": "Administrative boundary from OSM; official Survey of India (SoI) district boundaries may differ slightly along state borders."
+  },
+  "copernicus_dem": {
+    "dataset_id": "copernicus-dem-glo30",
+    "dataset_name": "Copernicus DEM GLO-30 (Global 30 m Digital Surface Model)",
+    "product_version": "COP-DEM_GLO-30-DGED / 2021_1 (AWS Open Data COG)",
+    "source_tiles": [
+      {
+        "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N24_00_E092_00_DEM/Copernicus_DSM_COG_10_N24_00_E092_00_DEM.tif",
+        "native_crs": "EPSG:4326",
+        "native_res_deg": [
+          0.00027778,
+          0.00027778
+        ],
+        "width": 3600,
+        "height": 3600,
+        "dtype": "float32"
+      },
+      {
+        "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N24_00_E093_00_DEM/Copernicus_DSM_COG_10_N24_00_E093_00_DEM.tif",
+        "native_crs": "EPSG:4326",
+        "native_res_deg": [
+          0.00027778,
+          0.00027778
+        ],
+        "width": 3600,
+        "height": 3600,
+        "dtype": "float32"
+      },
+      {
+        "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N25_00_E092_00_DEM/Copernicus_DSM_COG_10_N25_00_E092_00_DEM.tif",
+        "native_crs": "EPSG:4326",
+        "native_res_deg": [
+          0.00027778,
+          0.00027778
+        ],
+        "width": 3600,
+        "height": 3600,
+        "dtype": "float32"
+      },
+      {
+        "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N25_00_E093_00_DEM/Copernicus_DSM_COG_10_N25_00_E093_00_DEM.tif",
+        "native_crs": "EPSG:4326",
+        "native_res_deg": [
+          0.00027778,
+          0.00027778
+        ],
+        "width": 3600,
+        "height": 3600,
+        "dtype": "float32"
+      }
+    ],
+    "native_crs": "EPSG:4326",
+    "derived_metric_crs": "EPSG:32646",
+    "native_resolution_m": 30.0,
+    "district_raster_resolution_m": 90.0,
+    "core_corridor_native_30m_file": "haflong_jatinga_copernicus_dem_30m.tif",
+    "district_dem_file": "dima_hasao_dem_utm46n.tif",
+    "district_slope_file": "dima_hasao_slope_deg_utm46n.tif",
+    "district_aspect_file": "dima_hasao_aspect_deg_utm46n.tif",
+    "clip_bounds_wgs84": [
+      92.500515,
+      24.951076,
+      93.493486,
+      25.848943
+    ],
+    "core_corridor_bounds_wgs84": [
+      92.85,
+      25.05,
+      93.15,
+      25.3
+    ],
+    "elevation_stats_m": {
+      "min": 11.64,
+      "max": 2065.81,
+      "mean": 528.52,
+      "p95": 1248.92
+    },
+    "slope_stats_deg": {
+      "min": 0.0,
+      "max": 66.36,
+      "mean": 11.22,
+      "p95": 28.03
+    },
+    "file_sizes_kb": {
+      "haflong_jatinga_copernicus_dem_30m.tif": 2527.1,
+      "dima_hasao_dem_utm46n.tif": 3475.9,
+      "dima_hasao_slope_deg_utm46n.tif": 3931.7,
+      "dima_hasao_aspect_deg_utm46n.tif": 3926.6
+    },
+    "slope_algorithm": "Horn (1981) 3x3 finite difference on EPSG:32646 projected meters",
+    "observation_period": "TanDEM-X mission acquisitions (2011\u20132015), Copernicus DEM release 2021",
+    "processing_timestamp": "2026-11-23T09:00:41.734468+00:00",
+    "attribution": "\u00a9 DLR e.V. 2010\u20132014 and \u00a9 Airbus Defence and Space GmbH 2014\u20132018 provided under COPERNICUS by the European Union and ESA",
+    "limitations": "GLO-30 is a Digital Surface Model (DSM) including forest canopy height; 90 m district derivatives smooth micro-cliff gradients compared to native 30 m."
+  },
+  "gpm_imerg_rainfall": {
+    "dataset_id": "nasa-gpm-imerg-daily",
+    "climateserv_job_id": "8f8d403b-bd9f-4f04-bf87-cfdbca3a0999",
+    "interval": "2024-05-01 to 2024-06-30",
+    "total_days": 61,
+    "valid_imerg_days": 32,
+    "missing_imerg_days": 29,
+    "max_24h_mm": 203.259,
+    "max_72h_mm": 478.384,
+    "latest_valid": {
+      "date": "2024-06-01",
+      "observation_timestamp_utc": "2024-06-01T23:59:59Z",
+      "rainfall_24h_mm": 27.469,
+      "rainfall_72h_mm": 48.665,
+      "missing_24h": false,
+      "missing_72h": false
+    },
+    "power_valid_days": 61
+  },
+  "esa_worldcover": {
+    "dataset_id": "esa-worldcover-2021-v200",
+    "dataset_name": "ESA WorldCover 10 m 2021 v200 (Sentinel-1 & Sentinel-2 Derived)",
+    "product_version": "v200 (2021 epoch)",
+    "source_tiles": [
+      {
+        "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N24E090_Map.tif",
+        "native_crs": "EPSG:4326",
+        "native_res_deg": [
+          8.3333e-05,
+          8.3333e-05
+        ],
+        "width": 36000,
+        "height": 36000,
+        "dtype": "uint8"
+      },
+      {
+        "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N24E093_Map.tif",
+        "native_crs": "EPSG:4326",
+        "native_res_deg": [
+          8.3333e-05,
+          8.3333e-05
+        ],
+        "width": 36000,
+        "height": 36000,
+        "dtype": "uint8"
+      }
+    ],
+    "native_resolution_m": 10.0,
+    "exported_resolution_m": 30.0,
+    "resampling_method": "mode (overview/grid aggregation to 30m) + nearest to EPSG:32646",
+    "exported_crs": "EPSG:32646",
+    "raster_file": "dima_hasao_worldcover_2021_utm46n.tif",
+    "file_size_kb": 535.7,
+    "clip_bounds_wgs84": [
+      92.500515,
+      24.951076,
+      93.493486,
+      25.848943
+    ],
+    "observation_period": "2021-01-01 to 2021-12-31 (annual composite)",
+    "class_distribution": [
+      {
+        "code": 10,
+        "label": "Tree cover",
+        "pixel_count": 9874398,
+        "area_km2": 8886.96,
+        "percentage": 89.47
+      },
+      {
+        "code": 30,
+        "label": "Grassland",
+        "pixel_count": 726457,
+        "area_km2": 653.81,
+        "percentage": 6.58
+      },
+      {
+        "code": 40,
+        "label": "Cropland",
+        "pixel_count": 370256,
+        "area_km2": 333.23,
+        "percentage": 3.36
+      },
+      {
+        "code": 80,
+        "label": "Permanent water bodies",
+        "pixel_count": 29938,
+        "area_km2": 26.94,
+        "percentage": 0.27
+      },
+      {
+        "code": 50,
+        "label": "Built-up",
+        "pixel_count": 21671,
+        "area_km2": 19.5,
+        "percentage": 0.2
+      },
+      {
+        "code": 60,
+        "label": "Bare / sparse vegetation",
+        "pixel_count": 12475,
+        "area_km2": 11.23,
+        "percentage": 0.11
+      },
+      {
+        "code": 90,
+        "label": "Herbaceous wetland",
+        "pixel_count": 431,
+        "area_km2": 0.39,
+        "percentage": 0.0
+      },
+      {
+        "code": 20,
+        "label": "Shrubland",
+        "pixel_count": 320,
+        "area_km2": 0.29,
+        "percentage": 0.0
+      }
+    ],
+    "processing_timestamp": "2026-11-23T09:01:02.844337+00:00",
+    "attribution": "\u00a9 ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium (CC BY 4.0).",
+    "uncertainty_and_limitations": "Static 2021 annual map (global overall accuracy ~76.7% in v200 validation report). Does NOT capture post-2021 deforestation, jhum shifting cultivation cycles, highway cut-slopes, or seasonal canopy stress; persistent monsoon cloud cover in NER increases optical classification uncertainty."
+  },
+  "landslide_inventory_discovery": {
+    "verified_records": 0,
+    "fabricated_labels_count": 0,
+    "providers_probed": 3
+  }
+}

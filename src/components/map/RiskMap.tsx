@@ -5,9 +5,9 @@ import {
   ZoomIn,
   ZoomOut,
   Compass,
-  MapPin,
   ChevronDown,
   ChevronUp,
+  Crosshair,
 } from 'lucide-react';
 import {
   RiskLocation,
@@ -15,6 +15,7 @@ import {
   FieldReport,
   MapLayerSettings,
 } from '../../types/disaster';
+import { escapeHtml } from '../../utils/htmlEscape';
 
 interface RiskMapProps {
   locations: RiskLocation[];
@@ -23,6 +24,10 @@ interface RiskMapProps {
   historicalLandslides: HistoricalLandslide[];
   fieldReports: FieldReport[];
   isSimulated?: boolean;
+  pilotBoundaryGeoJson?: GeoJSON.FeatureCollection | null;
+  inspectedPoint?: { lat: number; lon: number } | null;
+  onInspectCoordinate?: (lat: number, lon: number) => void;
+  focusPilotTrigger?: number;
 }
 
 export const RiskMap: React.FC<RiskMapProps> = ({
@@ -32,13 +37,21 @@ export const RiskMap: React.FC<RiskMapProps> = ({
   historicalLandslides,
   fieldReports,
   isSimulated = false,
+  pilotBoundaryGeoJson = null,
+  inspectedPoint = null,
+  onInspectCoordinate,
+  focusPilotTrigger = 0,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerGroupsRef = useRef<{ [key: string]: L.LayerGroup }>({});
+  const onInspectRef = useRef(onInspectCoordinate);
+  onInspectRef.current = onInspectCoordinate;
 
   const [mapType, setMapType] = useState<'satellite' | 'dark'>('satellite');
   const [isLayersCollapsed, setIsLayersCollapsed] = useState(false);
+  const [showPilotBoundary, setShowPilotBoundary] = useState(true);
+  const [showDemoLayers, setShowDemoLayers] = useState(true);
 
   const [layers, setLayers] = useState<MapLayerSettings>({
     riskZones: true,
@@ -56,78 +69,86 @@ export const RiskMap: React.FC<RiskMapProps> = ({
     setLayers((prev) => ({ ...prev, [layerKey]: !prev[layerKey] }));
   };
 
-  // Highway corridors mock coordinates in NER
+  // Highway corridors prototype coordinates in NER
   const highwayLines = [
     {
       name: 'NH-13 (Trans-Arunachal Highway)',
       color: '#38bdf8',
       coords: [
-        [27.586, 91.865], // Tawang
-        [27.264, 92.423], // Bomdila
-        [27.084, 93.605], // Itanagar
-        [27.95, 94.85],   // Pasighat
+        [27.586, 91.865],
+        [27.264, 92.423],
+        [27.084, 93.605],
+        [27.95, 94.85],
       ] as [number, number][],
     },
     {
       name: 'NH-10 (Sikkim Lifeline)',
       color: '#f43f5e',
       coords: [
-        [26.85, 88.42],  // Siliguri
-        [27.167, 88.36], // Namchi
-        [27.338, 88.60], // Gangtok
-        [27.512, 88.52], // Mangan
+        [26.85, 88.42],
+        [27.167, 88.36],
+        [27.338, 88.6],
+        [27.512, 88.52],
       ] as [number, number][],
     },
     {
       name: 'NH-29 (Dimapur-Kohima Corridor)',
       color: '#fbbf24',
       coords: [
-        [25.91, 93.72],  // Dimapur
-        [25.675, 94.108], // Kohima
-        [25.267, 94.018], // Senapati
-        [24.832, 94.021], // Imphal
+        [25.91, 93.72],
+        [25.675, 94.108],
+        [25.267, 94.018],
+        [24.832, 94.021],
       ] as [number, number][],
     },
     {
-      name: 'NH-6 (Guwahati-Shillong-Silchar)',
+      name: 'NH-6 / NH-27 (Guwahati-Shillong-Haflong)',
       color: '#34d399',
       coords: [
-        [26.144, 91.736], // Guwahati
-        [25.903, 91.879], // Nongpoh
-        [25.578, 91.893], // Shillong
-        [25.178, 93.024], // Haflong
+        [26.144, 91.736],
+        [25.903, 91.879],
+        [25.578, 91.893],
+        [25.178, 93.024],
       ] as [number, number][],
     },
   ];
 
-  // Initialize Map
+  // Initialize Leaflet Map with proper attribution & dynamic metric scale bar
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
 
-    // Centered over North Eastern Region of India
     const map = L.map(mapContainerRef.current, {
-      center: [26.05, 92.8],
-      zoom: 7,
+      center: [25.38, 93.03],
+      zoom: 8,
       minZoom: 6,
-      maxZoom: 14,
+      maxZoom: 15,
       zoomControl: false,
-      attributionControl: false,
+      attributionControl: true,
     });
+
+    map.attributionControl.setPrefix('Leaflet');
+
+    // Genuine dynamic Leaflet scale bar (replaces hardcoded static "100 km" box)
+    L.control.scale({ metric: true, imperial: false, position: 'bottomright' }).addTo(map);
 
     mapRef.current = map;
 
-    // Base tile layers
     const satelliteTiles = L.tileLayer(
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-      { maxZoom: 18 }
+      {
+        maxZoom: 18,
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics | Pilot Data: Copernicus DEM, ESA WorldCover, NASA GPM, OSM',
+      }
     );
 
     const darkTiles = L.tileLayer(
       'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-      { maxZoom: 18 }
+      {
+        maxZoom: 18,
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO | Pilot Data: Copernicus DEM, ESA WorldCover, NASA GPM',
+      }
     );
 
-    // Default to satellite as shown in the screenshot
     if (mapType === 'satellite') {
       satelliteTiles.addTo(map);
     } else {
@@ -137,8 +158,9 @@ export const RiskMap: React.FC<RiskMapProps> = ({
     (map as any)._satelliteTiles = satelliteTiles;
     (map as any)._darkTiles = darkTiles;
 
-    // Initialize layer groups
     const groups = {
+      pilotBoundary: L.layerGroup().addTo(map),
+      inspectedPoint: L.layerGroup().addTo(map),
       riskZones: L.layerGroup().addTo(map),
       historicalLandslides: L.layerGroup().addTo(map),
       rainfall: L.layerGroup().addTo(map),
@@ -152,61 +174,136 @@ export const RiskMap: React.FC<RiskMapProps> = ({
 
     layerGroupsRef.current = groups;
 
+    // Click anywhere on map to inspect real environmental raster & precipitation values
+    map.on('click', (evt: L.LeafletMouseEvent) => {
+      if (onInspectRef.current) {
+        onInspectRef.current(evt.latlng.lat, evt.latlng.lng);
+      }
+    });
+
     return () => {
       map.remove();
       mapRef.current = null;
     };
   }, []);
 
-  // Switch Tile Base
+  // Switch Base Tile Layer
   useEffect(() => {
     const map = mapRef.current as any;
     if (!map) return;
 
     if (mapType === 'satellite') {
-      if (map._darkTiles && map.hasLayer(map._darkTiles)) {
-        map.removeLayer(map._darkTiles);
-      }
-      if (map._satelliteTiles && !map.hasLayer(map._satelliteTiles)) {
-        map.addLayer(map._satelliteTiles);
-      }
+      if (map._darkTiles && map.hasLayer(map._darkTiles)) map.removeLayer(map._darkTiles);
+      if (map._satelliteTiles && !map.hasLayer(map._satelliteTiles)) map.addLayer(map._satelliteTiles);
     } else {
-      if (map._satelliteTiles && map.hasLayer(map._satelliteTiles)) {
-        map.removeLayer(map._satelliteTiles);
-      }
-      if (map._darkTiles && !map.hasLayer(map._darkTiles)) {
-        map.addLayer(map._darkTiles);
-      }
+      if (map._satelliteTiles && map.hasLayer(map._satelliteTiles)) map.removeLayer(map._satelliteTiles);
+      if (map._darkTiles && !map.hasLayer(map._darkTiles)) map.addLayer(map._darkTiles);
     }
   }, [mapType]);
 
-  // Redraw Layers
+  // Render REAL Dima Hasao District Boundary GeoJSON
+  useEffect(() => {
+    const groups = layerGroupsRef.current;
+    if (!groups.pilotBoundary) return;
+    groups.pilotBoundary.clearLayers();
+
+    if (showPilotBoundary && pilotBoundaryGeoJson) {
+      const geoLayer = L.geoJSON(pilotBoundaryGeoJson as any, {
+        style: {
+          color: '#10b981',
+          weight: 2.5,
+          opacity: 0.95,
+          fillColor: '#06b6d4',
+          fillOpacity: 0.12,
+          dashArray: '6, 4',
+        },
+        onEachFeature: (_feature, layer) => {
+          layer.bindTooltip(
+            `<div class="text-xs font-bold text-emerald-300">Dima Hasao District, Assam (Verified Pilot AOI)</div>
+             <div class="text-[10px] text-slate-300">Click anywhere inside boundary to query Copernicus DEM, ESA WorldCover &amp; NASA GPM IMERG</div>`,
+            { sticky: true, className: 'bg-slate-900/95 text-white border border-emerald-500/50 rounded p-1.5' }
+          );
+          layer.on('click', (evt: L.LeafletMouseEvent) => {
+            L.DomEvent.stopPropagation(evt);
+            if (onInspectRef.current) {
+              onInspectRef.current(evt.latlng.lat, evt.latlng.lng);
+            }
+          });
+        },
+      });
+      geoLayer.addTo(groups.pilotBoundary);
+    }
+  }, [pilotBoundaryGeoJson, showPilotBoundary]);
+
+  // Render Inspected Coordinate Pin
+  useEffect(() => {
+    const groups = layerGroupsRef.current;
+    if (!groups.inspectedPoint) return;
+    groups.inspectedPoint.clearLayers();
+
+    if (inspectedPoint) {
+      const pinIcon = L.divIcon({
+        className: 'geos-inspect-pin',
+        html: `<div style="width:18px;height:18px;border-radius:50%;border:2px solid #10b981;background:rgba(16,185,129,0.28);box-shadow:0 0 12px rgba(16,185,129,0.9);display:flex;align-items:center;justify-content:center;"><div style="width:5px;height:5px;border-radius:50%;background:#ffffff;"></div></div>`,
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+      });
+      L.marker([inspectedPoint.lat, inspectedPoint.lon], { icon: pinIcon })
+        .bindTooltip(
+          `<div class="text-[11px] font-mono text-emerald-300 font-bold">Inspected Pilot Point</div>
+           <div class="text-[10px] font-mono text-slate-200">${escapeHtml(inspectedPoint.lat.toFixed(4))}°N, ${escapeHtml(inspectedPoint.lon.toFixed(4))}°E</div>`,
+          { className: 'bg-slate-900 text-white border border-emerald-500/50 rounded p-1' }
+        )
+        .addTo(groups.inspectedPoint);
+    }
+  }, [inspectedPoint]);
+
+  // Focus on Dima Hasao Pilot when requested
+  useEffect(() => {
+    if (focusPilotTrigger > 0 && mapRef.current) {
+      mapRef.current.flyTo([25.35, 93.02], 9, { duration: 1.0 });
+    }
+  }, [focusPilotTrigger]);
+
+  // Redraw Simulated Demo Layers (all interpolated fields escaped via escapeHtml)
   useEffect(() => {
     const map = mapRef.current;
     const groups = layerGroupsRef.current;
     if (!map || !groups.riskZones) return;
 
-    // Clear previous
-    Object.values(groups as Record<string, L.LayerGroup>).forEach((g) => g.clearLayers());
+    const demoKeys = [
+      'riskZones',
+      'historicalLandslides',
+      'rainfall',
+      'roads',
+      'settlements',
+      'hospitals',
+      'schools',
+      'infrastructure',
+      'fieldReports',
+    ];
+    demoKeys.forEach((k) => groups[k]?.clearLayers());
 
-    // 1. Roads & Arteries
+    if (!showDemoLayers) return;
+
+    // 1. Roads
     if (layers.roads) {
       highwayLines.forEach((hwy) => {
         const polyline = L.polyline(hwy.coords, {
           color: hwy.color,
           weight: 3,
-          opacity: 0.85,
+          opacity: 0.8,
           dashArray: '4, 6',
         });
         polyline.bindTooltip(
-          `<div class="font-bold text-xs">${hwy.name}</div><div class="text-[10px] text-slate-300">Strategic Himalayan Highway Corridor</div>`,
+          `<div class="font-bold text-xs">${escapeHtml(hwy.name)}</div><div class="text-[10px] text-slate-300">Prototype Highway Overlay</div>`,
           { className: 'bg-slate-900 text-white rounded p-1 border border-slate-700' }
         );
         polyline.addTo(groups.roads);
       });
     }
 
-    // 2. Risk Zones (Dominant interactive circles & pulse halos)
+    // 2. Simulated Risk Zones
     if (layers.riskZones) {
       locations.forEach((loc) => {
         const isSelected = selectedLocation?.id === loc.id;
@@ -219,21 +316,18 @@ export const RiskMap: React.FC<RiskMapProps> = ({
             ? '#eab308'
             : '#22c55e';
 
-        // Size adapts to score & simulation status
         const baseRadius = isSimulated ? loc.calculatedScore * 450 : loc.calculatedScore * 350;
 
-        // Outer glow halo circle
         const halo = L.circle([loc.lat, loc.lng], {
           radius: Math.max(12000, baseRadius),
-          color: color,
+          color,
           fillColor: color,
-          fillOpacity: isSelected ? 0.45 : isSimulated ? 0.35 : 0.22,
+          fillOpacity: isSelected ? 0.4 : isSimulated ? 0.3 : 0.18,
           weight: isSelected ? 3 : 1.5,
         });
 
-        // Interactive core marker
         const coreMarker = L.circleMarker([loc.lat, loc.lng], {
-          radius: isSelected ? 11 : 8,
+          radius: isSelected ? 10 : 7,
           color: '#ffffff',
           fillColor: color,
           fillOpacity: 0.95,
@@ -242,17 +336,16 @@ export const RiskMap: React.FC<RiskMapProps> = ({
 
         const popupContent = `
           <div style="font-family: sans-serif;">
-            <div style="font-weight: 700; font-size: 13px; color: #fff; margin-bottom: 2px;">${loc.name}</div>
-            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">${loc.district}, ${loc.state}</div>
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-              <span style="background: ${color}22; color: ${color}; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 11px; border: 1px solid ${color}66;">
-                ${loc.calculatedLevel} RISK (${loc.calculatedScore}/100)
+            <div style="font-weight: 700; font-size: 13px; color: #fff; margin-bottom: 2px;">${escapeHtml(loc.name)}</div>
+            <div style="font-size: 11px; color: #94a3b8; margin-bottom: 6px;">${escapeHtml(loc.district)}, ${escapeHtml(loc.state)}</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; gap: 6px;">
+              <span style="background: ${color}22; color: ${color}; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 10px; border: 1px solid ${color}66;">
+                ${escapeHtml(loc.calculatedLevel)} DEMO (${escapeHtml(loc.calculatedScore)}/100)
               </span>
-              <span style="font-size: 10px; color: #94a3b8;">Conf: ${loc.confidence}%</span>
             </div>
             <div style="font-size: 10px; color: #cbd5e1; line-height: 1.3;">
-              • Rain: <b>${loc.currentRainfall} mm</b> | Slope: <b>${loc.slope}°</b><br/>
-              • Pop Exposed: <b>${loc.populationExposed.toLocaleString()}</b>
+              Scenario Rain: <b>${escapeHtml(loc.currentRainfall)} mm</b> | Slope: <b>${escapeHtml(loc.slope)}°</b><br/>
+              Demo Pop Estimate: <b>${escapeHtml(loc.populationExposed.toLocaleString())}</b>
             </div>
           </div>
         `;
@@ -262,11 +355,15 @@ export const RiskMap: React.FC<RiskMapProps> = ({
           className: 'bg-slate-900/95 text-white border border-slate-700 rounded-lg shadow-xl',
         });
 
-        coreMarker.on('click', () => {
+        coreMarker.on('click', (evt) => {
+          L.DomEvent.stopPropagation(evt);
           onSelectLocation(loc);
+          if (onInspectRef.current) onInspectRef.current(loc.lat, loc.lng);
         });
-        halo.on('click', () => {
+        halo.on('click', (evt) => {
+          L.DomEvent.stopPropagation(evt);
           onSelectLocation(loc);
+          if (onInspectRef.current) onInspectRef.current(evt.latlng.lat, evt.latlng.lng);
         });
 
         halo.addTo(groups.riskZones);
@@ -274,7 +371,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
       });
     }
 
-    // 3. Historical Landslide markers
+    // 3. Historical Reference Markers
     if (layers.historicalLandslides) {
       historicalLandslides.forEach((hist) => {
         const histIcon = L.divIcon({
@@ -286,24 +383,24 @@ export const RiskMap: React.FC<RiskMapProps> = ({
 
         const marker = L.marker([hist.lat, hist.lng], { icon: histIcon });
         marker.bindTooltip(
-          `<div class="font-bold text-xs text-red-400">HISTORICAL LANDSLIDE (${hist.year})</div>
-           <div class="font-semibold text-white text-xs">${hist.locationName}</div>
-           <div class="text-[10px] text-slate-300">Fatalities: ${hist.fatalities} | Rain: ${hist.rainfallRecorded} mm</div>
-           <div class="text-[9px] text-slate-400 mt-1">${hist.damageDescription}</div>`,
+          `<div class="font-bold text-xs text-red-400">DEMO REFERENCE EVENT (${escapeHtml(hist.year)})</div>
+           <div class="font-semibold text-white text-xs">${escapeHtml(hist.locationName)}</div>
+           <div class="text-[10px] text-slate-300">Fatalities: ${escapeHtml(hist.fatalities)} | Ref Rain: ${escapeHtml(hist.rainfallRecorded)} mm</div>
+           <div class="text-[9px] text-slate-400 mt-1">${escapeHtml(hist.damageDescription)}</div>`,
           { className: 'bg-slate-900 border border-red-500/40 rounded p-1.5 max-w-xs' }
         );
         marker.addTo(groups.historicalLandslides);
       });
     }
 
-    // 4. Rainfall Indicators
+    // 4. Rainfall Indicators (Demo Layer)
     if (layers.rainfall) {
       locations.forEach((loc) => {
         if (loc.currentRainfall > 100) {
           const rainIcon = L.divIcon({
             className: 'custom-rain-icon',
             html: `<div style="background: rgba(14, 116, 144, 0.85); border: 1px solid #38bdf8; color: #e0f2fe; padding: 1px 4px; border-radius: 8px; font-size: 9px; font-weight: bold; font-family: monospace; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.5);">
-              💧 ${loc.currentRainfall}mm
+              ${escapeHtml(loc.currentRainfall)}mm (demo)
             </div>`,
             iconAnchor: [20, 20],
           });
@@ -323,7 +420,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
           weight: 1,
         });
         dot.bindTooltip(
-          `<div class="text-xs font-semibold">${loc.name} Habitation</div><div class="text-[10px] text-slate-300">Pop: ${loc.populationExposed.toLocaleString()}</div>`,
+          `<div class="text-xs font-semibold">${escapeHtml(loc.name)} Habitation</div><div class="text-[10px] text-slate-300">Demo Pop: ${escapeHtml(loc.populationExposed.toLocaleString())}</div>`,
           { className: 'bg-slate-900 text-white rounded p-1 border border-slate-700' }
         );
         dot.addTo(groups.settlements);
@@ -342,7 +439,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
           });
           L.marker([loc.lat, loc.lng], { icon: hospIcon })
             .bindTooltip(
-              `<div class="text-xs font-bold text-purple-300">Healthcare Facilities: ${loc.infrastructure.hospitals}</div><div class="text-[10px] text-slate-300">Emergency trauma unit active at ${loc.district}</div>`,
+              `<div class="text-xs font-bold text-purple-300">Healthcare Facilities (Demo): ${escapeHtml(loc.infrastructure.hospitals)}</div><div class="text-[10px] text-slate-300">${escapeHtml(loc.district)}</div>`,
               { className: 'bg-slate-900 text-white border border-purple-500/40 rounded p-1' }
             )
             .addTo(groups.hospitals);
@@ -350,19 +447,19 @@ export const RiskMap: React.FC<RiskMapProps> = ({
       });
     }
 
-    // 7. Critical Infrastructure (Bridges, Power)
+    // 7. Critical Infrastructure
     if (layers.infrastructure) {
       locations.forEach((loc) => {
         if (loc.infrastructure.bridges > 0) {
           const bridgeIcon = L.divIcon({
             className: 'custom-bridge-icon',
-            html: `<div style="background: #06b6d4; color: #082f49; width: 14px; height: 14px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; border: 1px solid white;">🌉</div>`,
+            html: `<div style="background: #06b6d4; color: #082f49; width: 14px; height: 14px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; border: 1px solid white;">B</div>`,
             iconSize: [14, 14],
             iconAnchor: [-10, 7],
           });
           L.marker([loc.lat, loc.lng], { icon: bridgeIcon })
             .bindTooltip(
-              `<div class="text-xs font-bold text-cyan-400">Bridges: ${loc.infrastructure.bridges} | Power Assets: ${loc.infrastructure.powerAssets}</div>`,
+              `<div class="text-xs font-bold text-cyan-400">Bridges: ${escapeHtml(loc.infrastructure.bridges)} | Power Assets: ${escapeHtml(loc.infrastructure.powerAssets)}</div>`,
               { className: 'bg-slate-900 text-white border border-cyan-500/40 rounded p-1' }
             )
             .addTo(groups.infrastructure);
@@ -370,7 +467,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
       });
     }
 
-    // 8. Field Reports
+    // 8. Field Reports (Strictly escaped to prevent HTML/JS XSS injection)
     if (layers.fieldReports) {
       fieldReports.forEach((rep) => {
         const color =
@@ -391,30 +488,33 @@ export const RiskMap: React.FC<RiskMapProps> = ({
 
         L.marker([rep.lat, rep.lng], { icon: repIcon })
           .bindTooltip(
-            `<div class="text-xs font-bold" style="color: ${color}">FIELD OBSERVATION: ${rep.type.toUpperCase()}</div>
-             <div class="font-medium text-white text-xs">${rep.locationName}</div>
-             <div class="text-[10px] text-slate-300">By ${rep.submittedBy} (${rep.role}) • ${rep.timestamp}</div>
-             <div class="text-[9px] text-slate-400 mt-1">${rep.description}</div>`,
+            `<div class="text-xs font-bold" style="color: ${color}">FIELD OBSERVATION: ${escapeHtml(rep.type.toUpperCase())}</div>
+             <div class="font-medium text-white text-xs">${escapeHtml(rep.locationName)}</div>
+             <div class="text-[10px] text-slate-300">By ${escapeHtml(rep.submittedBy)} (${escapeHtml(rep.role)}) • ${escapeHtml(rep.timestamp)}</div>
+             <div class="text-[9px] text-slate-400 mt-1">${escapeHtml(rep.description)}</div>`,
             { className: 'bg-slate-900 border border-slate-700 rounded p-1.5 max-w-xs' }
           )
           .addTo(groups.fieldReports);
       });
     }
-  }, [locations, selectedLocation, historicalLandslides, fieldReports, layers, isSimulated]);
+  }, [locations, selectedLocation, historicalLandslides, fieldReports, layers, isSimulated, showDemoLayers]);
 
   // Center on Selected Location when changed externally
   useEffect(() => {
     if (!selectedLocation || !mapRef.current) return;
     mapRef.current.flyTo([selectedLocation.lat, selectedLocation.lng], 9, {
-      duration: 1.2,
+      duration: 1.0,
       easeLinearity: 0.25,
     });
   }, [selectedLocation]);
 
   const handleZoomIn = () => mapRef.current?.zoomIn();
   const handleZoomOut = () => mapRef.current?.zoomOut();
-  const handleRecenter = () => {
+  const handleRecenterNER = () => {
     mapRef.current?.flyTo([26.05, 92.8], 7, { duration: 1.0 });
+  };
+  const handleFocusDimaHasao = () => {
+    mapRef.current?.flyTo([25.35, 93.02], 9, { duration: 1.0 });
   };
 
   return (
@@ -422,8 +522,8 @@ export const RiskMap: React.FC<RiskMapProps> = ({
       {/* Map Canvas */}
       <div ref={mapContainerRef} className="w-full h-full z-0" />
 
-      {/* Floating Layer Control Panel (Top-Left, exactly matching mockup) */}
-      <div className="absolute top-3 left-3 z-10 w-52 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-lg shadow-2xl overflow-hidden transition-all duration-200">
+      {/* Floating Layer Control Panel (Top-Left) */}
+      <div className="absolute top-3 left-3 z-10 w-56 bg-slate-900/92 backdrop-blur-md border border-slate-700/80 rounded-lg shadow-2xl overflow-hidden transition-all duration-200">
         <div
           onClick={() => setIsLayersCollapsed(!isLayersCollapsed)}
           className="px-3 py-2 bg-slate-800/80 flex items-center justify-between cursor-pointer border-b border-slate-700/60"
@@ -434,6 +534,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
           </div>
           <button
             id="map-toggle-layer-panel-btn"
+            type="button"
             className="text-slate-400 hover:text-white"
           >
             {isLayersCollapsed ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
@@ -441,116 +542,106 @@ export const RiskMap: React.FC<RiskMapProps> = ({
         </div>
 
         {!isLayersCollapsed && (
-          <div className="p-2 space-y-1.5 text-xs">
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
+          <div className="p-2 space-y-1.5 text-xs max-h-72 overflow-y-auto">
+            {/* Verified Pilot Section */}
+            <div className="text-[9px] font-mono uppercase text-emerald-400 font-bold px-1">
+              Verified Pilot Layer
+            </div>
+            <label className="flex items-center gap-2 px-1.5 py-1 rounded bg-emerald-950/30 border border-emerald-500/30 cursor-pointer">
               <input
                 type="checkbox"
-                checked={layers.riskZones}
-                onChange={() => toggleLayer('riskZones')}
-                className="rounded border-slate-700 text-red-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
+                checked={showPilotBoundary}
+                onChange={() => setShowPilotBoundary((v) => !v)}
+                className="rounded border-slate-700 text-emerald-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
               />
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-              <span className="text-slate-200 text-[11px] font-medium">Risk Zones</span>
+              <span className="w-2.5 h-2.5 rounded-sm border border-emerald-400 bg-emerald-500/30"></span>
+              <span className="text-emerald-200 text-[11px] font-semibold">Dima Hasao AOI (Real)</span>
             </label>
 
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
+            {/* Simulated Demo Section */}
+            <div className="pt-1 border-t border-slate-800 flex items-center justify-between px-1">
+              <span className="text-[9px] font-mono uppercase text-amber-300 font-bold">
+                Simulated Demo Layers
+              </span>
               <input
                 type="checkbox"
-                checked={layers.historicalLandslides}
-                onChange={() => toggleLayer('historicalLandslides')}
-                className="rounded border-slate-700 text-amber-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
+                checked={showDemoLayers}
+                onChange={() => setShowDemoLayers((v) => !v)}
+                title="Toggle all simulated demo layers"
+                className="rounded border-slate-700 text-amber-500 focus:ring-0 w-3 h-3 bg-slate-950"
               />
-              <span className="text-red-400 text-[10px] font-bold">▲</span>
-              <span className="text-slate-200 text-[11px] font-medium">Historical Landslides</span>
-            </label>
+            </div>
 
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={layers.rainfall}
-                onChange={() => toggleLayer('rainfall')}
-                className="rounded border-slate-700 text-cyan-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
-              />
-              <span className="text-cyan-400 text-[10px]">💧</span>
-              <span className="text-slate-200 text-[11px] font-medium">Rainfall (24h)</span>
-            </label>
+            {showDemoLayers && (
+              <>
+                <label className="flex items-center gap-2 px-1.5 py-0.5 rounded hover:bg-slate-800/60 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={layers.riskZones}
+                    onChange={() => toggleLayer('riskZones')}
+                    className="rounded border-slate-700 text-red-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
+                  />
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                  <span className="text-slate-200 text-[11px]">Heuristic Zones</span>
+                </label>
 
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={layers.roads}
-                onChange={() => toggleLayer('roads')}
-                className="rounded border-slate-700 text-blue-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
-              />
-              <span className="text-sky-400 text-[10px]">🛣️</span>
-              <span className="text-slate-200 text-[11px] font-medium">Roads</span>
-            </label>
+                <label className="flex items-center gap-2 px-1.5 py-0.5 rounded hover:bg-slate-800/60 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={layers.historicalLandslides}
+                    onChange={() => toggleLayer('historicalLandslides')}
+                    className="rounded border-slate-700 text-amber-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
+                  />
+                  <span className="text-red-400 text-[10px] font-bold">▲</span>
+                  <span className="text-slate-200 text-[11px]">Ref. Events (Demo)</span>
+                </label>
 
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={layers.settlements}
-                onChange={() => toggleLayer('settlements')}
-                className="rounded border-slate-700 text-indigo-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
-              />
-              <span className="text-indigo-400 text-[10px]">👥</span>
-              <span className="text-slate-200 text-[11px] font-medium">Settlements</span>
-            </label>
+                <label className="flex items-center gap-2 px-1.5 py-0.5 rounded hover:bg-slate-800/60 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={layers.roads}
+                    onChange={() => toggleLayer('roads')}
+                    className="rounded border-slate-700 text-blue-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
+                  />
+                  <span className="text-sky-400 text-[10px]">—</span>
+                  <span className="text-slate-200 text-[11px]">Highway Corridors</span>
+                </label>
 
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={layers.hospitals}
-                onChange={() => toggleLayer('hospitals')}
-                className="rounded border-slate-700 text-purple-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
-              />
-              <span className="text-purple-400 text-[10px]">✚</span>
-              <span className="text-slate-200 text-[11px] font-medium">Hospitals</span>
-            </label>
-
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={layers.infrastructure}
-                onChange={() => toggleLayer('infrastructure')}
-                className="rounded border-slate-700 text-teal-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
-              />
-              <span className="text-teal-400 text-[10px]">🌉</span>
-              <span className="text-slate-200 text-[11px] font-medium">Critical Infrastructure</span>
-            </label>
-
-            <label className="flex items-center gap-2 px-1.5 py-1 rounded hover:bg-slate-800/60 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={layers.fieldReports}
-                onChange={() => toggleLayer('fieldReports')}
-                className="rounded border-slate-700 text-rose-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
-              />
-              <span className="text-rose-400 text-[10px]">🚩</span>
-              <span className="text-slate-200 text-[11px] font-medium">Field Reports</span>
-            </label>
+                <label className="flex items-center gap-2 px-1.5 py-0.5 rounded hover:bg-slate-800/60 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={layers.fieldReports}
+                    onChange={() => toggleLayer('fieldReports')}
+                    className="rounded border-slate-700 text-rose-500 focus:ring-0 w-3.5 h-3.5 bg-slate-950"
+                  />
+                  <span className="text-rose-400 text-[10px] font-bold">!</span>
+                  <span className="text-slate-200 text-[11px]">Session Reports</span>
+                </label>
+              </>
+            )}
           </div>
         )}
       </div>
 
-      {/* Floating Risk Legend (Bottom-Left) */}
-      <div className="absolute bottom-3 left-3 z-10 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-lg p-2.5 shadow-2xl text-[11px] space-y-1 font-mono">
-        <div className="text-[10px] uppercase font-bold text-slate-400 mb-1">Risk Level</div>
+      {/* Floating Legend (Bottom-Left) */}
+      <div className="absolute bottom-7 left-3 z-10 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-lg p-2.5 shadow-2xl text-[10px] space-y-1 font-mono">
+        <div className="text-[9px] uppercase font-bold text-emerald-400">Verified Pilot AOI</div>
+        <div className="flex items-center gap-2 pb-1 border-b border-slate-800">
+          <span className="w-2.5 h-2.5 rounded-sm border border-emerald-400 bg-cyan-500/20"></span>
+          <span className="text-slate-200">Dima Hasao (Click to Query)</span>
+        </div>
+        <div className="text-[9px] uppercase font-bold text-amber-300 pt-0.5">Demo Heuristic Index</div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-red-500 ring-2 ring-red-500/20"></span>
-          <span className="text-slate-200">Critical (75-100)</span>
+          <span className="w-2 h-2 rounded-full bg-red-500"></span>
+          <span className="text-slate-300">Critical (75-100)</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
-          <span className="text-slate-200">High (50-74)</span>
+          <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+          <span className="text-slate-300">High (50-74)</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
-          <span className="text-slate-200">Moderate (25-49)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-          <span className="text-slate-200">Low (0-24)</span>
+          <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
+          <span className="text-slate-300">Moderate (25-49)</span>
         </div>
       </div>
 
@@ -558,6 +649,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
       <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5">
         <button
           id="map-zoom-in-btn"
+          type="button"
           onClick={handleZoomIn}
           className="w-8 h-8 rounded-lg bg-slate-900/90 backdrop-blur border border-slate-700 text-slate-200 hover:bg-slate-800 flex items-center justify-center shadow-lg transition"
           title="Zoom In"
@@ -566,6 +658,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
         </button>
         <button
           id="map-zoom-out-btn"
+          type="button"
           onClick={handleZoomOut}
           className="w-8 h-8 rounded-lg bg-slate-900/90 backdrop-blur border border-slate-700 text-slate-200 hover:bg-slate-800 flex items-center justify-center shadow-lg transition"
           title="Zoom Out"
@@ -574,6 +667,7 @@ export const RiskMap: React.FC<RiskMapProps> = ({
         </button>
         <button
           id="map-style-toggle-btn"
+          type="button"
           onClick={() => setMapType(mapType === 'satellite' ? 'dark' : 'satellite')}
           className="w-8 h-8 rounded-lg bg-slate-900/90 backdrop-blur border border-slate-700 text-slate-200 hover:bg-slate-800 flex items-center justify-center shadow-lg transition"
           title={`Toggle Map Style (Current: ${mapType})`}
@@ -581,19 +675,23 @@ export const RiskMap: React.FC<RiskMapProps> = ({
           <Layers className="w-4 h-4 text-cyan-400" />
         </button>
         <button
-          id="map-recenter-btn"
-          onClick={handleRecenter}
-          className="w-8 h-8 rounded-lg bg-slate-900/90 backdrop-blur border border-slate-700 text-slate-200 hover:bg-slate-800 flex items-center justify-center shadow-lg transition"
-          title="Recenter NER Region"
+          id="map-focus-pilot-btn"
+          type="button"
+          onClick={handleFocusDimaHasao}
+          className="w-8 h-8 rounded-lg bg-emerald-950/90 backdrop-blur border border-emerald-500/60 text-emerald-300 hover:bg-emerald-900 flex items-center justify-center shadow-lg transition"
+          title="Focus Dima Hasao Real Pilot Area"
         >
-          <Compass className="w-4 h-4 text-emerald-400" />
+          <Crosshair className="w-4 h-4" />
         </button>
-      </div>
-
-      {/* Scale Bar Marker (Bottom-Right) */}
-      <div className="absolute bottom-3 right-3 z-10 bg-slate-900/80 backdrop-blur border border-slate-700/60 rounded px-2 py-0.5 text-[10px] font-mono text-slate-300">
-        <div className="w-16 h-1 bg-slate-400 mb-0.5"></div>
-        <span>100 km</span>
+        <button
+          id="map-recenter-btn"
+          type="button"
+          onClick={handleRecenterNER}
+          className="w-8 h-8 rounded-lg bg-slate-900/90 backdrop-blur border border-slate-700 text-slate-200 hover:bg-slate-800 flex items-center justify-center shadow-lg transition"
+          title="Recenter Full NER Region"
+        >
+          <Compass className="w-4 h-4 text-cyan-400" />
+        </button>
       </div>
     </div>
   );

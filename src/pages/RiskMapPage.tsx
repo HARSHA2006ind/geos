@@ -1,7 +1,9 @@
-import React, { useState, useMemo } from 'react';
-import { Filter, Layers, Search, MapPin, Eye, Compass, ShieldAlert, Sliders } from 'lucide-react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import { Search, MapPin, Eye, Sliders } from 'lucide-react';
 import { RiskMap } from '../components/map/RiskMap';
-import { RiskLocation, HistoricalLandslide, FieldReport, RiskLevel } from '../types/disaster';
+import { PilotEnvironmentPanel } from '../components/pilot/PilotEnvironmentPanel';
+import { RiskLocation, HistoricalLandslide, FieldReport } from '../types/disaster';
+import { environmentApi, PointEnvironmentResponse } from '../services/environmentApi';
 
 interface RiskMapPageProps {
   locations: RiskLocation[];
@@ -11,6 +13,7 @@ interface RiskMapPageProps {
   fieldReports: FieldReport[];
   onViewAnalysis: (loc: RiskLocation) => void;
   onSimulate: (loc: RiskLocation) => void;
+  initialLevelFilter?: string;
 }
 
 export const RiskMapPage: React.FC<RiskMapPageProps> = ({
@@ -21,11 +24,54 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
   fieldReports,
   onViewAnalysis,
   onSimulate,
+  initialLevelFilter = 'ALL',
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [levelFilter, setLevelFilter] = useState<string>('ALL');
+  const [levelFilter, setLevelFilter] = useState<string>(initialLevelFilter);
   const [minSlope, setMinSlope] = useState<number>(0);
   const [minRainfall, setMinRainfall] = useState<number>(0);
+
+  const [pilotBoundary, setPilotBoundary] = useState<GeoJSON.FeatureCollection | null>(null);
+  const [inspectedPoint, setInspectedPoint] = useState<{ lat: number; lon: number }>({
+    lat: 25.1645,
+    lon: 93.0176,
+  });
+  const [pointEnv, setPointEnv] = useState<PointEnvironmentResponse | null>(null);
+  const [loadingEnv, setLoadingEnv] = useState(false);
+  const [envError, setEnvError] = useState<string | null>(null);
+  const [focusPilotTrigger, setFocusPilotTrigger] = useState(0);
+
+  useEffect(() => {
+    setLevelFilter(initialLevelFilter);
+  }, [initialLevelFilter]);
+
+  const inspectCoordinate = useCallback(async (lat: number, lon: number) => {
+    setInspectedPoint({ lat, lon });
+    setLoadingEnv(true);
+    setEnvError(null);
+    try {
+      const res = await environmentApi.getPointEnvironment(lat, lon);
+      setPointEnv(res);
+    } catch (err: unknown) {
+      setEnvError(err instanceof Error ? err.message : 'Failed to query pilot environment');
+    } finally {
+      setLoadingEnv(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    environmentApi
+      .getPilotBoundary()
+      .then((res) => {
+        if (active) setPilotBoundary(res.geojson as unknown as GeoJSON.FeatureCollection);
+      })
+      .catch(() => {});
+    inspectCoordinate(25.1645, 93.0176);
+    return () => {
+      active = false;
+    };
+  }, [inspectCoordinate]);
 
   const filteredLocations = useMemo(() => {
     return locations.filter((loc) => {
@@ -44,18 +90,30 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
   const highCount = locations.filter((l) => l.calculatedLevel === 'HIGH').length;
 
   return (
-    <div className="h-[calc(100vh-6rem)] flex flex-col space-y-2">
-      {/* Top Telemetry & Filter Bar */}
+    <div className="space-y-3">
+      {/* Verified Pilot Environmental Inspector */}
+      <PilotEnvironmentPanel
+        data={pointEnv}
+        loading={loadingEnv}
+        error={envError}
+        onSelectCoordinate={(lat, lon) => {
+          inspectCoordinate(lat, lon);
+          setFocusPilotTrigger((n) => n + 1);
+        }}
+        onFocusPilot={() => setFocusPilotTrigger((n) => n + 1)}
+      />
+
+      {/* Top Filter Bar */}
       <div className="bg-[#0f172a] border border-slate-800 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <MapPin className="w-5 h-5 text-cyan-400" />
             <div>
               <h2 className="text-sm font-bold text-slate-100 font-display">
-                Geospatial Hazard Risk Map (NER)
+                Geospatial Risk Map (Dima Hasao Pilot + NER Demo Layer)
               </h2>
               <p className="text-[10px] text-slate-400 font-mono">
-                Showing {filteredLocations.length} of {locations.length} hazard telemetry nodes
+                Showing {filteredLocations.length} of {locations.length} demo nodes · Click inside green boundary for real data
               </p>
             </div>
           </div>
@@ -65,26 +123,23 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
               {criticalCount} Critical
             </span>
             <span className="px-2 py-0.5 rounded bg-orange-950/80 text-orange-400 border border-orange-500/40">
-              {highCount} High Risk
+              {highCount} High
             </span>
           </div>
         </div>
 
-        {/* Filters */}
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Search */}
-          <div className="relative w-48">
+          <div className="relative w-44">
             <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search place..."
+              placeholder="Search demo sector..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-slate-900 border border-slate-700 rounded-md pl-8 pr-3 py-1 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
             />
           </div>
 
-          {/* Level Filter */}
           <div className="flex items-center rounded-md bg-slate-900 border border-slate-700 p-0.5 text-[11px]">
             {['ALL', 'CRITICAL', 'HIGH', 'MODERATE', 'LOW'].map((lvl) => (
               <button
@@ -101,7 +156,6 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
             ))}
           </div>
 
-          {/* Slope filter pill */}
           <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-900 border border-slate-700 rounded-md text-[11px] text-slate-300">
             <span>Slope &gt;</span>
             <select
@@ -116,7 +170,6 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
             </select>
           </div>
 
-          {/* Rainfall filter pill */}
           <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-900 border border-slate-700 rounded-md text-[11px] text-slate-300">
             <span>Rain &gt;</span>
             <select
@@ -133,23 +186,26 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
         </div>
       </div>
 
-      {/* Main Map with Floating Detail Drawer on selection */}
-      <div className="relative flex-1 rounded-xl overflow-hidden border border-slate-800">
+      {/* Main Map */}
+      <div className="relative h-[540px] rounded-xl overflow-hidden border border-slate-800">
         <RiskMap
           locations={filteredLocations}
           selectedLocation={selectedLocation}
           onSelectLocation={onSelectLocation}
           historicalLandslides={historicalLandslides}
           fieldReports={fieldReports}
+          pilotBoundaryGeoJson={pilotBoundary}
+          inspectedPoint={inspectedPoint}
+          onInspectCoordinate={inspectCoordinate}
+          focusPilotTrigger={focusPilotTrigger}
         />
 
-        {/* Floating Quick Drawer if location selected */}
         {selectedLocation && (
-          <div className="absolute right-4 bottom-4 z-20 w-80 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl p-4 shadow-2xl space-y-3 animate-in slide-in-from-right-4 duration-200">
+          <div className="absolute right-4 bottom-8 z-20 w-80 bg-slate-900/95 backdrop-blur-md border border-slate-700 rounded-xl p-4 shadow-2xl space-y-3">
             <div className="flex items-start justify-between">
               <div>
-                <span className="text-[10px] text-cyan-400 font-mono uppercase tracking-wider block">
-                  Focused Location
+                <span className="text-[10px] text-amber-300 font-mono uppercase tracking-wider block">
+                  Demo Sector Selection
                 </span>
                 <h4 className="text-sm font-bold text-white font-display">
                   {selectedLocation.name}
@@ -171,19 +227,19 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
 
             <div className="grid grid-cols-2 gap-2 text-[11px] font-mono p-2 bg-slate-950/60 rounded border border-slate-800">
               <div>
-                <span className="text-slate-500 block text-[9px]">Slope:</span>
+                <span className="text-slate-500 block text-[9px]">Demo Slope:</span>
                 <span className="text-slate-200 font-semibold">{selectedLocation.slope}°</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[9px]">24h Rain:</span>
+                <span className="text-slate-500 block text-[9px]">Demo 24h Rain:</span>
                 <span className="text-cyan-400 font-semibold">{selectedLocation.currentRainfall} mm</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[9px]">Soil Saturation:</span>
+                <span className="text-slate-500 block text-[9px]">Demo Saturation:</span>
                 <span className="text-amber-400 font-semibold">{selectedLocation.soilSaturation}%</span>
               </div>
               <div>
-                <span className="text-slate-500 block text-[9px]">Pop Exposed:</span>
+                <span className="text-slate-500 block text-[9px]">Demo Pop Est:</span>
                 <span className="text-purple-300 font-semibold">{selectedLocation.populationExposed.toLocaleString()}</span>
               </div>
             </div>
@@ -194,14 +250,14 @@ export const RiskMapPage: React.FC<RiskMapPageProps> = ({
                 className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded text-xs font-semibold border border-slate-700 transition"
               >
                 <Eye className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Deep Analysis</span>
+                <span>Diagnosis</span>
               </button>
               <button
                 onClick={() => onSimulate(selectedLocation)}
                 className="flex-1 flex items-center justify-center gap-1.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded text-xs font-semibold shadow-md shadow-blue-600/20 transition"
               >
                 <Sliders className="w-3.5 h-3.5" />
-                <span>Simulate</span>
+                <span>Stress Test</span>
               </button>
             </div>
           </div>

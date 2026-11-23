@@ -1,0 +1,79 @@
+{
+  "schema_version": "geos-experimental-ghcn-eval-1.0",
+  "data_role": "experimental_off_district_synoptic_verification_only",
+  "discovery_provenance": {
+    "discovered_via": "NVIDIA Earth2Studio v1.0.0 (`earth2studio/data/ghcn.py` -> GHCNDaily)",
+    "source_url": "https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/IN003010600.csv",
+    "provider": "NOAA National Centers for Environmental Information (NCEI) \u2014 GHCN-Daily",
+    "license": "Public Domain (US Government / NOAA Open Data)",
+    "authentication_required": false
+  },
+  "in_district_dima_hasao_ghcn_audit": {
+    "stations_found_inside_polygon": 4,
+    "active_post_1970_stations_inside_polygon": 0,
+    "stations": [
+      {
+        "station_id": "IN003060200",
+        "name": "HALFLONG OBSY",
+        "lat": 25.17,
+        "lon": 93.02,
+        "elev_m": 682.0,
+        "latest_record_year": 1970
+      },
+      {
+        "station_id": "IN003060600",
+        "name": "HARANGAJAO",
+        "lat": 25.12,
+        "lon": 92.87,
+        "elev_m": 289.0,
+        "latest_record_year": 1955
+      },
+      {
+        "station_id": "IN003060300",
+        "name": "JAITANGA VALLEY",
+        "lat": 25.13,
+        "lon": 93.0,
+        "elev_m": 723.0,
+        "latest_record_year": 1955
+      },
+      {
+        "station_id": "IN003060400",
+        "name": "MAIBONG",
+        "lat": 25.3,
+        "lon": 93.15,
+        "elev_m": 274.0,
+        "latest_record_year": 1968
+      }
+    ],
+    "finding": "All 4 GHCN-Daily stations physically inside Dima Hasao (Haflong, Harangajao, Jaitanga Valley, Maibong) ceased reporting in GHCN-Daily between 1955 and 1970. True in-district gauge validation still requires IMD Guwahati / CWC / ASDMA station data."
+  },
+  "nearest_active_synoptic_station": {
+    "station_id": "IN003010600",
+    "name": "SILCHAR (IMD Synoptic, Cachar / Barak Valley \u2014 ~35 km south of Dima Hasao)",
+    "lat": 24.75,
+    "lon": 92.8,
+    "elev_m": 29.0,
+    "total_historical_rows": 27932,
+    "latest_observation_date": "2026-11-09",
+    "valid_prcp_days_2015_2024": 1060,
+    "valid_prcp_days_in_2024_imerg_gap": 127
+  },
+  "comparison_with_dima_hasao_imerg_2015_2024": {
+    "overlapping_valid_days": 933,
+    "pearson_r_daily": 0.3062,
+    "mean_absolute_diff_mm_day": 15.68,
+    "mean_bias_imerg_minus_silchar_mm_day": -4.39,
+    "imerg_paired_mean_mm_day": 11.36,
+    "silchar_paired_mean_mm_day": 15.76,
+    "scientific_caveat": "Silchar sits in the low-elevation Barak Valley (29 m MSL) ~35 km south of the Barail Range ridge (Haflong ~682 m MSL). Correlation reflects regional monsoon co-variability, NOT site-specific mountain gauge validation for Dima Hasao hillslopes."
+  },
+  "performance_benchmark": {
+    "execution_time_sec": 2.885,
+    "peak_python_heap_mb": 19.09,
+    "http_bytes_transferred_kb": 2327.62,
+    "extra_dependencies_added": 0,
+    "gpu_required": false,
+    "output_disk_kb": 2.9
+  },
+  "retrieved_at_utc": "2026-11-23T10:54:07.611007+00:00"
+}

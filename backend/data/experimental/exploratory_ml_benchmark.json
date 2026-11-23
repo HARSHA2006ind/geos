@@ -1,0 +1,579 @@
+{
+  "schema_version": "1.0",
+  "generated_at_utc": "2026-11-23T11:12:20.691190+00:00",
+  "study_area": "Dima Hasao District, Assam (Pilot)",
+  "track": "exploratory_research_only",
+  "validated_for_production": false,
+  "promoted_to_inference": false,
+  "production_landslide_probability_policy": "STRICTLY_NULL_UNTIL_ALL_13_QUALITY_GATES_PASS",
+  "production_quality_gate_status": {
+    "overall_ml_ready": false,
+    "passed_checks": 6,
+    "total_checks": 13,
+    "blocking_failures": [
+      "duplicate_landslide_events",
+      "landslide_location_uncertainty",
+      "event_date_precision",
+      "feature_timestamps",
+      "data_leakage_prevention",
+      "train_test_geographic_separation"
+    ]
+  },
+  "dataset_construction": {
+    "positive_source": "GSI Bhusanket Public Inventory (in-district point centroids)",
+    "raw_in_district_records": 379,
+    "spatial_dedup_radius_m": 100.0,
+    "deduplicated_positives_sampled": 279,
+    "background_sampling_method": "Positive-Unlabeled (PU) uniform spatial background >= 250 m from known GSI points (NOT confirmed landslide-free ground truth)",
+    "unlabeled_background_sampled": 563,
+    "unique_5km_utm_spatial_blocks": 199,
+    "excluded_temporal_leakage_features": [
+      "esa_worldcover_2021 (post-dates pre-2021 events)",
+      "sentinel2_premonsoon_2024_ndvi (post-dates pre-May-2024 events)"
+    ],
+    "missing_critical_geology_features": [
+      "GSI 1:50k lithology polygons (NGDR/Bhukosh access blocked)",
+      "GSI thrust/fault lineaments"
+    ],
+    "random_seed": 2026
+  },
+  "model_a_static_susceptibility": {
+    "validation_scheme": "5-fold Geographic Spatial-Block GroupKFold (5 km x 5 km EPSG:32646 blocks)",
+    "clean_terrain_soil_ablation": {
+      "description": "Excludes road/railway distance proxies to isolate physical terrain, hydrology, and soil conditioning.",
+      "features": [
+        "elevation_m",
+        "slope_deg",
+        "aspect_sin",
+        "aspect_cos",
+        "profile_curvature",
+        "plan_curvature",
+        "tri_m",
+        "twi",
+        "log1p_flow_acc",
+        "dist_drainage_m",
+        "soil_clay_0_5cm",
+        "soil_sand_0_5cm",
+        "soil_silt_0_5cm",
+        "soil_bdod_0_5cm",
+        "soil_cfvo_0_5cm",
+        "soil_soc_0_5cm"
+      ],
+      "models": {
+        "random_forest": {
+          "algorithm": "RandomForestClassifier (baseline)",
+          "training_cv_seconds": 2.404,
+          "oof_metrics": {
+            "roc_auc": 0.7588,
+            "pr_auc": 0.5415,
+            "precision_at_0_5": 0.6128,
+            "recall_at_0_5": 0.5161,
+            "f1_at_0_5": 0.5603,
+            "brier_score": 0.1857,
+            "expected_calibration_error": 0.0696,
+            "confusion_matrix": {
+              "tn": 472,
+              "fp": 91,
+              "fn": 135,
+              "tp": 144
+            }
+          },
+          "spatial_block_generalization": {
+            "n_folds": 5,
+            "fold_roc_auc_mean": 0.764,
+            "fold_roc_auc_std": 0.0386,
+            "fold_pr_auc_mean": 0.5561,
+            "fold_pr_auc_std": 0.0998,
+            "fold_roc_aucs": [
+              0.8371,
+              0.7357,
+              0.7449,
+              0.7338,
+              0.7687
+            ]
+          },
+          "calibration_bins": [
+            {
+              "mean_predicted": 0.0982,
+              "fraction_positive": 0.0496
+            },
+            {
+              "mean_predicted": 0.2191,
+              "fraction_positive": 0.1643
+            },
+            {
+              "mean_predicted": 0.3261,
+              "fraction_positive": 0.2643
+            },
+            {
+              "mean_predicted": 0.4225,
+              "fraction_positive": 0.3429
+            },
+            {
+              "mean_predicted": 0.5249,
+              "fraction_positive": 0.5571
+            },
+            {
+              "mean_predicted": 0.6586,
+              "fraction_positive": 0.6099
+            }
+          ],
+          "shap_top_features": [
+            {
+              "feature": "tri_m",
+              "mean_abs_shap": 0.07408
+            },
+            {
+              "feature": "elevation_m",
+              "mean_abs_shap": 0.05102
+            },
+            {
+              "feature": "soil_soc_0_5cm",
+              "mean_abs_shap": 0.04791
+            },
+            {
+              "feature": "slope_deg",
+              "mean_abs_shap": 0.04272
+            },
+            {
+              "feature": "soil_sand_0_5cm",
+              "mean_abs_shap": 0.03038
+            },
+            {
+              "feature": "soil_cfvo_0_5cm",
+              "mean_abs_shap": 0.0243
+            },
+            {
+              "feature": "soil_clay_0_5cm",
+              "mean_abs_shap": 0.02316
+            },
+            {
+              "feature": "soil_silt_0_5cm",
+              "mean_abs_shap": 0.01587
+            },
+            {
+              "feature": "soil_bdod_0_5cm",
+              "mean_abs_shap": 0.01336
+            },
+            {
+              "feature": "aspect_cos",
+              "mean_abs_shap": 0.01292
+            }
+          ],
+          "shap_disclaimer": "SHAP values quantify statistical attribution within this exploratory PU benchmark only; they are NOT physically causal geotechnical parameters or Factor of Safety estimates."
+        },
+        "xgboost": {
+          "algorithm": "XGBClassifier (CPU hist candidate)",
+          "training_cv_seconds": 0.903,
+          "oof_metrics": {
+            "roc_auc": 0.7623,
+            "pr_auc": 0.5678,
+            "precision_at_0_5": 0.6067,
+            "recall_at_0_5": 0.5197,
+            "f1_at_0_5": 0.5598,
+            "brier_score": 0.1865,
+            "expected_calibration_error": 0.0506,
+            "confusion_matrix": {
+              "tn": 469,
+              "fp": 94,
+              "fn": 134,
+              "tp": 145
+            }
+          },
+          "spatial_block_generalization": {
+            "n_folds": 5,
+            "fold_roc_auc_mean": 0.7614,
+            "fold_roc_auc_std": 0.0474,
+            "fold_pr_auc_mean": 0.5739,
+            "fold_pr_auc_std": 0.1135,
+            "fold_roc_aucs": [
+              0.8417,
+              0.7309,
+              0.7255,
+              0.7192,
+              0.7895
+            ]
+          },
+          "calibration_bins": [
+            {
+              "mean_predicted": 0.0362,
+              "fraction_positive": 0.0638
+            },
+            {
+              "mean_predicted": 0.1082,
+              "fraction_positive": 0.1429
+            },
+            {
+              "mean_predicted": 0.2127,
+              "fraction_positive": 0.2643
+            },
+            {
+              "mean_predicted": 0.3599,
+              "fraction_positive": 0.3571
+            },
+            {
+              "mean_predicted": 0.5485,
+              "fraction_positive": 0.5357
+            },
+            {
+              "mean_predicted": 0.7875,
+              "fraction_positive": 0.6241
+            }
+          ],
+          "shap_top_features": [
+            {
+              "feature": "soil_soc_0_5cm",
+              "mean_abs_shap": 0.56262
+            },
+            {
+              "feature": "tri_m",
+              "mean_abs_shap": 0.54617
+            },
+            {
+              "feature": "elevation_m",
+              "mean_abs_shap": 0.54369
+            },
+            {
+              "feature": "soil_clay_0_5cm",
+              "mean_abs_shap": 0.30586
+            },
+            {
+              "feature": "soil_cfvo_0_5cm",
+              "mean_abs_shap": 0.21973
+            },
+            {
+              "feature": "soil_silt_0_5cm",
+              "mean_abs_shap": 0.18571
+            },
+            {
+              "feature": "slope_deg",
+              "mean_abs_shap": 0.17097
+            },
+            {
+              "feature": "soil_bdod_0_5cm",
+              "mean_abs_shap": 0.15616
+            },
+            {
+              "feature": "plan_curvature",
+              "mean_abs_shap": 0.14924
+            },
+            {
+              "feature": "soil_sand_0_5cm",
+              "mean_abs_shap": 0.14891
+            }
+          ],
+          "shap_disclaimer": "SHAP values quantify statistical attribution within this exploratory PU benchmark only; they are NOT physically causal geotechnical parameters or Factor of Safety estimates."
+        }
+      }
+    },
+    "corridor_proxy_leakage_diagnostic": {
+      "description": "Adds OSM distance-to-road and distance-to-railway solely to measure survey-accessibility bias leakage.",
+      "features": [
+        "elevation_m",
+        "slope_deg",
+        "aspect_sin",
+        "aspect_cos",
+        "profile_curvature",
+        "plan_curvature",
+        "tri_m",
+        "twi",
+        "log1p_flow_acc",
+        "dist_drainage_m",
+        "soil_clay_0_5cm",
+        "soil_sand_0_5cm",
+        "soil_silt_0_5cm",
+        "soil_bdod_0_5cm",
+        "soil_cfvo_0_5cm",
+        "soil_soc_0_5cm",
+        "dist_road_m",
+        "dist_railway_m"
+      ],
+      "models": {
+        "random_forest": {
+          "algorithm": "RandomForestClassifier (baseline)",
+          "training_cv_seconds": 2.469,
+          "oof_metrics": {
+            "roc_auc": 0.9444,
+            "pr_auc": 0.8966,
+            "precision_at_0_5": 0.8327,
+            "recall_at_0_5": 0.8208,
+            "f1_at_0_5": 0.8267,
+            "brier_score": 0.0911,
+            "expected_calibration_error": 0.0783,
+            "confusion_matrix": {
+              "tn": 517,
+              "fp": 46,
+              "fn": 50,
+              "tp": 229
+            }
+          },
+          "spatial_block_generalization": {
+            "n_folds": 5,
+            "fold_roc_auc_mean": 0.9423,
+            "fold_roc_auc_std": 0.0256,
+            "fold_pr_auc_mean": 0.8922,
+            "fold_pr_auc_std": 0.0509,
+            "fold_roc_aucs": [
+              0.9797,
+              0.9252,
+              0.9053,
+              0.9447,
+              0.9568
+            ]
+          },
+          "calibration_bins": [
+            {
+              "mean_predicted": 0.0424,
+              "fraction_positive": 0.0
+            },
+            {
+              "mean_predicted": 0.1046,
+              "fraction_positive": 0.0357
+            },
+            {
+              "mean_predicted": 0.1655,
+              "fraction_positive": 0.0571
+            },
+            {
+              "mean_predicted": 0.3315,
+              "fraction_positive": 0.2429
+            },
+            {
+              "mean_predicted": 0.638,
+              "fraction_positive": 0.7143
+            },
+            {
+              "mean_predicted": 0.8501,
+              "fraction_positive": 0.9362
+            }
+          ],
+          "shap_top_features": [
+            {
+              "feature": "dist_road_m",
+              "mean_abs_shap": 0.22316
+            },
+            {
+              "feature": "dist_railway_m",
+              "mean_abs_shap": 0.0711
+            },
+            {
+              "feature": "tri_m",
+              "mean_abs_shap": 0.04948
+            },
+            {
+              "feature": "slope_deg",
+              "mean_abs_shap": 0.02663
+            },
+            {
+              "feature": "elevation_m",
+              "mean_abs_shap": 0.0235
+            },
+            {
+              "feature": "soil_soc_0_5cm",
+              "mean_abs_shap": 0.01765
+            },
+            {
+              "feature": "soil_sand_0_5cm",
+              "mean_abs_shap": 0.01699
+            },
+            {
+              "feature": "soil_clay_0_5cm",
+              "mean_abs_shap": 0.01305
+            },
+            {
+              "feature": "plan_curvature",
+              "mean_abs_shap": 0.00978
+            },
+            {
+              "feature": "soil_cfvo_0_5cm",
+              "mean_abs_shap": 0.00759
+            }
+          ],
+          "shap_disclaimer": "SHAP values quantify statistical attribution within this exploratory PU benchmark only; they are NOT physically causal geotechnical parameters or Factor of Safety estimates."
+        },
+        "xgboost": {
+          "algorithm": "XGBClassifier (CPU hist candidate)",
+          "training_cv_seconds": 1.009,
+          "oof_metrics": {
+            "roc_auc": 0.9468,
+            "pr_auc": 0.9034,
+            "precision_at_0_5": 0.8255,
+            "recall_at_0_5": 0.8136,
+            "f1_at_0_5": 0.8195,
+            "brier_score": 0.0863,
+            "expected_calibration_error": 0.0359,
+            "confusion_matrix": {
+              "tn": 515,
+              "fp": 48,
+              "fn": 52,
+              "tp": 227
+            }
+          },
+          "spatial_block_generalization": {
+            "n_folds": 5,
+            "fold_roc_auc_mean": 0.9463,
+            "fold_roc_auc_std": 0.0196,
+            "fold_pr_auc_mean": 0.8999,
+            "fold_pr_auc_std": 0.039,
+            "fold_roc_aucs": [
+              0.9775,
+              0.9279,
+              0.9229,
+              0.951,
+              0.9524
+            ]
+          },
+          "calibration_bins": [
+            {
+              "mean_predicted": 0.0041,
+              "fraction_positive": 0.0071
+            },
+            {
+              "mean_predicted": 0.0135,
+              "fraction_positive": 0.0143
+            },
+            {
+              "mean_predicted": 0.0395,
+              "fraction_positive": 0.0714
+            },
+            {
+              "mean_predicted": 0.212,
+              "fraction_positive": 0.2643
+            },
+            {
+              "mean_predicted": 0.7738,
+              "fraction_positive": 0.6857
+            },
+            {
+              "mean_predicted": 0.9795,
+              "fraction_positive": 0.9433
+            }
+          ],
+          "shap_top_features": [
+            {
+              "feature": "dist_road_m",
+              "mean_abs_shap": 2.29719
+            },
+            {
+              "feature": "dist_railway_m",
+              "mean_abs_shap": 0.73837
+            },
+            {
+              "feature": "tri_m",
+              "mean_abs_shap": 0.55678
+            },
+            {
+              "feature": "elevation_m",
+              "mean_abs_shap": 0.31576
+            },
+            {
+              "feature": "plan_curvature",
+              "mean_abs_shap": 0.20823
+            },
+            {
+              "feature": "soil_clay_0_5cm",
+              "mean_abs_shap": 0.19108
+            },
+            {
+              "feature": "dist_drainage_m",
+              "mean_abs_shap": 0.19004
+            },
+            {
+              "feature": "soil_sand_0_5cm",
+              "mean_abs_shap": 0.14637
+            },
+            {
+              "feature": "aspect_sin",
+              "mean_abs_shap": 0.14339
+            },
+            {
+              "feature": "profile_curvature",
+              "mean_abs_shap": 0.14046
+            }
+          ],
+          "shap_disclaimer": "SHAP values quantify statistical attribution within this exploratory PU benchmark only; they are NOT physically causal geotechnical parameters or Factor of Safety estimates."
+        }
+      },
+      "measured_corridor_bias_inflation": {
+        "random_forest_roc_auc_delta": 0.1856,
+        "xgboost_roc_auc_delta": 0.1845,
+        "scientific_interpretation": "Adding road/railway proximity artificially inflates spatial-CV ROC-AUC because 77.8% of GSI public points were surveyed along NH-27/railway corridors \u2014 proving why unstratified corridor-proxy features must NOT be deployed into production susceptibility maps."
+      }
+    }
+  },
+  "model_b_dynamic_rainfall_thresholds": {
+    "model_type": "Model B \u2014 Empirical Rainfall-Threshold Research (Non-Operational)",
+    "validated_for_production": false,
+    "event_records_with_day_precision": 95,
+    "event_records_overlapping_valid_imerg": 85,
+    "unique_event_days_overlapping_imerg": 14,
+    "event_day_rainfall_mm": {
+      "1d": {
+        "count": 14,
+        "median": 49.9,
+        "p75": 70.38,
+        "p90": 78.49,
+        "max": 83.8
+      },
+      "3d": {
+        "count": 14,
+        "median": 127.18,
+        "p75": 181.49,
+        "p90": 251.45,
+        "max": 347.48
+      },
+      "7d": {
+        "count": 14,
+        "median": 212.67,
+        "p75": 253.22,
+        "p90": 331.82,
+        "max": 407.1
+      },
+      "15d": {
+        "count": 14,
+        "median": 287.31,
+        "p75": 321.11,
+        "p90": 420.01,
+        "max": 435.51
+      }
+    },
+    "monsoon_non_event_day_rainfall_mm": {
+      "1d": {
+        "count": 1675,
+        "median": 4.37,
+        "p75": 11.14,
+        "p90": 21.78,
+        "max": 203.26
+      },
+      "3d": {
+        "count": 1673,
+        "median": 19.06,
+        "p75": 33.38,
+        "p90": 58.1,
+        "max": 478.38
+      },
+      "7d": {
+        "count": 1669,
+        "median": 50.16,
+        "p75": 76.87,
+        "p90": 115.94,
+        "max": 578.22
+      }
+    },
+    "experimental_reference_envelopes": {
+      "imd_heavy_24h_mm": 64.5,
+      "imd_very_heavy_24h_mm": 115.6,
+      "imd_extremely_heavy_24h_mm": 204.5,
+      "experimental_72h_watch_mm": 120.0,
+      "experimental_72h_elevated_mm": 200.0,
+      "experimental_7d_antecedent_wet_mm": 250.0,
+      "calibration_status": "EXPERIMENTAL_REFERENCE_ONLY_NOT_SITE_CALIBRATED"
+    },
+    "scientific_limitations": [
+      "District-averaged 0.1 deg IMERG daily series smooths localized Barail Range cloudburst peaks.",
+      "Only a small subset of unique calendar days overlap valid IMERG days, with 2024 monsoon (June\u2013Dec) missing pending NASA Earthdata Login download.",
+      "Non-event monsoon days may include unrecorded rural landslides (under-reporting / positive-unlabeled censoring).",
+      "Dynamic event-probability modeling remains BLOCKED until multi-year, rain-gauge-validated, dated landslide records pass the Data Quality Gate."
+    ]
+  }
+}

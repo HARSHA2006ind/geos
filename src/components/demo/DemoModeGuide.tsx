@@ -66,38 +66,38 @@ export const DEMO_STEPS: DemoStepInfo[] = [
   },
   {
     number: 4,
-    title: 'Show Expanded Critical Zone',
-    subtitle: 'Spatial expansion of failure corridors',
+    title: 'Show Expanded Heuristic Zone',
+    subtitle: 'Simulated expansion of stress corridors',
     description:
-      'Observe the dynamic GIS heatmap and expanding red critical warning rings as vulnerable slope sectors cross the Factor of Safety threshold (FS < 1.0).',
-    actionLabel: 'Inspect Expanded Heatmap',
+      'Observe how the prototype heuristic circles expand under higher rainfall inputs (unvalidated demonstration mode — Factor of Safety is not physically modeled yet).',
+    actionLabel: 'Inspect Expanded Demo Map',
     icon: <Flame className="w-4 h-4 text-red-400" />,
   },
   {
     number: 5,
-    title: 'Quantify Impacted Population & Lifelines',
-    subtitle: 'What could be affected?',
+    title: 'Review Demo Exposure & Lifelines',
+    subtitle: 'Prototype impact layout',
     description:
-      'Examine quantified community exposure: +8,400 newly endangered residents, blocked NH-54E / NH-13 corridors, and disrupted hospital/school lifelines.',
-    actionLabel: 'View Lifeline Disruption',
+      'Examine the prototype exposure and lifeline checklist layout. Real WorldPop and OpenStreetMap infrastructure intersections are scheduled for Phase 2.',
+    actionLabel: 'View Impact Layout',
     icon: <Users className="w-4 h-4 text-purple-400" />,
   },
   {
     number: 6,
-    title: 'Generate Operational Response Plan',
-    subtitle: 'What should authorities do now?',
+    title: 'Review Response Checklist',
+    subtitle: 'Operational workflow prototype',
     description:
-      'Access prioritized Standard Operating Procedures (SOPs) grouped into Immediate (0–2h), High Priority (2–6h), and Monitoring (6–24h) with siren escalation.',
-    actionLabel: 'Generate SOP Matrix & Siren',
+      'Inspect dynamically generated location directives grouped by priority level with session-only alert drafting.',
+    actionLabel: 'Open Response Checklist',
     icon: <ShieldAlert className="w-4 h-4 text-rose-400" />,
   },
   {
     number: 7,
-    title: 'Submit Field Report & Feedback Loop',
-    subtitle: 'Continuous intelligence from ground reports',
+    title: 'Record Session Field Report',
+    subtitle: 'Simulated ground observation loop',
     description:
-      'Demonstrate the real-time feedback loop: Ingest a verified high-severity ground observation to immediately recalculate local risk (e.g. 78 → 88) across the network.',
-    actionLabel: 'Trigger Field Report Feedback Loop',
+      'Record a simulated ground observation in the browser session to test recalculation of the prototype heuristic index.',
+    actionLabel: 'Trigger Simulated Report Loop',
     icon: <Sparkles className="w-4 h-4 text-amber-400" />,
   },
 ];
@@ -110,25 +110,24 @@ export const DemoModeGuide: React.FC<DemoModeGuideProps> = ({
   onSelectStep,
   onExitDemo,
   onExecuteStepAction,
-  selectedLocation,
 }) => {
   const stepInfo = DEMO_STEPS[currentStep - 1] || DEMO_STEPS[0];
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4 animate-in slide-in-from-bottom-6 duration-300">
-      <div className="bg-[#0b1322]/95 backdrop-blur-md border-2 border-cyan-500/80 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] p-4 text-slate-100 space-y-3">
+      <div className="bg-[#0b1322]/95 backdrop-blur-md border-2 border-amber-500/70 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] p-4 text-slate-100 space-y-3">
         {/* Header Strip */}
         <div className="flex items-center justify-between gap-2 pb-2 border-b border-slate-800">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-md bg-cyan-950 border border-cyan-500/50 flex items-center justify-center text-cyan-400">
+            <div className="w-6 h-6 rounded-md bg-amber-950 border border-amber-500/50 flex items-center justify-center text-amber-400">
               <Sparkles className="w-3.5 h-3.5" />
             </div>
             <div>
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400">
-                SIH26001 Presentation Walkthrough
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-300">
+                Simulated Presentation Mode (Demo Walkthrough)
               </span>
               <span className="text-xs font-bold text-slate-200 ml-2 hidden sm:inline font-display">
-                GeoResilience-NER Operations Tour
+                GeoResilience-NER 2.0 UI Tour
               </span>
             </div>
           </div>

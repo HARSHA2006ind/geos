@@ -1,0 +1,1390 @@
+# GEOS 2.0 — COMPLETE AUTONOMOUS END-TO-END BUILD DIRECTIVE
+
+## MASTER ENGINEERING INSTRUCTION
+
+You are now the autonomous principal engineering and scientific research team responsible for completing **GeoResilience-NER 2.0**.
+
+Act simultaneously as:
+
+- Principal Software Architect
+- Senior Full-Stack Engineer
+- Geospatial Data Scientist
+- Remote Sensing Specialist
+- Machine Learning Research Engineer
+- Meteorological Data Engineer
+- Geotechnical Research Specialist
+- DevOps and Infrastructure Engineer
+- Cybersecurity Engineer
+- UI/UX Engineering Lead
+- Scientific Validation and Quality Assurance Lead
+
+Your responsibility is to **implement, integrate, test, debug, optimize, document and complete all technically feasible parts of the application**.
+
+Do not stop after completing one development phase.
+
+Do not request approval between ordinary development stages.
+
+Do not finish after writing plans or documentation. Deliver actual working code and tested functionality.
+
+Continue systematically until every feasible requirement has been implemented or a genuine external blocker prevents further work.
+
+---
+
+# 1. PROJECT IDENTITY
+
+**Project:** GeoResilience-NER 2.0
+
+**Repository:** https://github.com/HARSHA2006ind/geos
+
+**Primary pilot region:** Dima Hasao District, Assam, India.
+
+**Long-term target:** All eight Northeastern states of India.
+
+**Project category:** AI-powered landslide susceptibility assessment, environmental monitoring, experimental early-warning research and disaster decision support.
+
+### Primary objective
+
+Build a scientifically defensible platform that:
+
+1. Collects authentic environmental and geospatial information.
+2. Processes satellite, terrain, geology, soil and weather data.
+3. Identifies landslide-susceptible locations using validated machine learning.
+4. Monitors rainfall and other relevant dynamic conditions.
+5. Assesses the potential exposure of roads, settlements, hospitals and other infrastructure.
+6. Supports prioritization of field inspection and preparedness.
+7. Visualizes results on an interactive GIS dashboard.
+8. Generates grounded, evidence-linked explanations using Gemini.
+9. Supports authenticated field reports and verification.
+10. Tracks all data sources, model versions, uncertainty and limitations.
+
+The intended workflow is:
+
+**COLLECT → VALIDATE → PREDICT → ASSESS IMPACT → PRIORITIZE → REVIEW ALERT → FIELD VERIFY → SUPPORT ACTION**
+
+This system is a research and decision-support platform until it receives sufficient scientific validation and institutional authorization.
+
+It must never impersonate an official government disaster-warning service.
+
+---
+
+# 2. EXISTING PROJECT — DO NOT REBUILD FROM ZERO
+
+Previous development stages have already reported substantial progress.
+
+Inspect the current repository and verify this work before implementing anything.
+
+### Existing technology
+
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Leaflet
+- Recharts
+- Python FastAPI
+- PostgreSQL / PostGIS integration
+- NASA GPM IMERG ingestion
+- Copernicus DEM processing
+- ESA WorldCover
+- Sentinel-2 NDVI
+- ISRIC SoilGrids
+- GSI landslide inventory ingestion
+- NOAA GFS experimental forecast evaluation
+- Gemini explanation integration
+- Automated tests
+
+### Most recent reported research results
+
+- Approximately 379 GSI records inside Dima Hasao.
+- A ten-year historical IMERG rainfall dataset with remaining gaps.
+- Real terrain, vegetation, soil, hydrology and transport-proximity layers.
+- NOAA GFS CPU-only forecast evaluation.
+- 38 automated tests reportedly passing.
+- Scientific ML training currently blocked.
+- No scientifically validated landslide prediction model deployed.
+- GitHub feature branch not confirmed pushed.
+
+Treat these as **previous agent reports, not guaranteed current facts**.
+
+Reconcile them with actual repository files, commits, dataset manifests and test results.
+
+Preserve completed work.
+
+Never recreate an existing module unnecessarily.
+
+---
+
+# 3. AUTONOMOUS EXECUTION POLICY
+
+You are authorized to independently:
+
+- Inspect the repository.
+- Plan implementation.
+- Create development branches.
+- Implement new modules.
+- Refactor existing modules.
+- Install legitimate free and necessary dependencies.
+- Run local development servers.
+- Execute automated tests.
+- Debug failures.
+- Improve performance.
+- Build APIs.
+- Train and evaluate ML models when scientific readiness gates pass.
+- Create database migrations.
+- Produce documentation.
+- Commit verified changes to a development branch.
+- Continue through all feasible development phases.
+
+Do not stop after creating a plan.
+
+Do not stop merely because one scientific dataset requires human access; continue independent development work that does not depend on it.
+
+Stop for explicit human authorization when needed for:
+
+- Production deployment
+- Paid services
+- New external credential authorization
+- Destructive operations
+- Overwriting user data
+- Public dissemination of emergency warnings
+- Sending real external notifications
+- Replacing protected branches
+
+Never bypass scientific data-quality checks to force model training.
+
+---
+
+# 4. FINAL TECHNOLOGY STACK
+
+Use this stack unless a verified technical incompatibility requires a documented change.
+
+| Layer | Selected technology |
+|---|---|
+| Frontend | React + TypeScript + Vite |
+| Styling | Tailwind CSS |
+| Interactive maps | Leaflet |
+| Charts | Recharts |
+| Backend | Python FastAPI |
+| API schemas | Pydantic |
+| Database | PostgreSQL + PostGIS |
+| Database migration | Alembic |
+| ORM | SQLAlchemy + GeoAlchemy2 |
+| Geospatial processing | GDAL, Rasterio, GeoPandas, Shapely |
+| Scientific analysis | NumPy, Pandas, Xarray |
+| Satellite processing | Google Earth Engine where authorized, plus verified direct downloads |
+| Baseline ML | Random Forest |
+| Candidate production ML | XGBoost |
+| Explainability | SHAP |
+| ML validation | scikit-learn |
+| Experiment tracking | Versioned metadata and model artifacts |
+| AI assistant | Google Gemini |
+| Weather observations | NASA GPM IMERG and validated supplementary sources |
+| Weather forecasting | NOAA GFS via the existing CPU-only integration |
+| Historical station verification | NOAA GHCN-Daily and available IMD observations |
+| Testing | Pytest, Vitest, Playwright where feasible |
+| Deployment | Vercel frontend + Ubuntu Linux backend |
+| Reverse proxy | Caddy or Nginx with TLS |
+| Packaging | Docker Compose |
+
+Do not introduce unnecessary GPU frameworks, Kubernetes, large language models or paid cloud services.
+
+Keep the deployment practical for limited infrastructure.
+
+---
+
+# 5. PHASE A — SOURCE RECOVERY AND BASELINE VERIFICATION
+
+## A1. Recover the latest implementation
+
+Verify:
+
+- Current working directory.
+- Git repository status.
+- Latest committed changes.
+- Existing feature branch.
+- Available Git bundles.
+- Dataset manifests.
+- Scientific processing scripts.
+- Frontend and backend tests.
+
+Preserve all existing work before making structural changes.
+
+The previous branch was:
+
+`feature/geos-v2-foundation`
+
+Verify whether it remains current.
+
+Do not overwrite main.
+
+If GitHub authentication exists, push the development branch safely.
+
+If authentication is unavailable, generate verified, downloadable Git bundles and source exports in persistent storage.
+
+Do not claim GitHub synchronization succeeded unless the remote branch is confirmed.
+
+## A2. Establish regression baseline
+
+Run:
+
+- TypeScript checking.
+- Frontend production build.
+- Existing frontend tests.
+- Existing backend tests.
+- Database migration checks.
+- API smoke tests.
+- Geospatial data integrity checks.
+
+Record existing failures before fixing them.
+
+Implement regression fixes without removing valid functionality.
+
+---
+
+# 6. PHASE B — COMPLETE AUTHENTIC DATA ACQUISITION
+
+This is a critical project requirement.
+
+Every dataset must contain:
+
+- Dataset name and provider.
+- Official source URL.
+- Product/version identifier.
+- Acquisition and observation timestamps.
+- Spatial resolution.
+- Temporal resolution.
+- CRS.
+- Units.
+- Geographic coverage.
+- Processing methodology.
+- License and attribution.
+- Missing-data indicators.
+- Data-quality limitations.
+
+Never replace unavailable observations with synthetic values.
+
+## B1. Historical landslide inventory
+
+Continue integrating:
+
+- GSI Bhusanket verified records.
+- GSI Bhukosh / NGDR data where authorized.
+- ISRO / NRSC landslide inventory.
+- NASA COOLR.
+- Verified satellite-mapped landslide polygons.
+- Available field-validated historical records.
+
+Perform:
+
+1. Inventory classification.
+2. Event identifier verification.
+3. Duplicate detection.
+4. Coordinate uncertainty analysis.
+5. Date precision validation.
+6. Landslide-type categorization.
+7. Source reliability assessment.
+8. Event geometry quality assessment.
+
+Maintain original records without destructive modification.
+
+Do not assume that point coordinates identify exact landslide initiation zones.
+
+Where exact coordinates are unavailable, retain the event for contextual visualization but exclude it from inappropriate fine-scale training.
+
+## B2. Terrain data
+
+Use Copernicus DEM GLO-30 where available.
+
+Calculate and validate:
+
+- Elevation.
+- Slope.
+- Aspect.
+- Profile curvature.
+- Planform curvature.
+- Terrain Ruggedness Index.
+- Topographic Wetness Index.
+- Drainage characteristics.
+- Flow accumulation.
+- Terrain-position indicators.
+
+Ensure proper CRS and physical units.
+
+Provide native-resolution processing metadata and document aggregation to the selected analysis grid.
+
+## B3. Soil data
+
+Continue ISRIC SoilGrids processing for:
+
+- Clay.
+- Sand.
+- Silt.
+- Bulk density.
+- Coarse fragments.
+- Soil organic carbon.
+- Relevant depth intervals.
+
+Use valid published units and uncertainty metadata.
+
+Integrate soil moisture products separately where available.
+
+Do not infer geotechnical cohesion or friction angle directly from soil texture without a defensible method.
+
+## B4. Vegetation and land cover
+
+Use appropriate historical Sentinel-2, Landsat, ESA WorldCover and related datasets.
+
+Generate:
+
+- NDVI.
+- Vegetation cover.
+- Land-cover classification.
+- Relevant land-cover change indicators.
+
+Strictly prevent temporal leakage.
+
+For historical landslide events, use pre-event observations or explicitly documented static reference layers.
+
+Do not apply 2024 NDVI to a 2017 landslide as though it were a 2017 measurement.
+
+## B5. Geology
+
+Integrate authorized geological information from GSI and appropriate scientific sources.
+
+Prioritize:
+
+- Lithology.
+- Rock formations.
+- Faults.
+- Major structural geological features.
+- Relevant geological boundaries.
+
+Do not invent missing geological polygons.
+
+If detailed layers are restricted, document the access blocker and continue with features that are genuinely available.
+
+## B6. Rainfall observations
+
+Complete NASA GPM IMERG data ingestion.
+
+Support:
+
+- Historical rainfall.
+- Latest available observed rainfall.
+- Daily accumulation.
+- Antecedent 3-day accumulation.
+- Antecedent 7-day accumulation.
+- Antecedent 15-day accumulation.
+- Source latency and missing-data monitoring.
+
+Finish Earthdata-authenticated historical downloads when credentials are available.
+
+Preserve the distinction between Early, Late and Final rainfall products.
+
+Do not overwrite historical Final Run data with lower-quality operational estimates without explicit versioning.
+
+## B7. Forecast data
+
+Maintain the existing NOAA GFS forecast evaluator.
+
+Verify:
+
+- Precipitation variable semantics.
+- Rainfall-rate integration.
+- Forecast initialization time.
+- Forecast valid time.
+- Forecast horizon.
+- Missing values.
+- Spatial resolution.
+- Data staleness.
+- Forecast provenance.
+
+Support experimental 24-hour, 48-hour and 72-hour rainfall outlooks if scientifically and technically validated.
+
+Forecast products must never be labeled as measured rainfall.
+
+Do not integrate NVIDIA FourCastNet or large CUDA dependencies.
+
+## B8. Infrastructure exposure
+
+Use genuine geographic information from:
+
+- OpenStreetMap.
+- Official roads and transport datasets where available.
+- Population grids.
+- Government health-facility datasets where available.
+- Verified settlement maps.
+
+Include:
+
+- Roads.
+- Railways.
+- Bridges.
+- Settlements.
+- Hospitals.
+- Schools.
+- Population exposure.
+
+Record completeness limitations and uncertainty.
+
+Do not manufacture facilities or population counts.
+
+---
+
+# 7. PHASE C — SPATIAL DATABASE AND DATA ENGINEERING
+
+Implement a reliable PostgreSQL/PostGIS data foundation.
+
+Use versioned schemas and migrations.
+
+Recommended logical tables:
+
+- datasets
+- dataset_versions
+- administrative_boundaries
+- environmental_observations
+- rainfall_observations
+- weather_forecasts
+- landslide_events
+- landslide_event_evidence
+- terrain_features
+- soil_features
+- land_cover_observations
+- infrastructure_assets
+- model_registry
+- model_predictions
+- validation_results
+- experimental_alerts
+- field_reports
+- users
+- audit_logs
+
+Use appropriate geometry types, indexes and constraints.
+
+Store original source identifiers and timestamps.
+
+Keep historical observations separate from forward forecasts.
+
+Implement idempotent ingestion so repeated imports do not create duplicate records.
+
+Add data-quality reports and automated provenance checks.
+
+Handle raster storage efficiently without forcing large raw satellite files into PostgreSQL.
+
+---
+
+# 8. PHASE D — IMPLEMENT THE REAL MACHINE LEARNING SYSTEM
+
+This is the central AI/ML component.
+
+## D1. Separate two research problems
+
+### Model A — Static landslide susceptibility
+
+Purpose:
+
+Identify terrain that has relatively high susceptibility to landslides based on conditioning factors.
+
+Candidate features:
+
+- Slope.
+- Elevation.
+- Aspect.
+- Curvature.
+- Terrain ruggedness.
+- Drainage proximity.
+- Soil properties.
+- Lithology.
+- Fault proximity.
+- Land cover.
+- Relevant vegetation indicators.
+- Road proximity where scientifically justified.
+
+Models:
+
+**Random Forest:** Baseline.
+
+**XGBoost:** Primary candidate.
+
+Compare models using the same defensible training and evaluation splits.
+
+Do not assume XGBoost is superior before evaluation.
+
+### Model B — Dynamic rainfall-triggered hazard
+
+Purpose:
+
+Assess how recent and forecast rainfall affects potential landslide activity.
+
+Candidate inputs:
+
+- Static susceptibility.
+- Observed rainfall.
+- Antecedent rainfall.
+- Rainfall intensity and duration.
+- Available soil moisture.
+- Historical event dates.
+- Relevant regional trigger thresholds.
+
+Begin with transparent rainfall-threshold research.
+
+Only train an event-based dynamic model when appropriate dated event and non-event observational evidence exists.
+
+Do not combine static and dynamic scores using arbitrary weights.
+
+## D2. Scientific training preparation
+
+Implement:
+
+- Historical event verification.
+- Spatial precision assessment.
+- Positive sample construction.
+- Unlabeled-area sampling.
+- Sampling bias analysis.
+- Duplicate-event handling.
+- Spatial block partitioning.
+- Temporal holdout design.
+- Feature timestamp alignment.
+- Missing-value handling.
+- Dataset versioning.
+- Reproducible training.
+
+Do not treat arbitrary locations without known landslides as confirmed negative examples.
+
+If positive-unlabeled learning is appropriate, document the assumptions and interpretation.
+
+## D3. Strict model-training gate
+
+Before training, establish and evaluate:
+
+- Adequate independent event evidence.
+- Sufficient positional accuracy for chosen resolution.
+- Suitable event dates for temporal features.
+- Spatial coverage.
+- Inventory representativeness.
+- Leakage prevention.
+- Geographic validation feasibility.
+- Required dataset quality.
+
+The thresholds must be scientifically justified.
+
+Never weaken quality gates simply to produce a model.
+
+If necessary, build a separate explicitly labeled exploratory research track using only appropriate data and evaluation methods. Never promote exploratory results to validated operational outputs.
+
+## D4. Model evaluation
+
+When readiness criteria pass, train and compare Random Forest and XGBoost.
+
+Report:
+
+- Precision.
+- Recall.
+- PR-AUC.
+- ROC-AUC when meaningful.
+- Calibration.
+- Brier score where probabilities are interpretable.
+- False-positive and false-negative behavior.
+- Spatial generalization.
+- Temporal generalization where possible.
+- Uncertainty.
+- Feature sensitivity.
+
+Use spatial-block evaluation rather than relying on random pixel splits.
+
+Avoid leakage from nearby terrain cells and duplicated historical events.
+
+Do not invent accuracy values.
+
+## D5. Explainable AI
+
+Implement SHAP explanations for validated model outputs.
+
+Explain:
+
+- Important conditioning features.
+- Feature contributions.
+- Model limitations.
+- Prediction uncertainty.
+- Source data availability.
+
+Keep SHAP explanations distinct from physically causal geotechnical explanations.
+
+Gemini may summarize these results, but must not manufacture feature importance or model confidence.
+
+## D6. Model deployment gate
+
+Only deploy a model as validated if evidence supports its intended geographic scope.
+
+If no scientifically valid model is available:
+
+- Keep the inference interface implemented.
+- Return a clear unavailable status.
+- Preserve `landslide_probability: null`.
+- Show an explicit model-not-validated message.
+- Continue building other system components.
+
+A fully implemented inference API with honest unavailability is preferable to a fabricated prediction.
+
+---
+
+# 9. PHASE E — IMPLEMENT THE DYNAMIC HAZARD ENGINE
+
+Build a server-side dynamic hazard assessment service.
+
+It must distinguish:
+
+1. Static susceptibility.
+2. Current observed rainfall conditions.
+3. Forecast rainfall conditions.
+4. Data and model uncertainty.
+5. Potential exposure.
+6. Response priority.
+
+Do not confuse susceptibility with annual landslide probability or event-time landslide probability.
+
+If a research risk index is displayed from 0 to 100, explicitly identify its definition, calibration basis and limitations.
+
+Do not imply that 80/100 means an 80% landslide probability.
+
+Define Low, Moderate, High and Critical categories only with an evidence-based, documented interpretation.
+
+Where thresholds are not validated, label them experimental.
+
+Implement:
+
+- Rainfall observation freshness.
+- Missing telemetry alerts.
+- Model version tracking.
+- Source traceability.
+- Scenario recomputation.
+- Hazard assessment audit logs.
+
+Never calculate fabricated Factor of Safety values.
+
+---
+
+# 10. PHASE F — COMPLETE THE GIS DASHBOARD
+
+Preserve and improve the existing React application.
+
+Build a responsive, professional geospatial monitoring dashboard.
+
+## F1. Main command center
+
+Display real, calculated information:
+
+- Dataset freshness.
+- Pilot area coverage.
+- Observed rainfall summaries.
+- Environmental data availability.
+- Model operational/readiness state.
+- Areas flagged for research inspection.
+- Field report counts.
+- Data-quality warnings.
+
+Do not display invented operational statistics.
+
+## F2. GIS map
+
+Implement authentic geographic layers:
+
+- Administrative boundaries.
+- Terrain elevation.
+- Slope.
+- Historical landslides.
+- Rainfall observations.
+- Land cover.
+- Roads and railways.
+- Hospitals and settlements.
+- Field reports.
+- Model susceptibility layers when validated.
+
+Use GeoJSON, suitable raster tiles, or cloud-optimized geospatial formats.
+
+Support:
+
+- Layer toggle.
+- Legend.
+- Search.
+- Coordinate inspection.
+- Area selection.
+- Data source inspection.
+- Date selection.
+- Map scale.
+- Appropriate map attribution.
+- Missing-data indicators.
+
+Use real geographic geometries.
+
+Do not use synthetic circles as actual landslide zones.
+
+## F3. Location inspector
+
+When a user clicks a location, show:
+
+- Coordinates.
+- Elevation.
+- Slope.
+- Aspect.
+- Land cover.
+- Available soil properties.
+- Available geological information.
+- Recent rainfall.
+- Forecast rainfall.
+- Nearby infrastructure.
+- Dataset provenance.
+- Model output when validated.
+- Uncertainty and limitations.
+
+Include loading, unavailable-data and error states.
+
+## F4. Historical analysis
+
+Show:
+
+- Verified historical landslide records.
+- Source filtering.
+- Event dates.
+- Seasonal distributions.
+- Geographic distributions.
+- Historical rainfall comparison.
+- Data completeness.
+- Inventory uncertainty.
+
+Do not present duplicate or unverified records as independent confirmed events.
+
+## F5. What-If simulation
+
+Allow users to explore hypothetical rainfall scenarios.
+
+Implement server-side simulation calculations.
+
+Clearly label hypothetical values.
+
+Show how validated model outputs or threshold indicators change under the selected assumptions.
+
+Do not generate numerical landslide probabilities from arbitrary formulas.
+
+## F6. Impact analysis
+
+Use PostGIS spatial intersections and proximity queries.
+
+Analyze:
+
+- Roads intersecting credible hazard areas.
+- Settlements potentially exposed.
+- Facilities requiring review.
+- Population exposure estimates.
+- Alternative-road information where verified.
+
+Clearly identify when spatial exposure is estimated rather than observed damage.
+
+## F7. Mobile experience
+
+Optimize the entire application for:
+
+- Desktop.
+- Tablet.
+- Mobile.
+
+Ensure the maps, charts, navigation, inspection panels and forms remain usable.
+
+Avoid unnecessary animations that reduce performance or accessibility.
+
+Retain the existing design quality.
+
+---
+
+# 11. PHASE G — GEMINI AI ASSISTANT
+
+Implement a secure Gemini-powered geospatial explanation assistant.
+
+Verify the actual supported model name through the current official Gemini API or available-model discovery.
+
+Make the selected model configurable.
+
+Keep API keys on the backend.
+
+### Required assistant capabilities
+
+Users should be able to ask:
+
+- Why is this area considered susceptible?
+- Which environmental factors influence this assessment?
+- How much rainfall has been observed?
+- Which dataset supports this result?
+- Which roads or settlements are nearby?
+- What data is missing?
+- Which locations require field inspection?
+- How did the conditions change over time?
+- What does the confidence information mean?
+
+### Gemini rules
+
+Gemini must:
+
+- Use structured evidence from the backend.
+- Refer to actual data sources.
+- Distinguish observations and forecasts.
+- Explain uncertainty.
+- Refuse to invent landslide probabilities.
+- Never fabricate official warnings.
+- Never invent measurements or facilities.
+- Avoid unverified geotechnical claims.
+- Treat field reports as untrusted until reviewed.
+
+Gemini is the explanation and decision-support layer, not the numerical landslide prediction engine.
+
+Add schema validation, rate limiting, authentication for privileged features and prompt-injection defenses.
+
+---
+
+# 12. PHASE H — FIELD OFFICER REPORTING
+
+Build a functioning authenticated field-report workflow.
+
+Implement user roles such as:
+
+- Administrator.
+- Research analyst.
+- Field officer.
+- Public read-only viewer.
+
+Field officers should be able to submit:
+
+- Location.
+- GPS coordinates.
+- Observation timestamp.
+- Landslide or slope-condition category.
+- Description.
+- Real photo uploads.
+- Severity observation.
+- Road obstruction information.
+- Additional notes.
+
+Implement:
+
+- Actual file uploads.
+- Storage and database persistence.
+- Coordinate validation.
+- Photo metadata handling.
+- Verification status.
+- Reviewer approval.
+- Audit history.
+- Role-based permissions.
+
+Never insert random coordinate offsets or fake photos.
+
+Preserve privacy and avoid exposing sensitive personal information.
+
+Do not allow an unverified report to silently modify a validated ML output.
+
+---
+
+# 13. PHASE I — ALERT AND RESPONSE WORKFLOW
+
+Build a complete **experimental alert-management system**.
+
+Include:
+
+- Alert creation.
+- Hazard evidence.
+- Geographic area.
+- Source timestamps.
+- Severity rationale.
+- Affected infrastructure estimate.
+- Recommended inspection priorities.
+- Reviewer identity.
+- Approval workflow.
+- Alert history.
+- Status tracking.
+
+Support notification adapters for future deployment.
+
+Implement dry-run notification testing and audit logs.
+
+Do not actually send emergency warnings to the public without explicit human authorization and applicable institutional approval.
+
+Do not claim SMS, cell broadcast, police radio, siren or government portal integration unless a real verified interface exists.
+
+Separate draft research alerts from official emergency communications.
+
+---
+
+# 14. PHASE J — AUTOMATED ENVIRONMENTAL MONITORING
+
+Implement scheduled ingestion and analysis.
+
+The server should periodically:
+
+1. Check for newly available rainfall observations.
+2. Retrieve valid updates.
+3. Validate timestamps and values.
+4. Update the database.
+5. Identify missing or stale observations.
+6. Refresh appropriate environmental summaries.
+7. Recalculate supported experimental hazard indicators.
+8. Record execution results.
+9. Expose operational health information.
+
+Use cron or another lightweight scheduler.
+
+Make update intervals configurable and respect provider latency and API quotas.
+
+Do not claim continuous real-time monitoring if source products are delayed.
+
+Implement robust retry behavior, rate limiting and idempotency.
+
+When a provider is unavailable, show the last successful observation timestamp and a stale-data indicator.
+
+---
+
+# 15. PHASE K — API CONTRACTS
+
+Implement documented FastAPI endpoints.
+
+At minimum, provide appropriate endpoints for:
+
+- System health.
+- Dataset registry.
+- Data provenance.
+- Pilot boundaries.
+- Environmental point inspection.
+- Rainfall history.
+- Rainfall forecast.
+- Terrain features.
+- Soil features.
+- Historical landslides.
+- Landslide inventory quality.
+- Infrastructure exposure.
+- Scientific data quality.
+- ML readiness.
+- Model information.
+- Susceptibility inference, when valid.
+- Scenario simulations.
+- Research alerts.
+- Field reports.
+- Gemini explanations.
+- Authentication and authorization.
+
+Use a versioned API prefix:
+
+`/api/v1/`
+
+Implement:
+
+- Pydantic validation.
+- OpenAPI documentation.
+- Consistent error responses.
+- Pagination.
+- Date-range filtering.
+- Geographic validation.
+- Source metadata.
+- Appropriate caching.
+- Request limits.
+
+Frontend API types must match the backend response schemas.
+
+No page should depend on fake production data.
+
+---
+
+# 16. PHASE L — SECURITY AND RELIABILITY
+
+Apply production-quality engineering practices.
+
+Include:
+
+- Authentication.
+- Role-based authorization.
+- Password or identity-provider security.
+- Input validation.
+- Safe geospatial upload handling.
+- API rate limiting.
+- Safe Gemini proxying.
+- Secret management.
+- TLS.
+- Security headers.
+- Audit logs.
+- Data-access restrictions.
+- Dependency vulnerability checks.
+- Backup and recovery.
+- Database migration safety.
+
+Protect against:
+
+- Cross-site scripting.
+- SQL injection.
+- Prompt injection.
+- Unauthorized report modification.
+- Unauthorized alerts.
+- Excessive API requests.
+- Unbounded uploads.
+- Corrupt datasets.
+- Invalid coordinates.
+
+Implement database backups and test restoration.
+
+Do not store API keys or user secrets in GitHub.
+
+---
+
+# 17. PHASE M — DEPLOYMENT ON FREE INFRASTRUCTURE
+
+Target server:
+
+**8 GB RAM | 4 vCPU | 20 GB SSD | Ubuntu Linux**
+
+Deploy only after explicit production authorization.
+
+Recommended architecture:
+
+Frontend:
+
+React + Vite hosted on Vercel or an appropriate static hosting service.
+
+Backend:
+
+FastAPI on the Linux server.
+
+Database:
+
+PostgreSQL + PostGIS on the Linux server.
+
+Scheduling:
+
+Lightweight Python jobs or cron.
+
+Satellite processing:
+
+Google Earth Engine or authorized external geospatial processing.
+
+Weather forecasts:
+
+CPU-only remote data retrieval.
+
+Gemini:
+
+Hosted API.
+
+### Server optimization
+
+- Avoid full raw satellite archives.
+- Use compact spatial feature datasets.
+- Store static model results efficiently.
+- Use PostGIS spatial indexes.
+- Limit API worker counts.
+- Bound memory-intensive calculations.
+- Use batch processing.
+- Monitor disk usage.
+- Avoid unnecessary Docker images and dependencies.
+- Keep backups outside the server.
+
+Demonstrate that the deployed configuration can fit within the resource budget.
+
+Record measured memory, CPU, disk and API-response performance.
+
+Do not claim resource suitability solely from theoretical estimates.
+
+---
+
+# 18. PHASE N — TESTING AND SCIENTIFIC VALIDATION
+
+Create and execute a comprehensive test suite.
+
+## Frontend testing
+
+- Component rendering.
+- Navigation.
+- Map interactions.
+- Data-source displays.
+- API error handling.
+- Mobile responsiveness.
+- Accessibility.
+- Field-report forms.
+- Alert review workflow.
+
+## Backend testing
+
+- API validation.
+- Database migrations.
+- Authentication.
+- Authorization.
+- Data persistence.
+- Pagination.
+- Rate limiting.
+- Background jobs.
+- Error handling.
+
+## Geospatial testing
+
+- CRS consistency.
+- Valid geometries.
+- Coordinate transformations.
+- Raster sampling.
+- Resolution alignment.
+- Raster nodata handling.
+- Boundary containment.
+- Spatial query correctness.
+
+## Scientific testing
+
+- Duplicate-event detection.
+- Rainfall units.
+- Forecast-rate integration.
+- Missing temporal intervals.
+- Pre-event feature alignment.
+- Spatial data leakage.
+- Sampling bias.
+- ML calibration.
+- Model generalization.
+- SHAP reproducibility.
+- Confidence and uncertainty representation.
+
+## Deployment testing
+
+- Backend container startup.
+- Database startup.
+- Migration execution.
+- Frontend connectivity.
+- Health checks.
+- Backup restoration.
+- Memory and disk limits.
+
+Do not claim a passing test unless it was actually executed.
+
+If infrastructure prevents running a test, document the precise blocker.
+
+---
+
+# 19. PHASE O — REGIONAL EXPANSION
+
+The initial pilot is Dima Hasao, Assam.
+
+Prepare an extensible data model and GIS architecture for eventual coverage across:
+
+- Assam.
+- Arunachal Pradesh.
+- Meghalaya.
+- Manipur.
+- Mizoram.
+- Nagaland.
+- Tripura.
+- Sikkim.
+
+Do not immediately generate unvalidated landslide predictions across all states.
+
+Expand each region only when appropriate data coverage, quality assessment and geographic validation are available.
+
+Display the difference between:
+
+- Region configured.
+- Environmental data available.
+- Landslide inventory available.
+- Model validated.
+- Experimental monitoring active.
+
+Allow the dashboard to show a state even when predictive coverage is not yet available.
+
+---
+
+# 20. SCIENTIFIC ACCEPTANCE CRITERIA
+
+A feature is complete only when it has:
+
+1. Working implementation.
+2. Appropriate automated tests.
+3. Verified data or clearly marked test fixtures.
+4. Documented source provenance.
+5. Error and missing-data behavior.
+6. Security controls where applicable.
+7. Reproducible output.
+8. Compatibility with the existing architecture.
+
+A machine-learning model has additional requirements:
+
+- Genuine training labels.
+- Appropriate spatial precision.
+- Defensible comparison samples.
+- Spatially independent validation.
+- Temporal integrity.
+- Scientific performance reporting.
+- Documented limitations.
+- Versioned artifacts.
+
+Do not use attractive visual results as evidence of scientific accuracy.
+
+---
+
+# 21. AUTONOMOUS DEVELOPMENT LOOP
+
+For each phase:
+
+1. Inspect the existing implementation.
+2. Identify completed functionality.
+3. Identify missing requirements.
+4. Implement the missing functionality.
+5. Add tests.
+6. Run tests.
+7. Fix failures.
+8. Check regressions.
+9. Document evidence.
+10. Commit verified development changes.
+11. Proceed to the next feasible phase.
+
+Do not repeatedly stop to request confirmation.
+
+Do not spend the entire session generating planning documents.
+
+Prefer working implementations and reproducible tests over lengthy speculative architecture discussions.
+
+If one external dataset is blocked, continue other independent phases and document the dependency.
+
+If the scientific training gate fails, continue implementing the GIS, APIs, authentication, field reporting, monitoring and other valid components.
+
+Do not force the ML model into production.
+
+---
+
+# 22. REQUIRED FINAL DELIVERABLES
+
+Create the following documentation:
+
+- `GEOS_V2_MASTER_IMPLEMENTATION_REPORT.md`
+- `GEOS_V2_ARCHITECTURE.md`
+- `GEOS_DATA_SOURCE_REGISTRY.md`
+- `GEOS_DATA_QUALITY_REPORT.md`
+- `GEOS_ML_TRAINING_REPORT.md`
+- `GEOS_MODEL_VALIDATION.md`
+- `GEOS_GIS_VERIFICATION.md`
+- `GEOS_API_DOCUMENTATION.md`
+- `GEOS_SECURITY_AUDIT.md`
+- `GEOS_DEPLOYMENT_GUIDE.md`
+- `GEOS_TEST_RESULTS.md`
+- `GEOS_REMAINING_BLOCKERS.md`
+- `GEOS_GITHUB_SYNC_STATUS.md`
+
+Maintain a machine-readable implementation status for all phases.
+
+For every feature, report:
+
+- Implemented.
+- Tested.
+- Scientifically validated, where applicable.
+- Blocked.
+- Not implemented.
+
+Do not hide unfinished features.
+
+---
+
+# 23. FINAL ENGINEERING REVIEW
+
+At the end of execution, provide a complete report covering:
+
+### A. Application completion
+
+Which features are genuinely implemented and working?
+
+### B. Data acquisition
+
+Which real environmental datasets are integrated, how recent are they, and what is missing?
+
+### C. Machine learning
+
+Was Random Forest trained?
+
+Was XGBoost trained?
+
+What scientific evidence supports their results?
+
+Are any model predictions validated?
+
+If not trained, explain the exact blockers.
+
+### D. GIS
+
+Which map layers use real coordinates and actual geographic features?
+
+### E. Dynamic monitoring
+
+Does the system ingest newly available rainfall automatically?
+
+Are data freshness and failure states correctly handled?
+
+### F. Gemini
+
+Are explanations based on actual structured evidence?
+
+### G. Field reporting
+
+Can authenticated officers create, persist and verify observations?
+
+### H. Alerts
+
+Does the experimental alert approval workflow function without sending unauthorized public warnings?
+
+### I. Infrastructure
+
+Can the system operate within 8 GB RAM, 4 vCPU and 20 GB SSD?
+
+### J. Testing
+
+What tests passed, failed or could not be executed?
+
+### K. GitHub
+
+Is the latest development branch actually available on the remote repository?
+
+### L. Remaining blockers
+
+Which tasks require unavailable datasets, credentials, institutional permissions or additional scientific validation?
+
+---
+
+# 24. DEFINITION OF DONE
+
+The engineering implementation is considered substantially complete when:
+
+- The frontend works end to end.
+- The backend APIs work.
+- Real environmental data can be retrieved.
+- Geospatial calculations are reproducible.
+- The database persists verified information.
+- GIS maps display authentic geographic data.
+- Monitoring jobs run and report freshness.
+- Gemini explanations use documented evidence.
+- Field reports can be persisted and reviewed.
+- Experimental alerts support authorization and audit trails.
+- Automated tests pass.
+- The application can be staged on the intended infrastructure.
+- Every prediction has an explicit scientific validation status.
+
+**ML readiness and operational warning authorization are separate acceptance gates.**
+
+If the available landslide labels do not support trustworthy model training, the application must remain operational as an environmental intelligence and research platform, with predictive outputs unavailable.
+
+Do not fabricate completion to satisfy this directive.
+
+---
+
+# 25. START EXECUTION IMMEDIATELY
+
+Begin from the actual current project state.
+
+First secure and verify the existing repository, then implement remaining development phases in dependency order.
+
+Preserve everything that already works.
+
+Do not rebuild completed components unnecessarily.
+
+Continue automatically through all feasible phases.
+
+Do not stop after documentation, isolated experiments or a single successful test.
+
+When blocked by external requirements, complete all independent work and report exact unblock instructions.
+
+**The final objective is a working, scientifically transparent, end-to-end GeoResilience-NER 2.0 research platform—not another simulated landslide prediction dashboard.**
+
+BEGIN IMPLEMENTATION NOW.
